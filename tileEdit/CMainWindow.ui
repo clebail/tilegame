@@ -170,16 +170,30 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QPushButton" name="tilePrev">
+           <widget class="QPushButton" name="tileLeft">
             <property name="text">
-             <string>&lt;</string>
+             <string>Left</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="tileNext">
+           <widget class="QPushButton" name="tileRight">
             <property name="text">
-             <string>&gt;</string>
+             <string>Right</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="tileUp">
+            <property name="text">
+             <string>Up</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="tileDown">
+            <property name="text">
+             <string>Down</string>
             </property>
            </widget>
           </item>
@@ -210,7 +224,7 @@
      <x>0</x>
      <y>0</y>
      <width>493</width>
-     <height>29</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

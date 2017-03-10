@@ -12,6 +12,11 @@ public:
     ~CMainWindow();
 private:
     QImage tiles;
+private slots:
+    void on_tileLeft_clicked(void);
+    void on_tileRight_clicked(void);
+    void on_tileUp_clicked(void);
+    void on_tileDown_clicked(void);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__
