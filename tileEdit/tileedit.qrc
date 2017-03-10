@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/tileEdit/images">
+        <file>tileset.png</file>
+    </qresource>
+</RCC>
