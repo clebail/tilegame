@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     CWidgetTile.cpp
 
 HEADERS  += CMainWindow.h \
-    CWidgetTile.h
+    CWidgetTile.h \
+    CTile.h
 
 FORMS    += CMainWindow.ui
 

@@ -13,6 +13,7 @@
 //----------------------------------------------------------------------------
 CWidgetTile::CWidgetTile(QWidget *parent) : QWidget(parent) {
     x = y = 0;
+    maxX = maxY = 0;
 }
 //----------------------------------------------------------------------------
 void CWidgetTile::setImage(QImage *image) {

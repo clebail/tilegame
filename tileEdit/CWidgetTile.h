@@ -12,6 +12,10 @@ public:
     void decX(void);
     void incY(void);
     void decY(void);
+    int getX(void) { return x; }
+    int getY(void) { return y; }
+    int getXMax(void) { return maxX; }
+    int getYMax(void) { return maxY; }
 private:
     QImage *image;
     int x, y;
