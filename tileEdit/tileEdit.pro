@@ -10,6 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = tileEdit
 TEMPLATE = app
+INCLUDEPATH += ..
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -25,11 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         CMainWindow.cpp \
-    CWidgetTile.cpp
+    CWidgetTile.cpp \
+    ../CTile.cpp
 
 HEADERS  += CMainWindow.h \
     CWidgetTile.h \
-    CTile.h
+    ../CTile.h \
+    ../common.h
 
 FORMS    += CMainWindow.ui
 
