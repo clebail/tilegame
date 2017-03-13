@@ -41,6 +41,7 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
 }
 //----------------------------------------------------------------------------
 CMainWindow::~CMainWindow() {
+    delete[] tiles;
 }
 //----------------------------------------------------------------------------
 void CMainWindow::updateCoords(void) {
@@ -204,5 +205,22 @@ void CMainWindow::on_actSave_triggered(bool) {
             on_actSaveAs_triggered();
         }
     }
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_pbAnimate_clicked(void) {
+    QList<QPoint> ps;
+
+    ps.append(QPoint(0, 0)); //FIXME
+    ps.append(QPoint(1, 0)); //FIXME
+    ps.append(QPoint(2, 0)); //FIXME
+    ps.append(QPoint(3, 0)); //FIXME
+
+    animatedDialog = new CAnimateDialog(this);
+
+    animatedDialog->setImage(&tilesImage);
+    animatedDialog->setCoords(ps);
+    animatedDialog->exec();
+
+    delete animatedDialog;
 }
 //----------------------------------------------------------------------------

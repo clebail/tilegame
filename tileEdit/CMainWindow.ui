@@ -621,6 +621,13 @@
             </property>
            </spacer>
           </item>
+          <item>
+           <widget class="QPushButton" name="pbAnimate">
+            <property name="text">
+             <string>Animate</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -635,7 +642,7 @@
      <x>0</x>
      <y>0</y>
      <width>922</width>
-     <height>29</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -27,14 +27,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         CMainWindow.cpp \
     CWidgetTile.cpp \
-    ../CTile.cpp
+    ../CTile.cpp \
+    CAnimatedDialog.cpp
 
 HEADERS  += CMainWindow.h \
     CWidgetTile.h \
     ../CTile.h \
-    ../common.h
+    ../common.h \
+    CAnimateDialog.h
 
-FORMS    += CMainWindow.ui
+FORMS    += CMainWindow.ui \
+    CAnimateDialog.ui
 
 RESOURCES += \
     tileedit.qrc

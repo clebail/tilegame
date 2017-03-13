@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include "ui_CMainWindow.h"
 #include "CTile.h"
+#include "CAnimateDialog.h"
 //----------------------------------------------------------------------------
 #define TILE_WALL_COUNT             9
 //----------------------------------------------------------------------------
@@ -22,6 +23,7 @@ private:
     CTile *tiles;
     CTile *currentTile;
     QString curentFileName;
+    CAnimateDialog *animatedDialog;
 
     void updateCoords(void);
 private slots:
@@ -44,6 +46,7 @@ private slots:
     void on_actOpen_triggered(bool checked = false);
     void on_actSaveAs_triggered(bool checked = false);
     void on_actSave_triggered(bool checked = false);
+    void on_pbAnimate_clicked(void);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__
