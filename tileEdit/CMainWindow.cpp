@@ -63,7 +63,8 @@ void CMainWindow::updateCoords(void) {
     cbAnimated->setChecked(currentTile->animated);
     cbBistable->setChecked(currentTile->bistable);
     cbBreakable->setChecked(currentTile->breakable);
-    cbBonus->setChecked(currentTile->bonus);
+    cbTouchBonus->setChecked(currentTile->touchBonus);
+    cbHitBonus->setChecked(currentTile->hitBonus);
     cbDangerous->setChecked(currentTile->dangerous);
     txtAnimatedGroupeName->setText(currentTile->animatedGroupName);
     txtBisatbleGroupName->setText(currentTile->bistableGroupName);
@@ -129,8 +130,12 @@ void CMainWindow::on_cbBreakable_stateChanged(int state) {
     currentTile->breakable = state == Qt::Checked;
 }
 //----------------------------------------------------------------------------
-void CMainWindow::on_cbBonus_stateChanged(int state) {
-    currentTile->bonus = state == Qt::Checked;
+void CMainWindow::on_cbTouchBonus_stateChanged(int state) {
+    currentTile->touchBonus = state == Qt::Checked;
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_cbHitBonus_stateChanged(int state) {
+    currentTile->hitBonus = state == Qt::Checked;
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_cbDangerous_stateChanged(int state) {
@@ -158,6 +163,7 @@ void CMainWindow::on_actOpen_triggered(bool) {
             }
 
             curentFileName = fileName;
+            file.close();
         }
     }
 
@@ -178,6 +184,24 @@ void CMainWindow::on_actSaveAs_triggered(bool) {
             }
 
             curentFileName = fileName;
+        }
+        file.close();
+    }
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_actSave_triggered(bool) {
+    if(!curentFileName.isEmpty()) {
+        QFile file(curentFileName);
+        if(file.open(QIODevice::WriteOnly)) {
+            QDataStream stream(&file);
+
+            for(int i=0;i<tileCount;i++) {
+                stream << tiles[i];
+            }
+
+            file.close();
+        }else {
+            on_actSaveAs_triggered();
         }
     }
 }

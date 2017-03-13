@@ -36,9 +36,9 @@
         </widget>
        </item>
        <item row="0" column="7">
-        <widget class="QCheckBox" name="cbBonus">
+        <widget class="QCheckBox" name="cbTouchBonus">
          <property name="text">
-          <string>Bonus</string>
+          <string>Touch bonus</string>
          </property>
         </widget>
        </item>
@@ -53,13 +53,6 @@
         <widget class="QCheckBox" name="cbSolidLeft">
          <property name="text">
           <string>Solid Left</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="7">
-        <widget class="QCheckBox" name="cbDangerous">
-         <property name="text">
-          <string>Dangerous</string>
          </property>
         </widget>
        </item>
@@ -81,6 +74,20 @@
         <widget class="QCheckBox" name="cbBreakable">
          <property name="text">
           <string>Breakable</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QCheckBox" name="cbDangerous">
+         <property name="text">
+          <string>Dangerous</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="7">
+        <widget class="QCheckBox" name="cbHitBonus">
+         <property name="text">
+          <string>Hit bonus</string>
          </property>
         </widget>
        </item>
