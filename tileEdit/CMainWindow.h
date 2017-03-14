@@ -3,8 +3,8 @@
 #define __CMAINWINDOW_H__
 //----------------------------------------------------------------------------
 #include <QMainWindow>
+#include <CTiles.h>
 #include "ui_CMainWindow.h"
-#include "CTile.h"
 #include "CAnimateDialog.h"
 //----------------------------------------------------------------------------
 #define TILE_WALL_COUNT             9
@@ -19,10 +19,8 @@ private:
     CWidgetTile *wall[TILE_WALL_COUNT];
     int x, y;
     int maxX, maxY;
-    int tileCount;
-    CTile *tiles;
+    CTiles *tiles;
     CTile *currentTile;
-    QString curentFileName;
     CAnimateDialog *animatedDialog;
 
     void updateCoords(void);

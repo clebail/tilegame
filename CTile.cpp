@@ -36,6 +36,33 @@ QDataStream& operator>>(QDataStream& in, CTile& tile) {
     return in;
 }
 //-----------------------------------------------------------------------------------------------
+CTile::CTile(int x, int y) {
+    this->x = x;
+    this->y = y;
+
+    solidUp = false;
+    solidRight = false;
+    solidDown = false;
+    solidLeft = false;
+    animated = false;
+    bistable = false;
+    breakable = false;
+    touchBonus = false;
+    hitBonus = false;
+    dangerous = false;
+    animatedGroupName = "";
+    bistableGroupName = "";
+
+}
+//----------------------------------------------------------------------------
+int CTile::getX(void) {
+    return x;
+}
+//----------------------------------------------------------------------------
+int CTile::getY(void) {
+    return y;
+}
+//----------------------------------------------------------------------------
 QString CTile::getGroup(QString str) {
     return CTile::getElement(str, 0);
 }
@@ -43,6 +70,10 @@ QString CTile::getGroup(QString str) {
 QString CTile::getElement(QString str, int n) {
     QStringList items = str.split(";");
 
-    return items[n];
+    if(n >= 0 && n < items.size()) {
+        return items[n];
+    }
+
+    return "";
 }
 //-----------------------------------------------------------------------------------------------

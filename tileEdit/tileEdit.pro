@@ -28,13 +28,15 @@ SOURCES += main.cpp\
         CMainWindow.cpp \
     CWidgetTile.cpp \
     ../CTile.cpp \
-    CAnimatedDialog.cpp
+    CAnimatedDialog.cpp \
+    ../CTiles.cpp
 
 HEADERS  += CMainWindow.h \
     CWidgetTile.h \
     ../CTile.h \
     ../common.h \
-    CAnimateDialog.h
+    CAnimateDialog.h \
+    ../CTiles.h
 
 FORMS    += CMainWindow.ui \
     CAnimateDialog.ui

@@ -15,8 +15,7 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
     maxX = (tilesImage.size().width() - 2 * OFFSET_X) / REAL_TILE_WIDTH;
     maxY = (tilesImage.size().height() - 2 * OFFSET_Y) / REAL_TILE_HEIGHT;
 
-    tileCount = maxX * maxY;
-    tiles = new CTile[tileCount];
+    tiles = new CTiles(maxX, maxY);
 
     tileBig->setImage(&tilesImage);
     tileSmall->setImage(&tilesImage);
@@ -35,13 +34,11 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
         wall[i]->setImage(&tilesImage);
     }
 
-    curentFileName = "";
-
     updateCoords();
 }
 //----------------------------------------------------------------------------
 CMainWindow::~CMainWindow() {
-    delete[] tiles;
+    delete tiles;
 }
 //----------------------------------------------------------------------------
 void CMainWindow::updateCoords(void) {
@@ -55,7 +52,7 @@ void CMainWindow::updateCoords(void) {
         wall[i]->setXY(x, y);
     }
 
-    currentTile = &tiles[y * maxX + x];
+    currentTile = tiles->getTile(x + y * maxX);
 
     cbSolidUp->setChecked(currentTile->solidUp);
     cbSolidRight->setChecked(currentTile->solidRight);
@@ -145,28 +142,18 @@ void CMainWindow::on_cbDangerous_stateChanged(int state) {
 //----------------------------------------------------------------------------
 void CMainWindow::on_txtAnimatedGroupeName_textEdited(const QString & text) {
     currentTile->animatedGroupName = text;
+    tiles->computeGroups();
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_txtBisatbleGroupName_textEdited(const QString & text) {
     currentTile->bistableGroupName = text;
+    tiles->computeGroups();
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_actOpen_triggered(bool) {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Save File"), QString(), tr("Tile data (*.dat)"));
 
-    if(!fileName.isEmpty()) {
-        QFile file(fileName);
-        if(file.open(QIODevice::ReadOnly)) {
-            QDataStream stream(&file);
-
-            for(int i=0;i<tileCount;i++) {
-                stream >> tiles[i];
-            }
-
-            curentFileName = fileName;
-            file.close();
-        }
-    }
+    tiles->load(fileName);
 
     x = y = 0;
     updateCoords();
@@ -176,57 +163,21 @@ void CMainWindow::on_actSaveAs_triggered(bool) {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QString(), tr("Tile data (*.dat)"));
 
     if(!fileName.isEmpty()) {
-        QFile file(fileName);
-        if(file.open(QIODevice::WriteOnly)) {
-            QDataStream stream(&file);
-
-            for(int i=0;i<tileCount;i++) {
-                stream << tiles[i];
-            }
-
-            curentFileName = fileName;
-        }
-        file.close();
+        tiles->save(fileName);
     }
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_actSave_triggered(bool) {
-    if(!curentFileName.isEmpty()) {
-        QFile file(curentFileName);
-        if(file.open(QIODevice::WriteOnly)) {
-            QDataStream stream(&file);
-
-            for(int i=0;i<tileCount;i++) {
-                stream << tiles[i];
-            }
-
-            file.close();
-        }else {
-            on_actSaveAs_triggered();
-        }
-    }
+    tiles->save(tiles->getFileName());
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_pbAnimate_clicked(void) {
-    QList<QPoint> ps;
-    QString animatedGroup = CTile::getGroup(currentTile->animatedGroupName);
-
-    for(int i=0;i<tileCount;i++) {
-        int x, y;
-
-        y = i / maxX;
-        x = i % maxX;
-        CTile *tile = &tiles[i];
-
-        if(CTile::getGroup(tile->animatedGroupName) == animatedGroup) {
-            ps.append(QPoint(x, y));
-        }
-    }
+    QList<CTile *> group = tiles->getAnimatedGroup(currentTile->animatedGroupName);
 
     animatedDialog = new CAnimateDialog(this);
 
     animatedDialog->setImage(&tilesImage);
-    animatedDialog->setCoords(ps);
+    animatedDialog->setTiles(group);
     animatedDialog->exec();
 
     delete animatedDialog;

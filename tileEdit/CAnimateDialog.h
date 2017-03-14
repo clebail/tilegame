@@ -5,7 +5,7 @@
 #include <QDialog>
 #include <QTimer>
 #include <QList>
-#include <QPoint>
+#include <CTile.h>
 #include "ui_CAnimateDialog.h"
 //----------------------------------------------------------------------------
 class CAnimateDialog : public QDialog, private Ui::CAnimateDialog {
@@ -13,11 +13,11 @@ class CAnimateDialog : public QDialog, private Ui::CAnimateDialog {
 public:
     explicit CAnimateDialog(QWidget *parent = 0);
     void setImage(QImage *image);
-    void setCoords(const QList<QPoint>& coords);
+    void setTiles(const QList<CTile *>& tiles);
 private:
     QTimer *timer;
-    QList<QPoint> coords;
-    int curCoord;
+    QList<CTile *> tiles;
+    int curTile;
 private slots:
     void timeout(void);
     void on_pbPlay_clicked(void);
