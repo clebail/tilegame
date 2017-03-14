@@ -15,7 +15,7 @@ public:
     struct {
         bool active;
         QString groupName;
-        int animactedCount;
+        int count;
         QList<int> positions;
     } animated;
     bool bistable;
@@ -28,11 +28,13 @@ public:
     int getY(void);
     void parseAnimated(QString str);
     QString serializeAnimated(void);
+    QString getHash(void);
 
     static QString getGroup(QString str);
     static QString getElement(QString str, int n);
 private:
     int x, y;
+    QString hash;
 };
 //-----------------------------------------------------------------------------------------------
 QDataStream& operator<<(QDataStream& out, const CTile& tile);

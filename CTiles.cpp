@@ -42,8 +42,6 @@ void CTiles::load(QString fileName) {
             file.close();
 
             this->filename = fileName;
-
-            computeGroups();
         }
     }
 }
@@ -71,31 +69,35 @@ QString CTiles::getFileName(void) {
 //----------------------------------------------------------------------------
 QList<CTile *> CTiles::getAnimatedGroup(QString groupName) {
     QList<CTile *> ret;
+    QHash<int, CTile *> tmp;
+    int i;
 
-    if(animatedGroups.contains(groupName)) {
-       ret = animatedGroups.value(groupName);
+    for(i=0;i<tileCount;i++) {
+        CTile *tile = tiles[i];
+
+        if(tile->animated.active && tile->animated.groupName == groupName) {
+            for(int j=0;j<tile->animated.positions.size();j++) {
+                tmp.insert(tile->animated.positions.at(j), tile);
+            }
+        }
+    }
+
+    QHashIterator<int, CTile *> it(tmp);
+    while (it.hasNext()) {
+        it.next();
+        ret.append(it.value());
     }
 
     return ret;
 }
 //----------------------------------------------------------------------------
 QPair<CTile *, CTile *> CTiles::getBistableGroup(QString groupName) {
-    QString bistableGroup = CTile::getGroup(groupName);
     QPair<CTile *, CTile *> ret;
-
-    if(bistableGroups.contains(bistableGroup)) {
-        ret = bistableGroups.value(bistableGroup);
-    }
 
     return ret;
 }
 //----------------------------------------------------------------------------
 CTile * CTiles::getTile(int idx) {
     return tiles[idx];
-}
-//----------------------------------------------------------------------------
-void CTiles::computeGroups(void) {
-    for(int i=0;i<tileCount;i++) {
-    }
 }
 //----------------------------------------------------------------------------

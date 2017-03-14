@@ -1,5 +1,6 @@
 //----------------------------------------------------------------------------
 #include <QStringList>
+#include <QCryptographicHash>
 #include "CTile.h"
 //----------------------------------------------------------------------------
 QDataStream& operator<<(QDataStream& out, const CTile& tile) {
@@ -9,7 +10,7 @@ QDataStream& operator<<(QDataStream& out, const CTile& tile) {
     out << tile.solidLeft;
     out << tile.animated.active;
     out << tile.animated.groupName;
-    out << tile.animated.animactedCount;
+    out << tile.animated.count;
     out << tile.animated.positions;
     out << tile.bistable;
     out << tile.breakable;
@@ -28,7 +29,7 @@ QDataStream& operator>>(QDataStream& in, CTile& tile) {
     in >> tile.solidLeft;
     in >> tile.animated.active;
     in >> tile.animated.groupName;
-    in >> tile.animated.animactedCount;
+    in >> tile.animated.count;
     in >> tile.animated.positions;
     in >> tile.bistable;
     in >> tile.breakable;
@@ -44,13 +45,15 @@ CTile::CTile(int x, int y) {
     this->x = x;
     this->y = y;
 
+    this->hash = QCryptographicHash::hash((QString::number(x)+"_"+QString::number(y)).toAscii(), QCryptographicHash::Md5);
+
     solidUp = false;
     solidRight = false;
     solidDown = false;
     solidLeft = false;
     animated.active = false;
     animated.groupName = "";
-    animated.animactedCount = 0;
+    animated.count = 0;
     animated.positions = QList<int>();
     bistable = false;
     breakable = false;
@@ -73,11 +76,11 @@ void CTile::parseAnimated(QString str) {
     QStringList items = str.split(";");
 
     animated.groupName = items[0];
-    animated.animactedCount = 0;
+    animated.count = 0;
     animated.positions.clear();
 
     if(items.size() > 1) {
-        animated.animactedCount = items[1].toInt();
+        animated.count = items[1].toInt();
         if(items.size() == 3) {
             QStringList pos = items[2].split(",");
 
@@ -89,7 +92,7 @@ void CTile::parseAnimated(QString str) {
 }
 //----------------------------------------------------------------------------
 QString CTile::serializeAnimated(void) {
-    QString ret = animated.groupName+";"+QString::number(animated.animactedCount)+";";
+    QString ret = animated.groupName+";"+QString::number(animated.count)+";";
     QString s = "";
 
     for(int i=0;i<animated.positions.size();i++) {
@@ -98,6 +101,10 @@ QString CTile::serializeAnimated(void) {
     }
 
     return ret;
+}
+//----------------------------------------------------------------------------
+QString CTile::getHash(void) {
+    return hash;
 }
 //----------------------------------------------------------------------------
 QString CTile::getGroup(QString str) {

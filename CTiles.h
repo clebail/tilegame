@@ -16,15 +16,12 @@ public:
     QList<CTile *> getAnimatedGroup(QString groupName);
     QPair<CTile *, CTile *> getBistableGroup(QString groupName);
     CTile * getTile(int idx);
-    void computeGroups(void);
 private:
     typedef CTile * PCTile;
 
     int tileCount;
     QString filename;
     PCTile *tiles;
-    QHash<QString, QList<CTile *> > animatedGroups;
-    QHash<QString, QPair<CTile *, CTile *> > bistableGroups;
 };
 //----------------------------------------------------------------------------
 #endif //__CTILES_H__
