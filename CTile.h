@@ -17,6 +17,9 @@ public:
     bool dangerous;
     QString animatedGroupName;
     QString bistableGroupName;
+
+    static QString getGroup(QString str);
+    static QString getElement(QString str, int n);
 };
 //-----------------------------------------------------------------------------------------------
 QDataStream& operator<<(QDataStream& out, const CTile& tile);

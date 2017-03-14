@@ -1,4 +1,5 @@
 //----------------------------------------------------------------------------
+#include <QStringList>
 #include "CTile.h"
 //----------------------------------------------------------------------------
 QDataStream& operator<<(QDataStream& out, const CTile& tile) {
@@ -33,5 +34,15 @@ QDataStream& operator>>(QDataStream& in, CTile& tile) {
     in >> tile.bistableGroupName;
 
     return in;
+}
+//-----------------------------------------------------------------------------------------------
+QString CTile::getGroup(QString str) {
+    return CTile::getElement(str, 0);
+}
+//-----------------------------------------------------------------------------------------------
+QString CTile::getElement(QString str, int n) {
+    QStringList items = str.split(";");
+
+    return items[n];
 }
 //-----------------------------------------------------------------------------------------------

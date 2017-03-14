@@ -209,7 +209,7 @@ void CMainWindow::on_actSave_triggered(bool) {
 //----------------------------------------------------------------------------
 void CMainWindow::on_pbAnimate_clicked(void) {
     QList<QPoint> ps;
-    QString animatedGroupe = currentTile->animatedGroupName;
+    QString animatedGroup = CTile::getGroup(currentTile->animatedGroupName);
 
     for(int i=0;i<tileCount;i++) {
         int x, y;
@@ -218,7 +218,7 @@ void CMainWindow::on_pbAnimate_clicked(void) {
         x = i % maxX;
         CTile *tile = &tiles[i];
 
-        if(tile->animatedGroupName == animatedGroupe) {
+        if(CTile::getGroup(tile->animatedGroupName) == animatedGroup) {
             ps.append(QPoint(x, y));
         }
     }
