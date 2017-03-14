@@ -50,7 +50,7 @@ void CTiles::load(QString fileName) {
                     int animatedCount = CTile::getElement(animatedGroupName, 2).toInt();
 
                     tiles[i]->animatedPosition = animatedPosition;
-                    tiles[i]->animatedCount = animatedCount;
+                    tiles[i]->tile->animatedCount = animatedCount;
                 }
 
                 if(!bistableGroupName.isEmpty()) {

@@ -18,6 +18,7 @@ private:
     QTimer *timer;
     QList<CTile *> tiles;
     int curTile;
+    int curTileTime;
 private slots:
     void timeout(void);
     void on_pbPlay_clicked(void);

@@ -5,7 +5,7 @@ CAnimateDialog::CAnimateDialog(QWidget *parent) : QDialog(parent) {
     setupUi(this);
 
     tiles = QList<CTile *>();
-    curTile = 0;
+    curTile = curTileTime = 0;
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
@@ -28,11 +28,17 @@ void CAnimateDialog::timeout(void) {
         CTile *tile = tiles.at(curTile);
         tileImage->setXY(tile->getX(), tile->getY());
 
-        curTile++;
+        curTileTime++;
+        if(curTileTime >= tiles.at(curTile)->animatedCount) {
+            curTile++;
+            curTileTime = 0;
+        }
     }
 }
 //----------------------------------------------------------------------------
 void CAnimateDialog::on_pbPlay_clicked(void) {
+    curTile = curTileTime = 0;
+
     timer->start(42);
 }
 //----------------------------------------------------------------------------

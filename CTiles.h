@@ -22,7 +22,6 @@ private:
     public:
         CTile *tile;
         int animatedPosition;
-        int animatedCount;
         bool bistableFirst;
     };
 

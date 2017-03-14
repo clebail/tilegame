@@ -18,6 +18,7 @@ public:
     bool dangerous;
     QString animatedGroupName;
     QString bistableGroupName;
+    int animatedCount;
 
     int getX(void);
     int getY(void);
