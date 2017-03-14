@@ -58,13 +58,13 @@ void CMainWindow::updateCoords(void) {
     cbSolidRight->setChecked(currentTile->solidRight);
     cbSolidDown->setChecked(currentTile->solidDown);
     cbSolidLeft->setChecked(currentTile->solidLeft);
-    cbAnimated->setChecked(currentTile->animated);
+    cbAnimated->setChecked(currentTile->animated.active);
     cbBistable->setChecked(currentTile->bistable);
     cbBreakable->setChecked(currentTile->breakable);
     cbTouchBonus->setChecked(currentTile->touchBonus);
     cbHitBonus->setChecked(currentTile->hitBonus);
     cbDangerous->setChecked(currentTile->dangerous);
-    txtAnimatedGroupeName->setText(currentTile->animatedGroupName);
+    txtAnimatedGroupeName->setText(currentTile->serializeAnimated());
     txtBisatbleGroupName->setText(currentTile->bistableGroupName);
 }
 //----------------------------------------------------------------------------
@@ -117,7 +117,7 @@ void CMainWindow::on_cbSolidLeft_stateChanged(int state) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_cbAnimated_stateChanged(int state) {
-    currentTile->animated = state == Qt::Checked;
+    currentTile->animated.active = state == Qt::Checked;
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_cbBistable_stateChanged(int state) {
@@ -141,13 +141,11 @@ void CMainWindow::on_cbDangerous_stateChanged(int state) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_txtAnimatedGroupeName_textEdited(const QString & text) {
-    currentTile->animatedGroupName = text;
-    tiles->computeGroups();
+    currentTile->parseAnimated(text);
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_txtBisatbleGroupName_textEdited(const QString & text) {
     currentTile->bistableGroupName = text;
-    tiles->computeGroups();
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_actOpen_triggered(bool) {
@@ -172,7 +170,7 @@ void CMainWindow::on_actSave_triggered(bool) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_pbAnimate_clicked(void) {
-    QList<CTile *> group = tiles->getAnimatedGroup(currentTile->animatedGroupName);
+    QList<CTile *> group = tiles->getAnimatedGroup(currentTile->animated.groupName);
 
     animatedDialog = new CAnimateDialog(this);
 

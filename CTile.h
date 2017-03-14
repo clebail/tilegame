@@ -3,6 +3,7 @@
 #define __CTILE_H__
 //----------------------------------------------------------------------------
 #include <QDataStream>
+#include <QList>
 //----------------------------------------------------------------------------
 class CTile {
 private:
@@ -11,17 +12,22 @@ private:
 public:
     explicit CTile(int x, int y);
     bool solidUp, solidRight, solidDown, solidLeft;
-    bool animated;
+    struct {
+        bool active;
+        QString groupName;
+        int animactedCount;
+        QList<int> positions;
+    } animated;
     bool bistable;
     bool breakable;
     bool touchBonus, hitBonus;
     bool dangerous;
-    QString animatedGroupName;
     QString bistableGroupName;
-    int animatedCount;
 
     int getX(void);
     int getY(void);
+    void parseAnimated(QString str);
+    QString serializeAnimated(void);
 
     static QString getGroup(QString str);
     static QString getElement(QString str, int n);

@@ -18,19 +18,12 @@ public:
     CTile * getTile(int idx);
     void computeGroups(void);
 private:
-    class CItem {
-    public:
-        CTile *tile;
-        int animatedPosition;
-        bool bistableFirst;
-    };
-
-    typedef CItem * PCItem;
+    typedef CTile * PCTile;
 
     int tileCount;
     QString filename;
-    PCItem *tiles;
-    QHash<QString, QList<CItem *> > animatedGroups;
+    PCTile *tiles;
+    QHash<QString, QList<CTile *> > animatedGroups;
     QHash<QString, QPair<CTile *, CTile *> > bistableGroups;
 };
 //----------------------------------------------------------------------------
