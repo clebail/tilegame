@@ -13,6 +13,10 @@ void CWidgetTile::setImage(QImage *image) {
     repaint();
 }
 //----------------------------------------------------------------------------
+QImage * CWidgetTile::getImage(void) {
+    return this->image;
+}
+//----------------------------------------------------------------------------
 void CWidgetTile::setXY(int x, int y) {
     this->x = x;
     this->y = y;

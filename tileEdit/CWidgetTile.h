@@ -9,6 +9,7 @@ public:
     explicit CWidgetTile(QWidget *parent = 0);
     void setImage(QImage *image);
     void setXY(int x, int y);
+    QImage * getImage(void);
 private:
     QImage *image;
     int x, y;

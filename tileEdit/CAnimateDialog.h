@@ -16,7 +16,6 @@ public:
     void setCoords(const QList<QPoint>& coords);
 private:
     QTimer *timer;
-    QImage *image;
     QList<QPoint> coords;
     int curCoord;
 private slots:

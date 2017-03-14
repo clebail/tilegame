@@ -5,7 +5,6 @@ CAnimateDialog::CAnimateDialog(QWidget *parent) : QDialog(parent) {
     setupUi(this);
 
     coords = QList<QPoint>();
-    image = 0;
     curCoord = 0;
 
     timer = new QTimer(this);
@@ -13,7 +12,7 @@ CAnimateDialog::CAnimateDialog(QWidget *parent) : QDialog(parent) {
 }
 //----------------------------------------------------------------------------
 void CAnimateDialog::setImage(QImage *image) {
-    this->image = image;
+    tileImage->setImage(image);
 }
 //----------------------------------------------------------------------------
 void CAnimateDialog::setCoords(const QList<QPoint>& coords) {
@@ -21,7 +20,7 @@ void CAnimateDialog::setCoords(const QList<QPoint>& coords) {
 }
 //----------------------------------------------------------------------------
 void CAnimateDialog::timeout(void) {
-    if(image != 0 && coords.size() != 0) {
+    if(tileImage->getImage() != 0 && coords.size() != 0) {
         if(curCoord >= coords.size()) {
             curCoord = 0;
         }

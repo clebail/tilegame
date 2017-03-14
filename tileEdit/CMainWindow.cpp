@@ -209,11 +209,19 @@ void CMainWindow::on_actSave_triggered(bool) {
 //----------------------------------------------------------------------------
 void CMainWindow::on_pbAnimate_clicked(void) {
     QList<QPoint> ps;
+    QString animatedGroupe = currentTile->animatedGroupName;
 
-    ps.append(QPoint(0, 0)); //FIXME
-    ps.append(QPoint(1, 0)); //FIXME
-    ps.append(QPoint(2, 0)); //FIXME
-    ps.append(QPoint(3, 0)); //FIXME
+    for(int i=0;i<tileCount;i++) {
+        int x, y;
+
+        y = i / maxX;
+        x = i % maxX;
+        CTile *tile = &tiles[i];
+
+        if(tile->animatedGroupName == animatedGroupe) {
+            ps.append(QPoint(x, y));
+        }
+    }
 
     animatedDialog = new CAnimateDialog(this);
 
