@@ -11,6 +11,9 @@ class CTileSetDialog : public QDialog, private Ui::CTileSetDialog {
 public:
     explicit CTileSetDialog(QImage *image, QWidget *parent = 0);
     ~CTileSetDialog();
+    void setXY(int x, int y);
+private:
+    CTileSetWidget *tileSetWidget;
 };
 //----------------------------------------------------------------------------
 #endif //__CTILESETDIALOG_H__

@@ -74,6 +74,8 @@ void CMainWindow::updateCoords(void) {
     cbDangerous->setChecked(currentTile->dangerous);
     txtAnimatedGroupeName->setText(currentTile->serializeAnimated());
     txtBisatbleGroupName->setText(currentTile->bistableGroupName);
+
+    tileSetDialog->setXY(x, y);
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_tileLeft_clicked(void) {

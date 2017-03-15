@@ -9,9 +9,14 @@ CTileSetDialog::CTileSetDialog(QImage *image, QWidget *parent) : QDialog(parent)
     setModal(false);
     setWindowFlags(Qt::FramelessWindowHint);
 
-    scrollArea->setWidget(new CTileSetWidget(image, this));
+    tileSetWidget = new CTileSetWidget(image, this);
+    scrollArea->setWidget(tileSetWidget);
 }
 //----------------------------------------------------------------------------
 CTileSetDialog::~CTileSetDialog() {
+}
+//----------------------------------------------------------------------------
+void CTileSetDialog::setXY(int x, int y) {
+    tileSetWidget->setXY(x, y);
 }
 //----------------------------------------------------------------------------
