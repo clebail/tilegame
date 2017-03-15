@@ -6,7 +6,7 @@
 #include <CTiles.h>
 #include "ui_CMainWindow.h"
 #include "CAnimateDialog.h"
-#include "CTileSetDialog.h"
+#include "CTileSetWidget.h"
 //----------------------------------------------------------------------------
 #define TILE_WALL_COUNT             9
 //----------------------------------------------------------------------------
@@ -16,8 +16,6 @@ public:
     explicit CMainWindow(QWidget *parent = 0);
     ~CMainWindow();
     virtual bool eventFilter(QObject *object, QEvent *event);
-protected:
-    virtual void closeEvent(QCloseEvent *event);
 private:
     QImage tilesImage;
     CWidgetTile *wall[TILE_WALL_COUNT];
@@ -26,7 +24,7 @@ private:
     CTiles *tiles;
     CTile *currentTile;
     CAnimateDialog *animatedDialog;
-    CTileSetDialog *tileSetDialog;
+    CTileSetWidget *tileSetWidget;
 
     void updateCoords(void);
 private slots:
@@ -50,7 +48,7 @@ private slots:
     void on_actSaveAs_triggered(bool checked = false);
     void on_actSave_triggered(bool checked = false);
     void on_pbAnimate_clicked(void);
-    void onTileSetDialogMousePress(const int& x, const int &y);
+    void onTileSetWidgetMousePress(const int& x, const int &y);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

@@ -30,7 +30,6 @@ SOURCES += main.cpp\
     ../CTile.cpp \
     CAnimatedDialog.cpp \
     ../CTiles.cpp \
-    CTileSetDialog.cpp \
     CTileSetWidget.cpp
 
 HEADERS  += CMainWindow.h \
@@ -39,12 +38,10 @@ HEADERS  += CMainWindow.h \
     ../common.h \
     CAnimateDialog.h \
     ../CTiles.h \
-    CTileSetDialog.h \
     CTileSetWidget.h
 
 FORMS    += CMainWindow.ui \
     CAnimateDialog.ui \
-    CTileSetDialog.ui \
     CTileSetWidget.ui
 
 RESOURCES += \

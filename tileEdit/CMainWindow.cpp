@@ -35,10 +35,9 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
         wall[i]->setImage(&tilesImage);
     }
 
-    tileSetDialog = new CTileSetDialog(&tilesImage);
-    connect(tileSetDialog, SIGNAL(mousePress(int,int)), this, SLOT(onTileSetDialogMousePress(int,int)));
-    tileSetDialog->move(0, 0);
-    tileSetDialog->show();
+    tileSetWidget = new CTileSetWidget(&tilesImage, this);
+    connect(tileSetWidget, SIGNAL(mousePress(int,int)), this, SLOT(onTileSetWidgetMousePress(int,int)));
+    scrollArea->setWidget(tileSetWidget);
 
     updateCoords();
 
@@ -47,7 +46,7 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
 //----------------------------------------------------------------------------
 CMainWindow::~CMainWindow() {
     delete tiles;
-    delete tileSetDialog;
+    delete tileSetWidget;
 }
 //----------------------------------------------------------------------------
 bool CMainWindow::eventFilter(QObject *object, QEvent *event) {
@@ -73,10 +72,6 @@ bool CMainWindow::eventFilter(QObject *object, QEvent *event) {
     }
 
     return QObject::eventFilter(object, event);
-}
-//----------------------------------------------------------------------------
-void CMainWindow::closeEvent(QCloseEvent *) {
-    tileSetDialog->close();
 }
 //----------------------------------------------------------------------------
 void CMainWindow::updateCoords(void) {
@@ -105,7 +100,7 @@ void CMainWindow::updateCoords(void) {
     txtAnimatedGroupeName->setText(currentTile->serializeAnimated());
     txtBisatbleGroupName->setText(currentTile->bistableGroupName);
 
-    tileSetDialog->setXY(x, y);
+    tileSetWidget->setXY(x, y);
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_tileLeft_clicked(void) {
@@ -221,7 +216,7 @@ void CMainWindow::on_pbAnimate_clicked(void) {
     delete animatedDialog;
 }
 //----------------------------------------------------------------------------
-void CMainWindow::onTileSetDialogMousePress(const int& x, const int &y) {
+void CMainWindow::onTileSetWidgetMousePress(const int& x, const int &y) {
     this->x = x;
     this->y = y;
 
