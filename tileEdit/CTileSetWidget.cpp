@@ -1,6 +1,7 @@
 //----------------------------------------------------------------------------
 #include <QtDebug>
 #include <QPainter>
+#include <QMouseEvent>
 #include <common.h>
 #include "CTileSetWidget.h"
 
@@ -26,7 +27,7 @@ void CTileSetWidget::setXY(int x, int y) {
 void CTileSetWidget::paintEvent(QPaintEvent *) {
     if(image) {
         QPainter painter(this);
-        QRect select(x * (REAL_TILE_WIDTH) + OFFSET_X, y * (REAL_TILE_HEIGHT) + OFFSET_Y, TILE_WIDTH, TILE_HEIGHT);
+        QRect select(x * REAL_TILE_WIDTH + OFFSET_X, y * REAL_TILE_HEIGHT + OFFSET_Y, TILE_WIDTH, TILE_HEIGHT);
         QPen pen(Qt::blue);
         pen.setStyle(Qt::DotLine);
         pen.setWidth(2);
@@ -39,3 +40,13 @@ void CTileSetWidget::paintEvent(QPaintEvent *) {
     }
 }
 //----------------------------------------------------------------------------
+void CTileSetWidget::mousePressEvent(QMouseEvent *event) {
+    int x, y;
+
+    x = (event->x() - OFFSET_X) / REAL_TILE_WIDTH;
+    y = (event->y() - OFFSET_X) / REAL_TILE_HEIGHT;
+
+    emit(mousePress(x, y));
+}
+//----------------------------------------------------------------------------
+

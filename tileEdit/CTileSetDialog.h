@@ -14,6 +14,10 @@ public:
     void setXY(int x, int y);
 private:
     CTileSetWidget *tileSetWidget;
+private slots:
+    void onMousePress(const int& x ,const int& y);
+signals:
+    void mousePress(const int &x, const int &y);
 };
 //----------------------------------------------------------------------------
 #endif //__CTILESETDIALOG_H__

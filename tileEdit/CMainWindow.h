@@ -15,6 +15,7 @@ class CMainWindow : public QMainWindow, private Ui::CMainWindow {
 public:
     explicit CMainWindow(QWidget *parent = 0);
     ~CMainWindow();
+    virtual bool eventFilter(QObject *object, QEvent *event);
 protected:
     virtual void closeEvent(QCloseEvent *event);
 private:
@@ -49,6 +50,7 @@ private slots:
     void on_actSaveAs_triggered(bool checked = false);
     void on_actSave_triggered(bool checked = false);
     void on_pbAnimate_clicked(void);
+    void onTileSetDialogMousePress(const int& x, const int &y);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

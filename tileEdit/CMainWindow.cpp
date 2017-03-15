@@ -2,6 +2,7 @@
 #include <QtDebug>
 #include <QFileDialog>
 #include <QFile>
+#include <QKeyEvent>
 #include <common.h>
 #include "CMainWindow.h"
 //----------------------------------------------------------------------------
@@ -35,14 +36,43 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
     }
 
     tileSetDialog = new CTileSetDialog(&tilesImage);
+    connect(tileSetDialog, SIGNAL(mousePress(int,int)), this, SLOT(onTileSetDialogMousePress(int,int)));
+    tileSetDialog->move(0, 0);
     tileSetDialog->show();
 
     updateCoords();
+
+    qApp->installEventFilter(this);
 }
 //----------------------------------------------------------------------------
 CMainWindow::~CMainWindow() {
     delete tiles;
     delete tileSetDialog;
+}
+//----------------------------------------------------------------------------
+bool CMainWindow::eventFilter(QObject *object, QEvent *event) {
+    if(event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+
+        switch(keyEvent->key()) {
+        case Qt::Key_Up:
+            on_tileUp_clicked();
+            return true;
+        case Qt::Key_Right:
+            on_tileRight_clicked();
+            return true;
+        case Qt::Key_Down:
+            on_tileDown_clicked();
+            return true;
+        case Qt::Key_Left:
+            on_tileLeft_clicked();
+            return true;
+        default:
+            break;
+        }
+    }
+
+    return QObject::eventFilter(object, event);
 }
 //----------------------------------------------------------------------------
 void CMainWindow::closeEvent(QCloseEvent *) {
@@ -87,7 +117,7 @@ void CMainWindow::on_tileLeft_clicked(void) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_tileRight_clicked(void) {
-    if(x < maxX-1) {
+    if(x <= maxX-1) {
         x++;
 
         updateCoords();
@@ -103,7 +133,7 @@ void CMainWindow::on_tileUp_clicked(void) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_tileDown_clicked(void) {
-    if(y < maxY - 1) {
+    if(y <= maxY - 1) {
         y++;
 
         updateCoords();
@@ -189,5 +219,12 @@ void CMainWindow::on_pbAnimate_clicked(void) {
     animatedDialog->exec();
 
     delete animatedDialog;
+}
+//----------------------------------------------------------------------------
+void CMainWindow::onTileSetDialogMousePress(const int& x, const int &y) {
+    this->x = x;
+    this->y = y;
+
+    updateCoords();
 }
 //----------------------------------------------------------------------------

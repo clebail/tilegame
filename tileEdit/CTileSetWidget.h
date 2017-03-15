@@ -13,9 +13,12 @@ public:
     void setXY(int x, int y);
 protected:
     virtual void paintEvent(QPaintEvent *event);
+    virtual void mousePressEvent(QMouseEvent *event);
 private:
     QImage *image;
     int x, y;
+signals:
+    void mousePress(const int &x, const int &y);
 };
 //----------------------------------------------------------------------------
 #endif // CTILESETWIDGET_H
