@@ -29,17 +29,23 @@ SOURCES += main.cpp\
     CWidgetTile.cpp \
     ../CTile.cpp \
     CAnimatedDialog.cpp \
-    ../CTiles.cpp
+    ../CTiles.cpp \
+    CTileSetDialog.cpp \
+    CTileSetWidget.cpp
 
 HEADERS  += CMainWindow.h \
     CWidgetTile.h \
     ../CTile.h \
     ../common.h \
     CAnimateDialog.h \
-    ../CTiles.h
+    ../CTiles.h \
+    CTileSetDialog.h \
+    CTileSetWidget.h
 
 FORMS    += CMainWindow.ui \
-    CAnimateDialog.ui
+    CAnimateDialog.ui \
+    CTileSetDialog.ui \
+    CTileSetWidget.ui
 
 RESOURCES += \
     tileedit.qrc

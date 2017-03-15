@@ -34,11 +34,19 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
         wall[i]->setImage(&tilesImage);
     }
 
+    tileSetDialog = new CTileSetDialog(&tilesImage);
+    tileSetDialog->show();
+
     updateCoords();
 }
 //----------------------------------------------------------------------------
 CMainWindow::~CMainWindow() {
     delete tiles;
+    delete tileSetDialog;
+}
+//----------------------------------------------------------------------------
+void CMainWindow::closeEvent(QCloseEvent *) {
+    tileSetDialog->close();
 }
 //----------------------------------------------------------------------------
 void CMainWindow::updateCoords(void) {

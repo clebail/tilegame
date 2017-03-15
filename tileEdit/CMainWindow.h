@@ -6,6 +6,7 @@
 #include <CTiles.h>
 #include "ui_CMainWindow.h"
 #include "CAnimateDialog.h"
+#include "CTileSetDialog.h"
 //----------------------------------------------------------------------------
 #define TILE_WALL_COUNT             9
 //----------------------------------------------------------------------------
@@ -14,6 +15,8 @@ class CMainWindow : public QMainWindow, private Ui::CMainWindow {
 public:
     explicit CMainWindow(QWidget *parent = 0);
     ~CMainWindow();
+protected:
+    virtual void closeEvent(QCloseEvent *event);
 private:
     QImage tilesImage;
     CWidgetTile *wall[TILE_WALL_COUNT];
@@ -22,6 +25,7 @@ private:
     CTiles *tiles;
     CTile *currentTile;
     CAnimateDialog *animatedDialog;
+    CTileSetDialog *tileSetDialog;
 
     void updateCoords(void);
 private slots:
