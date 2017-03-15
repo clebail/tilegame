@@ -17,7 +17,9 @@ void CAnimateDialog::setImage(QImage *image) {
 //----------------------------------------------------------------------------
 void CAnimateDialog::setTiles(const QList<CTile *>& tiles) {
     this->tiles = tiles;
-    tileImage->setXY(tiles.at(0)->getX(), tiles.at(0)->getY());
+    if(tiles.size() != 0) {
+        tileImage->setXY(tiles.at(0)->getX(), tiles.at(0)->getY());
+    }
 }
 //----------------------------------------------------------------------------
 void CAnimateDialog::timeout(void) {
