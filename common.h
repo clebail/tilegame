@@ -10,6 +10,8 @@
 #define REAL_TILE_HEIGHT            (TILE_HEIGHT + SEP_HEIGHT)
 #define OFFSET_X                    (2 * SEP_WIDTH)
 #define OFFSET_Y                    (2 * SEP_HEIGHT)
+#define GAME_TILE_WIDTH             32
+#define GAME_TILE_HEIGHT            32
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
 #endif //__COMMON_H__

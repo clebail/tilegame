@@ -6,6 +6,7 @@
 #include <QImage>
 #include <CTileSetWidget.h>
 #include "ui_CMainWindow.h"
+#include "CWidgetGamePlay.h"
 //----------------------------------------------------------------------------
 class CMainWindow : public QMainWindow, private Ui::CMainWindow {
     Q_OBJECT
@@ -16,6 +17,10 @@ public:
 private:
     QImage tilesImage;
     CTileSetWidget *tileSetWidget;
+    int x, y;
+    //CWidgetGamePlay *wGamePlay;
+
+    void setXY(void);
 private slots:
     void onTileSetWidgetMousePress(const int& x, const int &y);
 };

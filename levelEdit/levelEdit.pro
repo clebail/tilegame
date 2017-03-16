@@ -27,12 +27,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         CMainWindow.cpp \
         ../CWidgetTile.cpp \
-        ../CTileSetWidget.cpp
+        ../CTileSetWidget.cpp \
+    CWidgetGamePlay.cpp
 
 HEADERS  += CMainWindow.h \
         ../CWidgetTile.h \
         ../CTileSetWidget.h \
-        ../common.h
+        ../common.h \
+    CWidgetGamePlay.h
 
 FORMS    += CMainWindow.ui \
         ../CTileSetWidget.ui

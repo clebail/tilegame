@@ -41,9 +41,9 @@
          <property name="title">
           <string>Game play</string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QWidget" name="widget" native="true">
+           <widget class="CWidgetGamePlay" name="wGamePlay" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -63,8 +63,41 @@
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-image: url(:/levelEdit/images/fond.png);</string>
+             <string notr="true"/>
             </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="widget_3" native="true">
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <widget class="QPushButton" name="pbAdd">
+               <property name="text">
+                <string>Add</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbDelete">
+               <property name="text">
+                <string>Delete</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -156,7 +189,7 @@
      <x>0</x>
      <y>0</y>
      <width>896</width>
-     <height>29</height>
+     <height>18</height>
     </rect>
    </property>
   </widget>
@@ -167,6 +200,12 @@
    <class>CWidgetTile</class>
    <extends>QWidget</extends>
    <header>CWidgetTile.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CWidgetGamePlay</class>
+   <extends>QWidget</extends>
+   <header>CWidgetGamePlay.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
