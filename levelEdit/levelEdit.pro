@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2017-03-10T16:53:29
+# Project created by QtCreator 2017-03-16T15:44:57
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = tileEdit
+TARGET = levelEdit
 TEMPLATE = app
 INCLUDEPATH += ..
 
@@ -26,23 +26,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         CMainWindow.cpp \
-    ../CWidgetTile.cpp \
-    ../CTile.cpp \
-    CAnimatedDialog.cpp \
-    ../CTiles.cpp \
-    ../CTileSetWidget.cpp
+        ../CWidgetTile.cpp \
+        ../CTileSetWidget.cpp
 
 HEADERS  += CMainWindow.h \
-    ../CWidgetTile.h \
-    ../CTile.h \
-    ../common.h \
-    CAnimateDialog.h \
-    ../CTiles.h \
-    ../CTileSetWidget.h
+        ../CWidgetTile.h \
+        ../CTileSetWidget.h \
+        ../common.h
 
 FORMS    += CMainWindow.ui \
-    CAnimateDialog.ui \
-    ../CTileSetWidget.ui
+        ../CTileSetWidget.ui
 
 RESOURCES += \
-    tileedit.qrc
+    leveledit.qrc

@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/levelEdit/images">
+        <file>tileset.png</file>
+        <file>fond.png</file>
+    </qresource>
+</RCC>

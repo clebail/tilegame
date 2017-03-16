@@ -5,6 +5,7 @@
 //----------------------------------------------------------------------------
 CWidgetTile::CWidgetTile(QWidget *parent) : QWidget(parent) {
     x = y = 0;
+    image = 0;
 }
 //----------------------------------------------------------------------------
 void CWidgetTile::setImage(QImage *image) {
@@ -25,20 +26,22 @@ void CWidgetTile::setXY(int x, int y) {
 }
 //----------------------------------------------------------------------------
 void CWidgetTile::paintEvent(QPaintEvent *) {
-    int xt, yt, wt, ht;
-    QPainter painter(this);
-    QRect src(x * REAL_TILE_WIDTH + OFFSET_X, y * REAL_TILE_HEIGHT + OFFSET_Y, TILE_WIDTH, TILE_HEIGHT);
+    if(image != 0) {
+        int xt, yt, wt, ht;
+        QPainter painter(this);
+        QRect src(x * REAL_TILE_WIDTH + OFFSET_X, y * REAL_TILE_HEIGHT + OFFSET_Y, TILE_WIDTH, TILE_HEIGHT);
 
-    if(this->size().width() >= this->size().height()) {
-        xt = (this->size().width() - this->size().height()) / 2;
-        yt = 0;
-        wt = ht = this->size().height();
-    } else {
-        xt = 0;
-        yt = (this->size().height() - this->size().width()) / 2;
-        wt = ht = this->size().width();
+        if(this->size().width() >= this->size().height()) {
+            xt = (this->size().width() - this->size().height()) / 2;
+            yt = 0;
+            wt = ht = this->size().height();
+        } else {
+            xt = 0;
+            yt = (this->size().height() - this->size().width()) / 2;
+            wt = ht = this->size().width();
+        }
+
+        painter.drawImage(QRect(xt, yt, wt, ht), *image, src);
     }
-
-    painter.drawImage(QRect(xt, yt, wt, ht), *image, src);
 }
 //----------------------------------------------------------------------------

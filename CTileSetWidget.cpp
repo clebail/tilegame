@@ -11,7 +11,7 @@ CTileSetWidget::CTileSetWidget(QImage *image, QWidget *parent) : QWidget(parent)
 
     resize(image->size());
     this->image = image;
-    x = y = 0;
+    setXY(0, 0);
 }
 //----------------------------------------------------------------------------
 CTileSetWidget::~CTileSetWidget() {
