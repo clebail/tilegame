@@ -10,7 +10,7 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
     x = y = 0;
     currentTile = 0;
 
-    tilesImage = QImage(":levelEdit/images/tileset.png");
+    tilesImage = QImage(":/levelEdit/images/tileset.png");
 
     xTileMax = (tilesImage.size().width() - 2 * OFFSET_X) / REAL_TILE_WIDTH;
 
@@ -23,6 +23,17 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
     tileSetWidget = new CTileSetWidget(&tilesImage, this);
     connect(tileSetWidget, SIGNAL(mousePress(int,int)), this, SLOT(onTileSetWidgetMousePress(int,int)));
     scrollArea->setWidget(tileSetWidget);
+
+    lblCurrent.setFrameStyle(QFrame::Panel | QFrame::Sunken);;
+    lblMax.setFrameStyle(QFrame::Panel | QFrame::Sunken);;
+
+    Ui::CMainWindow::statusBar->addPermanentWidget(&lblCurrent);
+    Ui::CMainWindow::statusBar->addPermanentWidget(&lblMax);
+
+    onMapResize(QSize(0, 0));
+    setXY();
+
+    connect(&map, SIGNAL(mapResize(QSize)), this, SLOT(onMapResize(QSize)));
 
     qApp->installEventFilter(this);
 }
@@ -37,8 +48,10 @@ bool CMainWindow::eventFilter(QObject *object, QEvent *event) {
 
         switch(keyEvent->key()) {
         case Qt::Key_Up:
-            y--;
-            setXY();
+            if(y > 0) {
+                y--;
+                setXY();
+            }
             return true;
         case Qt::Key_Right:
             x++;
@@ -49,11 +62,16 @@ bool CMainWindow::eventFilter(QObject *object, QEvent *event) {
             setXY();
             return true;
         case Qt::Key_Left:
-            x--;
-            setXY();
+            if(x > 0) {
+                x--;
+                setXY();
+            }
             return true;
         case Qt::Key_Plus:
             on_pbAdd_clicked();
+            return true;
+        case Qt::Key_Minus:
+            on_pbDelete_clicked();
             return true;
         default:
             break;
@@ -65,6 +83,11 @@ bool CMainWindow::eventFilter(QObject *object, QEvent *event) {
 //----------------------------------------------------------------------------
 void CMainWindow::setXY(void) {
     wGamePlay->setXY(x, y);
+
+    lblUp->setEnabled(y >= GAME_NB_Y);
+    lblLeft->setEnabled(x >= GAME_NB_X);
+
+    lblCurrent.setText("Position in map : "+QString::number(x + 1)+", "+QString::number(y + 1));
 }
 //----------------------------------------------------------------------------
 void CMainWindow::onTileSetWidgetMousePress(const int& x, const int &y) {
@@ -77,5 +100,14 @@ void CMainWindow::onTileSetWidgetMousePress(const int& x, const int &y) {
 void CMainWindow::on_pbAdd_clicked(void) {
     map.add(x, y, currentTile);
     wGamePlay->update();
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_pbDelete_clicked(void) {
+    map.remove(x, y);
+    wGamePlay->update();
+}
+//----------------------------------------------------------------------------
+void CMainWindow::onMapResize(const QSize& size) {
+    lblMax.setText("Map size : "+QString::number(size.width())+" x "+QString::number(size.height()));
 }
 //----------------------------------------------------------------------------

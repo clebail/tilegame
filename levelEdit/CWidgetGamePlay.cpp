@@ -13,8 +13,19 @@ CWidgetGamePlay::CWidgetGamePlay(QWidget *parent) : QWidget(parent) {
 }
 //----------------------------------------------------------------------------
 void CWidgetGamePlay::setXY(int x, int y) {
-    this->x = x;
-    this->y = y;
+    if(x >= GAME_NB_X - 1) {
+        viewPortX = x - GAME_NB_X + 1;
+        this->x = GAME_NB_X - 1;
+    }else {
+        this->x = x;
+    }
+
+    if(y >= GAME_NB_Y - 1) {
+        viewPortY = y - GAME_NB_Y + 1;
+        this->y = GAME_NB_Y - 1;
+    }else {
+        this->y = y;
+    }
 
     repaint();
 }

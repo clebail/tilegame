@@ -22,11 +22,14 @@ private:
     int xTileMax;
     CTileMap map;
     int currentTile;
+    QLabel lblMax, lblCurrent;
 
     void setXY(void);
 private slots:
     void onTileSetWidgetMousePress(const int& x, const int &y);
     void on_pbAdd_clicked(void);
+    void on_pbDelete_clicked(void);
+    void onMapResize(const QSize& size);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

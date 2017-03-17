@@ -2,5 +2,7 @@
     <qresource prefix="/levelEdit/images">
         <file>tileset.png</file>
         <file>fond.png</file>
+        <file>chevronUp.png</file>
+        <file>chevronLeft.png</file>
     </qresource>
 </RCC>
