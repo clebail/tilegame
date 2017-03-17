@@ -16,6 +16,7 @@ public:
     int getTileCount(void);
     int * getTile(int x, int y);
     QSize getSize(void);
+    void clear(void);
 private:
     int xMax, yMax;
     QList<int *> map;

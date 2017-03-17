@@ -23,6 +23,7 @@ private:
     CTileMap map;
     int currentTile;
     QLabel lblMax, lblCurrent;
+    QString fileName;
 
     void setXY(void);
 private slots:
@@ -30,6 +31,9 @@ private slots:
     void on_pbAdd_clicked(void);
     void on_pbDelete_clicked(void);
     void onMapResize(const QSize& size);
+    void on_actOpen_triggered(bool checked = false);
+    void on_actSaveAs_triggered(bool checked = false);
+    void on_actSave_triggered(bool checked = false);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

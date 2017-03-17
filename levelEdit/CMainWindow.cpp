@@ -1,6 +1,7 @@
 //----------------------------------------------------------------------------
 #include <QtDebug>
 #include <QKeyEvent>
+#include <QFileDialog>
 #include <common.h>
 #include "CMainWindow.h"
 //----------------------------------------------------------------------------
@@ -9,6 +10,7 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
 
     x = y = 0;
     currentTile = 0;
+    fileName = "";
 
     tilesImage = QImage(":/levelEdit/images/tileset.png");
 
@@ -109,5 +111,62 @@ void CMainWindow::on_pbDelete_clicked(void) {
 //----------------------------------------------------------------------------
 void CMainWindow::onMapResize(const QSize& size) {
     lblMax.setText("Map size : "+QString::number(size.width())+" x "+QString::number(size.height()));
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_actOpen_triggered(bool) {
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Save File"), QString(), tr("Tile data (*.dat)"));
+
+    if(!fileName.isEmpty()) {
+        QFile file(fileName);
+        if(file.open(QIODevice::ReadOnly)) {
+            QDataStream stream(&file);
+
+            map.clear();
+            stream >> map;
+
+            qDebug() << map.getTileCount();
+
+            file.close();
+
+            this->fileName = fileName;
+
+            x = y = 0;
+            setXY();
+        }
+    }
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_actSaveAs_triggered(bool) {
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QString(), tr("Tile data (*.dat)"));
+
+    if(!fileName.isEmpty()) {
+        QFile file(fileName);
+        if(file.open(QIODevice::WriteOnly)) {
+            QDataStream stream(&file);
+
+            stream << map;
+
+            file.close();
+
+            this->fileName = fileName;
+        }
+    }
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_actSave_triggered(bool) {
+    if(fileName.isEmpty()) {
+        on_actSaveAs_triggered();
+    }else {
+        QFile file(fileName);
+        if(file.open(QIODevice::WriteOnly)) {
+            QDataStream stream(&file);
+
+            stream << map;
+
+            file.close();
+
+            this->fileName = fileName;
+        }
+    }
 }
 //----------------------------------------------------------------------------

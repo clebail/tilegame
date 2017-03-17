@@ -5,13 +5,16 @@
 QDataStream& operator<<(QDataStream& out, const CTileMap& tileMap) {
     int i;
 
+    out << tileMap.xMax;
+    out << tileMap.yMax;
+
     for(i=0;i<tileMap.map.size();i++) {
         int *tileIndex = tileMap.map[i];
 
         if(tileIndex != 0) {
             out << QString::number(*tileIndex);
         }else {
-            out << "";
+            out << QString("N");
         }
     }
 
@@ -19,18 +22,25 @@ QDataStream& operator<<(QDataStream& out, const CTileMap& tileMap) {
 }
 //-----------------------------------------------------------------------------------------------
 QDataStream& operator>>(QDataStream& in, CTileMap& tileMap) {
-    while(!in.atEnd()) {
-        QString s;
+    int x, y;
 
-        in >> s;
+    in >> tileMap.xMax;
+    in >> tileMap.yMax;
 
-        if(!s.isEmpty()) {
-            int *tileIndex = new int;
+    for(y=0;y<tileMap.yMax;y++) {
+        for(x=0;x<tileMap.xMax;x++) {
+            QString s;
 
-            *tileIndex = s.toInt();
-            tileMap.map.append(tileIndex);
-        }else {
-            tileMap.map.append(0);
+            in >> s;
+
+            if(s != "N") {
+                int *tileIndex = new int;
+
+                *tileIndex = s.toInt();
+                tileMap.map.append(tileIndex);
+            }else {
+                tileMap.map.append(0);
+            }
         }
     }
 
@@ -42,11 +52,7 @@ CTileMap::CTileMap() {
 }
 //----------------------------------------------------------------------------
 CTileMap::~CTileMap(void) {
-    int i;
-
-    for(i=0;i<getTileCount();i++) {
-        delete map[i];
-    }
+    clear();
 }
 //----------------------------------------------------------------------------
 void CTileMap::add(int x, int y, int tileIndex) {
@@ -104,6 +110,16 @@ int * CTileMap::getTile(int x, int y) {
 //----------------------------------------------------------------------------
 QSize CTileMap::getSize(void) {
     return QSize(xMax, yMax);
+}
+//----------------------------------------------------------------------------
+void CTileMap::clear(void) {
+    int i;
+
+    for(i=0;i<getTileCount();i++) {
+        delete map[i];
+    }
+
+    map.clear();
 }
 //----------------------------------------------------------------------------
 void CTileMap::addToMap(int nb) {

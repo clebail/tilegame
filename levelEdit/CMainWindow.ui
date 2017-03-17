@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>896</width>
-    <height>655</height>
+    <width>901</width>
+    <height>682</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -304,16 +304,47 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>896</width>
-     <height>29</height>
+     <width>901</width>
+     <height>18</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actOpen"/>
+    <addaction name="actSave"/>
+    <addaction name="actSaveAs"/>
+    <addaction name="separator"/>
+    <addaction name="actQuit"/>
+   </widget>
+   <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="styleSheet">
     <string notr="true"/>
    </property>
   </widget>
+  <action name="actOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actSaveAs">
+   <property name="text">
+    <string>Save as</string>
+   </property>
+  </action>
+  <action name="actQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
