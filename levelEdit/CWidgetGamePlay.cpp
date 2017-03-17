@@ -4,6 +4,10 @@
 //----------------------------------------------------------------------------
 CWidgetGamePlay::CWidgetGamePlay(QWidget *parent) : QWidget(parent) {
     x = y = 0;
+    viewPortX = viewPortY = 0;
+
+    tilesImage = 0;
+    tileMap = 0;
 
     backImage = QImage(":/levelEdit/images/fond.png");
 }
@@ -15,6 +19,20 @@ void CWidgetGamePlay::setXY(int x, int y) {
     repaint();
 }
 //----------------------------------------------------------------------------
+void CWidgetGamePlay::setTilesImage(QImage *tilesImage) {
+    this->tilesImage = tilesImage;
+    xTileMax = (tilesImage->size().width() - 2 * OFFSET_X) / REAL_TILE_WIDTH;
+
+    repaint();
+}
+//----------------------------------------------------------------------------
+void CWidgetGamePlay::setTileMap(CTileMap *tileMap) {
+    this->tileMap = tileMap;
+
+    repaint();
+}
+//----------------------------------------------------------------------------
+
 void CWidgetGamePlay::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     QRect select(x * GAME_TILE_WIDTH, y * GAME_TILE_HEIGHT, GAME_TILE_WIDTH, GAME_TILE_HEIGHT);
@@ -23,6 +41,10 @@ void CWidgetGamePlay::paintEvent(QPaintEvent *) {
     pen.setWidth(2);
 
     drawBackground(&painter);
+
+    if(tilesImage != 0 && tileMap != 0) {
+        drawMap(&painter);
+    }
 
     painter.setBrush(Qt::NoBrush);
     painter.setPen(pen);
@@ -39,7 +61,23 @@ void CWidgetGamePlay::drawBackground(QPainter *painter) {
     }
 }
 //----------------------------------------------------------------------------
-void CWidgetGamePlay::on_pbAdd_clicked(void) {
+void CWidgetGamePlay::drawMap(QPainter *painter) {
+    int x, y;
 
+    for(y=0;y<GAME_NB_Y;y++) {
+        for(x=0;x<GAME_NB_X;x++) {
+            int *tileIndex = tileMap->getTile(x + viewPortX, y + viewPortY);
+
+            if(tileIndex != 0) {
+                int xTile = (*tileIndex) % xTileMax;
+                int yTile = (*tileIndex) / xTileMax;
+
+                QRect src(xTile * REAL_TILE_WIDTH + OFFSET_X, yTile * REAL_TILE_HEIGHT + OFFSET_Y, TILE_WIDTH, TILE_HEIGHT);
+                QRect dst(x * GAME_TILE_WIDTH, y * GAME_TILE_HEIGHT, GAME_TILE_WIDTH, GAME_TILE_HEIGHT);
+
+                painter->drawImage(dst, *tilesImage, src);
+            }
+        }
+    }
 }
 //----------------------------------------------------------------------------

@@ -28,13 +28,15 @@ SOURCES += main.cpp\
         CMainWindow.cpp \
         ../CWidgetTile.cpp \
         ../CTileSetWidget.cpp \
-    CWidgetGamePlay.cpp
+    CWidgetGamePlay.cpp \
+    ../CTileMap.cpp
 
 HEADERS  += CMainWindow.h \
         ../CWidgetTile.h \
         ../CTileSetWidget.h \
         ../common.h \
-    CWidgetGamePlay.h
+    CWidgetGamePlay.h \
+    ../CTileMap.h
 
 FORMS    += CMainWindow.ui \
         ../CTileSetWidget.ui

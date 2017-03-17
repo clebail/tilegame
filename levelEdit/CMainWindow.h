@@ -7,6 +7,7 @@
 #include <CTileSetWidget.h>
 #include "ui_CMainWindow.h"
 #include "CWidgetGamePlay.h"
+#include "CTileMap.h"
 //----------------------------------------------------------------------------
 class CMainWindow : public QMainWindow, private Ui::CMainWindow {
     Q_OBJECT
@@ -18,11 +19,14 @@ private:
     QImage tilesImage;
     CTileSetWidget *tileSetWidget;
     int x, y;
-    //CWidgetGamePlay *wGamePlay;
+    int xTileMax;
+    CTileMap map;
+    int currentTile;
 
     void setXY(void);
 private slots:
     void onTileSetWidgetMousePress(const int& x, const int &y);
+    void on_pbAdd_clicked(void);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

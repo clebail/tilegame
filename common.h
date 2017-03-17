@@ -12,6 +12,10 @@
 #define OFFSET_Y                    (2 * SEP_HEIGHT)
 #define GAME_TILE_WIDTH             32
 #define GAME_TILE_HEIGHT            32
+#define GAME_NB_X                   20
+#define GAME_NB_Y                   15
+#define GAME_WIDTH                  (GAME_TILE_WIDTH * GAME_NB_X)
+#define GAME_HEIGHT                 (GAME_TILE_HEIGHT * GAME_NB_Y)
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
 #endif //__COMMON_H__

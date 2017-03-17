@@ -4,21 +4,27 @@
 //----------------------------------------------------------------------------
 #include <QWidget>
 #include <QPainter>
+#include <CTileMap.h>
 //----------------------------------------------------------------------------
 class CWidgetGamePlay : public QWidget {
     Q_OBJECT
 public:
     explicit CWidgetGamePlay(QWidget *parent = 0);
     void setXY(int x, int y);
+    void setTilesImage(QImage *tilesImage);
+    void setTileMap(CTileMap *tileMap);
 protected:
     virtual void paintEvent(QPaintEvent *event);
 private:
     int x, y;
+    int viewPortX, viewPortY;
+    int xTileMax;
     QImage backImage;
+    QImage *tilesImage;
+    CTileMap *tileMap;
 
     void drawBackground(QPainter *painter);
-private slots:
-    void on_pbAdd_clicked(void);
+    void drawMap(QPainter *painter);
 };
 //----------------------------------------------------------------------------
 #endif //__CWIDGETGAMEPLAY_H__
