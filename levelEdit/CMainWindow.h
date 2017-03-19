@@ -20,7 +20,7 @@ private:
     CTileSetWidget *tileSetWidget;
     int x, y;
     int xTileMax;
-    CTileMap map;
+    CTileMap front, back, *currentMap;
     int currentTile;
     QLabel lblMax, lblCurrent;
     QString fileName;
@@ -34,6 +34,7 @@ private slots:
     void on_actOpen_triggered(bool checked = false);
     void on_actSaveAs_triggered(bool checked = false);
     void on_actSave_triggered(bool checked = false);
+    void on_cbView_currentIndexChanged(int);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

@@ -18,9 +18,11 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
 
     tileWidget->setImage(&tilesImage);
 
+    currentMap = &front;
+
     wGamePlay->resize(GAME_WIDTH, GAME_HEIGHT);
     wGamePlay->setTilesImage(&tilesImage);
-    wGamePlay->setTileMap(&map);
+    wGamePlay->setTileMap(currentMap);
 
     tileSetWidget = new CTileSetWidget(&tilesImage, this);
     connect(tileSetWidget, SIGNAL(mousePress(int,int)), this, SLOT(onTileSetWidgetMousePress(int,int)));
@@ -35,7 +37,7 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
     onMapResize(QSize(0, 0));
     setXY();
 
-    connect(&map, SIGNAL(mapResize(QSize)), this, SLOT(onMapResize(QSize)));
+    connect(currentMap, SIGNAL(mapResize(QSize)), this, SLOT(onMapResize(QSize)));
 
     qApp->installEventFilter(this);
 }
@@ -100,12 +102,12 @@ void CMainWindow::onTileSetWidgetMousePress(const int& x, const int &y) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_pbAdd_clicked(void) {
-    map.add(x, y, currentTile);
+    currentMap->add(x, y, currentTile);
     wGamePlay->update();
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_pbDelete_clicked(void) {
-    map.remove(x, y);
+    currentMap->remove(x, y);
     wGamePlay->update();
 }
 //----------------------------------------------------------------------------
@@ -121,17 +123,16 @@ void CMainWindow::on_actOpen_triggered(bool) {
         if(file.open(QIODevice::ReadOnly)) {
             QDataStream stream(&file);
 
-            map.clear();
-            stream >> map;
-
-            qDebug() << map.getTileCount();
+            front.clear();
+            back.clear();
+            stream >> front;
+            stream >> back;
 
             file.close();
 
             this->fileName = fileName;
 
-            x = y = 0;
-            setXY();
+            on_cbView_currentIndexChanged(0);
         }
     }
 }
@@ -144,7 +145,8 @@ void CMainWindow::on_actSaveAs_triggered(bool) {
         if(file.open(QIODevice::WriteOnly)) {
             QDataStream stream(&file);
 
-            stream << map;
+            stream << front;
+            stream << back;
 
             file.close();
 
@@ -161,12 +163,29 @@ void CMainWindow::on_actSave_triggered(bool) {
         if(file.open(QIODevice::WriteOnly)) {
             QDataStream stream(&file);
 
-            stream << map;
+            stream << front;
+            stream << back;
 
             file.close();
 
             this->fileName = fileName;
         }
     }
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_cbView_currentIndexChanged(int index) {
+    if(index == 0) {
+        currentMap = &front;
+    } else {
+        currentMap = &back ;
+    }
+
+    x = y = 0;
+
+    wGamePlay->setTileMap(currentMap);
+    onMapResize(currentMap->getSize());
+
+    setXY();
+
 }
 //----------------------------------------------------------------------------

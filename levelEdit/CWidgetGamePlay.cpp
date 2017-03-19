@@ -1,4 +1,5 @@
 //----------------------------------------------------------------------------
+#include <QtDebug>
 #include <common.h>
 #include "CWidgetGamePlay.h"
 //----------------------------------------------------------------------------
@@ -50,6 +51,8 @@ void CWidgetGamePlay::paintEvent(QPaintEvent *) {
     QPen pen(Qt::blue);
     pen.setStyle(Qt::DotLine);
     pen.setWidth(2);
+
+    qDebug() << "draw" << tileMap->getSize() << (unsigned)tileMap;
 
     drawBackground(&painter);
 

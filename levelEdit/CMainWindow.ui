@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>901</width>
+    <width>906</width>
     <height>682</height>
    </rect>
   </property>
@@ -169,6 +169,27 @@
               <number>0</number>
              </property>
              <item>
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>View</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="cbView">
+               <item>
+                <property name="text">
+                 <string>Front</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Back</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="pbAdd">
                <property name="text">
                 <string>Add</string>
@@ -179,6 +200,20 @@
               <widget class="QPushButton" name="pbDelete">
                <property name="text">
                 <string>Delete</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbInsertCol">
+               <property name="text">
+                <string>Insert column</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbInsertRow">
+               <property name="text">
+                <string>Insert row</string>
                </property>
               </widget>
              </item>
@@ -304,7 +339,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>901</width>
+     <width>906</width>
      <height>18</height>
     </rect>
    </property>
