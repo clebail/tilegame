@@ -23,6 +23,10 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
     wGamePlay->resize(GAME_WIDTH, GAME_HEIGHT);
     wGamePlay->setTilesImage(&tilesImage);
     wGamePlay->setTileMap(currentMap);
+    connect(wGamePlay, SIGNAL(viewPortChange(QPoint)), this, SLOT(onWGamePlayViewPortChanged(QPoint)));
+
+    wPreview->setTilesImage(&tilesImage);
+    wPreview->setTileMap(currentMap);
 
     tileSetWidget = new CTileSetWidget(&tilesImage, this);
     connect(tileSetWidget, SIGNAL(mousePress(int,int)), this, SLOT(onTileSetWidgetMousePress(int,int)));
@@ -37,7 +41,8 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
     onMapResize(QSize(0, 0));
     setXY();
 
-    connect(currentMap, SIGNAL(mapResize(QSize)), this, SLOT(onMapResize(QSize)));
+    connect(&front, SIGNAL(mapResize(QSize)), this, SLOT(onMapResize(QSize)));
+    connect(&back, SIGNAL(mapResize(QSize)), this, SLOT(onMapResize(QSize)));
 
     qApp->installEventFilter(this);
 }
@@ -104,11 +109,13 @@ void CMainWindow::onTileSetWidgetMousePress(const int& x, const int &y) {
 void CMainWindow::on_pbAdd_clicked(void) {
     currentMap->add(x, y, currentTile);
     wGamePlay->update();
+    wPreview->update();
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_pbDelete_clicked(void) {
     currentMap->remove(x, y);
     wGamePlay->update();
+    wPreview->update();
 }
 //----------------------------------------------------------------------------
 void CMainWindow::onMapResize(const QSize& size) {
@@ -183,9 +190,14 @@ void CMainWindow::on_cbView_currentIndexChanged(int index) {
     x = y = 0;
 
     wGamePlay->setTileMap(currentMap);
+    wPreview->setTileMap(currentMap);
     onMapResize(currentMap->getSize());
 
     setXY();
 
+}
+//----------------------------------------------------------------------------
+void CMainWindow::onWGamePlayViewPortChanged(const QPoint& point) {
+    wPreview->setViewPort(point.x(), point.y());
 }
 //----------------------------------------------------------------------------

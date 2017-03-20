@@ -28,6 +28,8 @@ void CWidgetGamePlay::setXY(int x, int y) {
         this->y = y;
     }
 
+    emit(viewPortChange(QPoint(viewPortX, viewPortY)));
+
     repaint();
 }
 //----------------------------------------------------------------------------
@@ -44,15 +46,16 @@ void CWidgetGamePlay::setTileMap(CTileMap *tileMap) {
     repaint();
 }
 //----------------------------------------------------------------------------
-
+QPoint CWidgetGamePlay::getViewPortCoords(void) {
+    return QPoint(viewPortX, viewPortY);
+}
+//----------------------------------------------------------------------------
 void CWidgetGamePlay::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     QRect select(x * GAME_TILE_WIDTH, y * GAME_TILE_HEIGHT, GAME_TILE_WIDTH, GAME_TILE_HEIGHT);
     QPen pen(Qt::blue);
     pen.setStyle(Qt::DotLine);
     pen.setWidth(2);
-
-    qDebug() << "draw" << tileMap->getSize() << (unsigned)tileMap;
 
     drawBackground(&painter);
 
