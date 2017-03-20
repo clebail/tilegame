@@ -16,7 +16,7 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
     maxX = (tilesImage.size().width() - 2 * OFFSET_X) / REAL_TILE_WIDTH;
     maxY = (tilesImage.size().height() - 2 * OFFSET_Y) / REAL_TILE_HEIGHT;
 
-    tiles = new CTiles(maxX, maxY);
+    tiles = new CTiles(maxX+1, maxY+1);
 
     tileBig->setImage(&tilesImage);
     tileSmall->setImage(&tilesImage);
