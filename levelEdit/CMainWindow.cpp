@@ -93,9 +93,6 @@ bool CMainWindow::eventFilter(QObject *object, QEvent *event) {
 void CMainWindow::setXY(void) {
     wGamePlay->setXY(x, y);
 
-    lblUp->setEnabled(y >= GAME_NB_Y);
-    lblLeft->setEnabled(x >= GAME_NB_X);
-
     lblCurrent.setText("Position in map : "+QString::number(x + 1)+", "+QString::number(y + 1));
 }
 //----------------------------------------------------------------------------
