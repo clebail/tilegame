@@ -518,7 +518,14 @@
     <addaction name="separator"/>
     <addaction name="actQuit"/>
    </widget>
+   <widget class="QMenu" name="menuGame">
+    <property name="title">
+     <string>&amp;Game</string>
+    </property>
+    <addaction name="actSimulate"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuGame"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="styleSheet">
@@ -543,6 +550,11 @@
   <action name="actQuit">
    <property name="text">
     <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="actSimulate">
+   <property name="text">
+    <string>Simulate</string>
    </property>
   </action>
  </widget>

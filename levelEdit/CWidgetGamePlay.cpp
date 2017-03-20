@@ -18,6 +18,7 @@ void CWidgetGamePlay::setXY(int x, int y) {
         viewPortX = x - GAME_NB_X + 1;
         this->x = GAME_NB_X - 1;
     }else {
+        viewPortX = 0;
         this->x = x;
     }
 
@@ -25,6 +26,7 @@ void CWidgetGamePlay::setXY(int x, int y) {
         viewPortY = y - GAME_NB_Y + 1;
         this->y = GAME_NB_Y - 1;
     }else {
+        viewPortY = 0;
         this->y = y;
     }
 

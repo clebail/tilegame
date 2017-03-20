@@ -13,6 +13,7 @@ public:
     void setXY(int x, int y);
     void setTilesImage(QImage *tilesImage);
     void setTileMap(CTileMap *tileMap);
+    QPoint getViewPortCoords(void);
 protected:
     virtual void paintEvent(QPaintEvent *event);
 private:
@@ -25,6 +26,8 @@ private:
 
     void drawBackground(QPainter *painter);
     void drawMap(QPainter *painter);
+signals:
+    void viewPortChange(const QPoint& point);
 };
 //----------------------------------------------------------------------------
 #endif //__CWIDGETGAMEPLAY_H__
