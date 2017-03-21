@@ -12,12 +12,11 @@ QDataStream& operator<<(QDataStream& out, const CTile& tile) {
     out << tile.animated.groupName;
     out << tile.animated.count;
     out << tile.animated.positions;
-    out << tile.bistable;
+    out << tile.climbing;
     out << tile.breakable;
     out << tile.touchBonus;
     out << tile.hitBonus;
     out << tile.dangerous;
-    out << tile.bistableGroupName;
 
     return out;
 }
@@ -31,12 +30,11 @@ QDataStream& operator>>(QDataStream& in, CTile& tile) {
     in >> tile.animated.groupName;
     in >> tile.animated.count;
     in >> tile.animated.positions;
-    in >> tile.bistable;
+    in >> tile.climbing;
     in >> tile.breakable;
     in >> tile.touchBonus;
     in >> tile.hitBonus;
     in >> tile.dangerous;
-    in >> tile.bistableGroupName;
 
     return in;
 }
@@ -55,12 +53,11 @@ CTile::CTile(int x, int y) {
     animated.groupName = "";
     animated.count = 0;
     animated.positions = QList<int>();
-    bistable = false;
+    climbing = false;
     breakable = false;
     touchBonus = false;
     hitBonus = false;
     dangerous = false;
-    bistableGroupName = "";
 
 }
 //----------------------------------------------------------------------------

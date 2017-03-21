@@ -5,6 +5,7 @@
 #include <QDataStream>
 #include <QList>
 #include <QSize>
+#include <QPoint>
 //----------------------------------------------------------------------------
 class CTileMap : public QObject {
     Q_OBJECT
@@ -17,9 +18,12 @@ public:
     int * getTile(int x, int y);
     QSize getSize(void);
     void clear(void);
+    void setOrigin(const QPoint& p);
+    QPoint getOrigin(void);
 private:
     int xMax, yMax;
     QList<int *> map;
+    QPoint origin;
 
     void addToMap(int nb);
     void reorderMap(int newXMax);

@@ -14,7 +14,7 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
 
     tilesImage = QImage(":/levelEdit/images/tileset.png");
 
-    xTileMax = (tilesImage.size().width() - 2 * OFFSET_X) / REAL_TILE_WIDTH;
+    xTileMax = (tilesImage.size().width() - 2 * OFFSET_X) / REAL_TILE_WIDTH + 1;
 
     tileWidget->setImage(&tilesImage);
 
@@ -52,7 +52,7 @@ CMainWindow::~CMainWindow() {
 }
 //----------------------------------------------------------------------------
 bool CMainWindow::eventFilter(QObject *object, QEvent *event) {
-    if(event->type() == QEvent::KeyPress) {
+    if(event->type() == QEvent::KeyPress && !object->inherits("QLineEdit")) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
 
         switch(keyEvent->key()) {
@@ -196,5 +196,12 @@ void CMainWindow::on_cbView_currentIndexChanged(int index) {
 //----------------------------------------------------------------------------
 void CMainWindow::onWGamePlayViewPortChanged(const QPoint& point) {
     wPreview->setViewPort(point.x(), point.y());
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_pbSetOrigin_clicked(void) {
+    QPoint p = QPoint(x, y);
+
+    currentMap->setOrigin(p);
+    wPreview->setOrigin(p);
 }
 //----------------------------------------------------------------------------

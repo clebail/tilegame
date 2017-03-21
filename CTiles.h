@@ -14,7 +14,6 @@ public:
     void save(QString fileName);
     QString getFileName(void);
     QList<CTile *> getAnimatedGroup(QString groupName);
-    QPair<CTile *, CTile *> getBistableGroup(QString groupName);
     CTile * getTile(int idx);
 private:
     typedef CTile * PCTile;

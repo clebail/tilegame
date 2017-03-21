@@ -37,7 +37,7 @@ void CWidgetGamePlay::setXY(int x, int y) {
 //----------------------------------------------------------------------------
 void CWidgetGamePlay::setTilesImage(QImage *tilesImage) {
     this->tilesImage = tilesImage;
-    xTileMax = (tilesImage->size().width() - OFFSET_X) / REAL_TILE_WIDTH;
+    xTileMax = (tilesImage->size().width() - 2 * OFFSET_X) / REAL_TILE_WIDTH + 1;
 
     repaint();
 }

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>906</width>
+    <width>1355</width>
     <height>697</height>
    </rect>
   </property>
@@ -153,6 +153,13 @@
               </widget>
              </item>
              <item>
+              <widget class="QPushButton" name="pbSetOrigin">
+               <property name="text">
+                <string>Set origin</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <spacer name="verticalSpacer_2">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -261,12 +268,12 @@
                </property>
                <layout class="QGridLayout" name="gridLayout_2">
                 <item row="1" column="2">
-                 <widget class="QCheckBox" name="checkBox_6">
+                 <widget class="QCheckBox" name="cbClimbing">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
                   <property name="text">
-                   <string>Bistable</string>
+                   <string>Climbing</string>
                   </property>
                   <property name="checkable">
                    <bool>false</bool>
@@ -274,7 +281,7 @@
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QCheckBox" name="checkBox_2">
+                 <widget class="QCheckBox" name="cbSolidRight">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -287,7 +294,7 @@
                  </widget>
                 </item>
                 <item row="1" column="0">
-                 <widget class="QCheckBox" name="checkBox_3">
+                 <widget class="QCheckBox" name="cbSolidDown">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -300,7 +307,7 @@
                  </widget>
                 </item>
                 <item row="0" column="3">
-                 <widget class="QCheckBox" name="checkBox_7">
+                 <widget class="QCheckBox" name="cbBreakable">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -326,7 +333,7 @@
                  </spacer>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QCheckBox" name="checkBox_4">
+                 <widget class="QCheckBox" name="cbSolidLeft">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -339,7 +346,7 @@
                  </widget>
                 </item>
                 <item row="1" column="3">
-                 <widget class="QCheckBox" name="checkBox_8">
+                 <widget class="QCheckBox" name="cbDangerous">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -352,7 +359,7 @@
                  </widget>
                 </item>
                 <item row="0" column="2">
-                 <widget class="QCheckBox" name="checkBox_5">
+                 <widget class="QCheckBox" name="cbAnimated">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -365,7 +372,7 @@
                  </widget>
                 </item>
                 <item row="0" column="0">
-                 <widget class="QCheckBox" name="checkBox">
+                 <widget class="QCheckBox" name="cbSolidUp">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -378,7 +385,7 @@
                  </widget>
                 </item>
                 <item row="0" column="4">
-                 <widget class="QCheckBox" name="checkBox_9">
+                 <widget class="QCheckBox" name="cbTouchBonus">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -391,7 +398,7 @@
                  </widget>
                 </item>
                 <item row="1" column="4">
-                 <widget class="QCheckBox" name="checkBox_10">
+                 <widget class="QCheckBox" name="cbHitBonus">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -439,7 +446,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>906</width>
+     <width>1355</width>
      <height>29</height>
     </rect>
    </property>
@@ -489,7 +496,7 @@
   </action>
   <action name="actSimulate">
    <property name="text">
-    <string>Simulate</string>
+    <string>&amp;Simulate</string>
    </property>
   </action>
  </widget>

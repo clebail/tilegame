@@ -18,11 +18,10 @@ public:
         int count;
         QList<int> positions;
     } animated;
-    bool bistable;
+    bool climbing;
     bool breakable;
     bool touchBonus, hitBonus;
     bool dangerous;
-    QString bistableGroupName;
 
     int getX(void);
     int getY(void);

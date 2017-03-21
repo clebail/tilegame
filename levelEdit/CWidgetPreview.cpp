@@ -8,18 +8,22 @@ CWidgetPreview::CWidgetPreview(QWidget *parent) : QWidget(parent) {
     tileMap = 0;
     xTileMax = 0;
 
+    origin = QPoint(0, 0);
+
     backImage = QImage(":/levelEdit/images/fond.png");
 }
 //----------------------------------------------------------------------------
 void CWidgetPreview::setTilesImage(QImage *tilesImage) {
     this->tilesImage = tilesImage;
-    xTileMax = (tilesImage->size().width() - 2 * OFFSET_X) / REAL_TILE_WIDTH;
+    xTileMax = (tilesImage->size().width() - 2 * OFFSET_X) / REAL_TILE_WIDTH + 1;
 
     repaint();
 }
 //----------------------------------------------------------------------------
 void CWidgetPreview::setTileMap(CTileMap *tileMap) {
     this->tileMap = tileMap;
+    origin.setX(tileMap->getOrigin().x());
+    origin.setY(tileMap->getOrigin().y());
 
     repaint();
 }
@@ -27,6 +31,13 @@ void CWidgetPreview::setTileMap(CTileMap *tileMap) {
 void CWidgetPreview::setViewPort(int x, int y) {
     viewPortX = x;
     viewPortY = y;
+
+    repaint();
+}
+//----------------------------------------------------------------------------
+void CWidgetPreview::setOrigin(const QPoint& p) {
+    origin.setX(p.x());
+    origin.setY(p.y());
 
     repaint();
 }
@@ -96,6 +107,13 @@ void CWidgetPreview::drawMap(QPainter *painter) {
         painter->setBrush(Qt::NoBrush);
         painter->setPen(pen);
         painter->drawRect(viewPort);
+
+        pen.setColor(Qt::red);
+        pen.setWidth(1);
+
+        painter->setBrush(Qt::red);
+        painter->setPen(pen);
+        painter->drawEllipse(QPoint(origin.x() * w + mX, origin.y() * h + mY),(int)(w / 5), (int)(h / 5));
     }
 }
 //----------------------------------------------------------------------------

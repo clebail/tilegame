@@ -7,6 +7,7 @@ QDataStream& operator<<(QDataStream& out, const CTileMap& tileMap) {
 
     out << tileMap.xMax;
     out << tileMap.yMax;
+    out << tileMap.origin;
 
     for(i=0;i<tileMap.map.size();i++) {
         int *tileIndex = tileMap.map[i];
@@ -26,6 +27,7 @@ QDataStream& operator>>(QDataStream& in, CTileMap& tileMap) {
 
     in >> tileMap.xMax;
     in >> tileMap.yMax;
+    in >> tileMap.origin;
 
     for(y=0;y<tileMap.yMax;y++) {
         for(x=0;x<tileMap.xMax;x++) {
@@ -49,6 +51,7 @@ QDataStream& operator>>(QDataStream& in, CTileMap& tileMap) {
 //-----------------------------------------------------------------------------------------------
 CTileMap::CTileMap() {
     xMax = yMax= 0;
+    origin = QPoint(0, 0);
 }
 //----------------------------------------------------------------------------
 CTileMap::~CTileMap(void) {
@@ -120,6 +123,15 @@ void CTileMap::clear(void) {
     }
 
     map.clear();
+}
+//----------------------------------------------------------------------------
+void CTileMap::setOrigin(const QPoint& p) {
+    origin.setX(p.x());
+    origin.setY(p.y());
+}
+//----------------------------------------------------------------------------
+QPoint CTileMap::getOrigin(void) {
+    return origin;
 }
 //----------------------------------------------------------------------------
 void CTileMap::addToMap(int nb) {

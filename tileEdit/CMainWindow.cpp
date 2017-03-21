@@ -13,10 +13,10 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
 
     tilesImage = QImage(":tileEdit/images/tileset.png");
 
-    maxX = (tilesImage.size().width() - 2 * OFFSET_X) / REAL_TILE_WIDTH;
-    maxY = (tilesImage.size().height() - 2 * OFFSET_Y) / REAL_TILE_HEIGHT;
+    maxX = (tilesImage.size().width() - 2 * OFFSET_X) / REAL_TILE_WIDTH + 1;
+    maxY = (tilesImage.size().height() - 2 * OFFSET_Y) / REAL_TILE_HEIGHT + 1;
 
-    tiles = new CTiles(maxX+1, maxY+1);
+    tiles = new CTiles(maxX, maxY);
 
     tileBig->setImage(&tilesImage);
     tileSmall->setImage(&tilesImage);
@@ -50,7 +50,7 @@ CMainWindow::~CMainWindow() {
 }
 //----------------------------------------------------------------------------
 bool CMainWindow::eventFilter(QObject *object, QEvent *event) {
-    if(event->type() == QEvent::KeyPress) {
+    if(event->type() == QEvent::KeyPress && !object->inherits("QLineEdit")) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
 
         switch(keyEvent->key()) {
@@ -92,13 +92,12 @@ void CMainWindow::updateCoords(void) {
     cbSolidDown->setChecked(currentTile->solidDown);
     cbSolidLeft->setChecked(currentTile->solidLeft);
     cbAnimated->setChecked(currentTile->animated.active);
-    cbBistable->setChecked(currentTile->bistable);
+    cbClimbing->setChecked(currentTile->climbing);
     cbBreakable->setChecked(currentTile->breakable);
     cbTouchBonus->setChecked(currentTile->touchBonus);
     cbHitBonus->setChecked(currentTile->hitBonus);
     cbDangerous->setChecked(currentTile->dangerous);
     txtAnimatedGroupeName->setText(currentTile->serializeAnimated());
-    txtBisatbleGroupName->setText(currentTile->bistableGroupName);
 
     tileSetWidget->setXY(x, y);
 }
@@ -112,7 +111,7 @@ void CMainWindow::on_tileLeft_clicked(void) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_tileRight_clicked(void) {
-    if(x <= maxX-1) {
+    if(x < maxX - 1) {
         x++;
 
         updateCoords();
@@ -128,7 +127,7 @@ void CMainWindow::on_tileUp_clicked(void) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_tileDown_clicked(void) {
-    if(y <= maxY - 1) {
+    if(y < maxY - 1) {
         y++;
 
         updateCoords();
@@ -155,8 +154,8 @@ void CMainWindow::on_cbAnimated_stateChanged(int state) {
     currentTile->animated.active = state == Qt::Checked;
 }
 //----------------------------------------------------------------------------
-void CMainWindow::on_cbBistable_stateChanged(int state) {
-    currentTile->bistable = state == Qt::Checked;
+void CMainWindow::on_cbClimbing_stateChanged(int state) {
+    currentTile->climbing = state == Qt::Checked;
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_cbBreakable_stateChanged(int state) {
@@ -177,10 +176,6 @@ void CMainWindow::on_cbDangerous_stateChanged(int state) {
 //----------------------------------------------------------------------------
 void CMainWindow::on_txtAnimatedGroupeName_textEdited(const QString & text) {
     currentTile->parseAnimated(text);
-}
-//----------------------------------------------------------------------------
-void CMainWindow::on_txtBisatbleGroupName_textEdited(const QString & text) {
-    currentTile->bistableGroupName = text;
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_actOpen_triggered(bool) {

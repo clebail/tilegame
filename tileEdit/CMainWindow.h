@@ -37,13 +37,12 @@ private slots:
     void on_cbSolidDown_stateChanged(int state);
     void on_cbSolidLeft_stateChanged(int state);
     void on_cbAnimated_stateChanged(int state);
-    void on_cbBistable_stateChanged(int state);
+    void on_cbClimbing_stateChanged(int state);
     void on_cbBreakable_stateChanged(int state);
     void on_cbTouchBonus_stateChanged(int state);
     void on_cbHitBonus_stateChanged(int state);
     void on_cbDangerous_stateChanged(int state);
     void on_txtAnimatedGroupeName_textEdited(const QString & text);
-    void on_txtBisatbleGroupName_textEdited(const QString & text);
     void on_actOpen_triggered(bool checked = false);
     void on_actSaveAs_triggered(bool checked = false);
     void on_actSave_triggered(bool checked = false);

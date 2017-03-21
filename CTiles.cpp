@@ -91,12 +91,6 @@ QList<CTile *> CTiles::getAnimatedGroup(QString groupName) {
     return ret;
 }
 //----------------------------------------------------------------------------
-QPair<CTile *, CTile *> CTiles::getBistableGroup(QString groupName) {
-    QPair<CTile *, CTile *> ret;
-
-    return ret;
-}
-//----------------------------------------------------------------------------
 CTile * CTiles::getTile(int idx) {
     return tiles[idx];
 }

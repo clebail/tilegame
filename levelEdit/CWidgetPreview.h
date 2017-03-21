@@ -12,6 +12,7 @@ public:
     void setTilesImage(QImage *tilesImage);
     void setTileMap(CTileMap *tileMap);
     void setViewPort(int x, int y);
+    void setOrigin(const QPoint& p);
 protected:
     virtual void paintEvent(QPaintEvent *event);
 private:
@@ -20,6 +21,7 @@ private:
     int xTileMax;
     CTileMap *tileMap;
     int viewPortX, viewPortY;
+    QPoint origin;
 
     void drawBackground(QPainter *painter);
     void drawMap(QPainter *painter);

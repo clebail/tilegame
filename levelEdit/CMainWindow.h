@@ -36,6 +36,7 @@ private slots:
     void on_actSave_triggered(bool checked = false);
     void on_cbView_currentIndexChanged(int);
     void onWGamePlayViewPortChanged(const QPoint& point);
+    void on_pbSetOrigin_clicked(void);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__
