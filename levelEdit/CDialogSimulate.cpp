@@ -3,9 +3,12 @@
 #include "CDialogSimulate.h"
 //----------------------------------------------------------------------------
 CDialogSimulate::CDialogSimulate(QWidget *parent) :QDialog(parent) {
+    //QLayout *layout;
+
     setupUi(this);
 
-    wSimulate->resize(GAME_WIDTH, GAME_HEIGHT);
+    //layout = layout();
+    resize(GAME_WIDTH + layout()->margin() * 2, GAME_HEIGHT + layout()->margin() * 2);
 
     timer = new QTimer(this);
     timer->setInterval(40);

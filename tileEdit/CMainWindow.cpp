@@ -212,6 +212,9 @@ void CMainWindow::on_pbAnimate_clicked(void) {
     animatedDialog->setTilesGroup(group);
     animatedDialog->exec();
 
+    if(group != 0) {
+        delete group;
+    }
     delete animatedDialog;
 }
 //----------------------------------------------------------------------------
