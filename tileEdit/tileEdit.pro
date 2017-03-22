@@ -37,7 +37,7 @@ HEADERS  += CMainWindow.h \
     ../CWidgetTile.h \
     ../CTile.h \
     ../common.h \
-    CAnimateDialog.h \
+    CAnimatedDialog.h \
     ../CTiles.h \
     ../CTileSetWidget.h \
     ../CTilesGroup.h

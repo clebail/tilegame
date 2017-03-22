@@ -3,7 +3,6 @@
 #define __CTILES_H__
 //----------------------------------------------------------------------------
 #include <QHash>
-#include <QList>
 #include <CTile.h>
 #include <CTilesGroup.h>
 //----------------------------------------------------------------------------
@@ -14,7 +13,7 @@ public:
     void load(QString fileName);
     void save(QString fileName);
     QString getFileName(void);
-    QList<CTile *> getAnimatedGroup(QString groupName);
+    CTilesGroup * getAnimatedGroup(QString groupName);
     CTile * getTile(int idx);
     QHash<QString, CTilesGroup *> getGroups(void);
 private:

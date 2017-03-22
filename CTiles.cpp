@@ -67,28 +67,10 @@ QString CTiles::getFileName(void) {
     return filename;
 }
 //----------------------------------------------------------------------------
-QList<CTile *> CTiles::getAnimatedGroup(QString groupName) {
-    QList<CTile *> ret;
-    QHash<int, CTile *> tmp;
-    int i;
+CTilesGroup * CTiles::getAnimatedGroup(QString groupName) {
+    QHash<QString, CTilesGroup *> groups = getGroups();
 
-    for(i=0;i<tileCount;i++) {
-        CTile *tile = tiles[i];
-
-        if(tile->animated.active && tile->animated.groupName == groupName) {
-            for(int j=0;j<tile->animated.positions.size();j++) {
-                tmp.insert(tile->animated.positions.at(j), tile);
-            }
-        }
-    }
-
-    QHashIterator<int, CTile *> it(tmp);
-    while (it.hasNext()) {
-        it.next();
-        ret.append(it.value());
-    }
-
-    return ret;
+    return groups.value(groupName);
 }
 //----------------------------------------------------------------------------
 CTile * CTiles::getTile(int idx) {

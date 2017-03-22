@@ -204,12 +204,12 @@ void CMainWindow::on_actQuit_triggered(bool) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_pbAnimate_clicked(void) {
-    QList<CTile *> group = tiles->getAnimatedGroup(currentTile->animated.groupName);
+    CTilesGroup * group = tiles->getAnimatedGroup(currentTile->animated.groupName);
 
-    animatedDialog = new CAnimateDialog(this);
+    animatedDialog = new CAnimatedDialog(this);
 
     animatedDialog->setImage(&tilesImage);
-    animatedDialog->setTiles(group);
+    animatedDialog->setTilesGroup(group);
     animatedDialog->exec();
 
     delete animatedDialog;

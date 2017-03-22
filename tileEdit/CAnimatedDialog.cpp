@@ -1,51 +1,48 @@
 //----------------------------------------------------------------------------
-#include "CAnimateDialog.h"
+#include <QtDebug>
+#include "CAnimatedDialog.h"
 //----------------------------------------------------------------------------
-CAnimateDialog::CAnimateDialog(QWidget *parent) : QDialog(parent) {
+CAnimatedDialog::CAnimatedDialog(QWidget *parent) : QDialog(parent) {
     setupUi(this);
-
-    tiles = QList<CTile *>();
-    curTile = curTileTime = 0;
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
 }
 //----------------------------------------------------------------------------
-void CAnimateDialog::setImage(QImage *image) {
+void CAnimatedDialog::setImage(QImage *image) {
     tileImage->setImage(image);
 }
 //----------------------------------------------------------------------------
-void CAnimateDialog::setTiles(const QList<CTile *>& tiles) {
-    this->tiles = tiles;
-    if(tiles.size() != 0) {
-        tileImage->setXY(tiles.at(0)->getX(), tiles.at(0)->getY());
-    }
-}
-//----------------------------------------------------------------------------
-void CAnimateDialog::timeout(void) {
-    if(tileImage->getImage() != 0 && tiles.size() != 0) {
-        if(curTile >= tiles.size()) {
-            curTile = 0;
-        }
+void CAnimatedDialog::setTilesGroup(CTilesGroup *group) {
+    this->group = group;
+    if(group != 0) {
+        CTile *tile;
 
-        CTile *tile = tiles.at(curTile);
+        tile = group->getCurrentTile();
+
         tileImage->setXY(tile->getX(), tile->getY());
-
-        curTileTime++;
-        if(curTileTime >= tiles.at(curTile)->animated.count) {
-            curTile++;
-            curTileTime = 0;
-        }
     }
 }
 //----------------------------------------------------------------------------
-void CAnimateDialog::on_pbPlay_clicked(void) {
-    curTile = curTileTime = 0;
+void CAnimatedDialog::timeout(void) {
+    if(tileImage->getImage() != 0 && group != 0) {
+        CTile *tile;
 
+        group->next();
+        tile = group->getCurrentTile();
+
+        tileImage->setXY(tile->getX(), tile->getY());
+    }
+}
+//----------------------------------------------------------------------------
+void CAnimatedDialog::on_pbPlay_clicked(void) {
     timer->start(42);
 }
 //----------------------------------------------------------------------------
-void CAnimateDialog::on_pbStop_clicked(void) {
+void CAnimatedDialog::on_pbStop_clicked(void) {
     timer->stop();
+    if(group) {
+        group->reset();
+    }
 }
 //----------------------------------------------------------------------------

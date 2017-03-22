@@ -5,7 +5,7 @@
 #include <QMainWindow>
 #include <CTiles.h>
 #include "ui_CMainWindow.h"
-#include "CAnimateDialog.h"
+#include "CAnimatedDialog.h"
 #include "CTileSetWidget.h"
 //----------------------------------------------------------------------------
 #define TILE_WALL_COUNT             9
@@ -23,7 +23,7 @@ private:
     int maxX, maxY;
     CTiles *tiles;
     CTile *currentTile;
-    CAnimateDialog *animatedDialog;
+    CAnimatedDialog *animatedDialog;
     CTileSetWidget *tileSetWidget;
 
     void updateCoords(void);

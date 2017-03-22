@@ -12,6 +12,7 @@ public:
     QString getName(void);
     void addTile(CTile *tile);
     void next(void);
+    void reset(void);
     CTile * getCurrentTile(void);
 private:
     QString name;
