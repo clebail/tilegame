@@ -6,15 +6,21 @@
 #include "CMainWindow.h"
 //----------------------------------------------------------------------------
 CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
+    int yTileMax;
+
     setupUi(this);
 
     x = y = 0;
-    currentTile = 0;
+    currentTileIndex = 0;
     fileName = "";
 
     tilesImage = QImage(":/levelEdit/images/tileset.png");
 
     xTileMax = (tilesImage.size().width() - 2 * OFFSET_X) / REAL_TILE_WIDTH + 1;
+    yTileMax = (tilesImage.size().height() - 2 * OFFSET_Y) / REAL_TILE_HEIGHT + 1;
+
+    tiles = new CTiles(xTileMax, yTileMax);
+    tiles->load(":/levelEdit/datas/tiles.dat");
 
     tileWidget->setImage(&tilesImage);
 
@@ -41,6 +47,8 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
     onMapResize(QSize(0, 0));
     setXY();
 
+    onTileSetWidgetMousePress(0, 0);
+
     connect(&front, SIGNAL(mapResize(QSize)), this, SLOT(onMapResize(QSize)));
     connect(&back, SIGNAL(mapResize(QSize)), this, SLOT(onMapResize(QSize)));
 
@@ -49,6 +57,7 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
 //----------------------------------------------------------------------------
 CMainWindow::~CMainWindow() {
     delete tileSetWidget;
+    delete tiles;
 }
 //----------------------------------------------------------------------------
 bool CMainWindow::eventFilter(QObject *object, QEvent *event) {
@@ -97,14 +106,29 @@ void CMainWindow::setXY(void) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::onTileSetWidgetMousePress(const int& x, const int &y) {
+    CTile *tile;
+
     tileSetWidget->setXY(x, y);
     tileWidget->setXY(x, y);
 
-    currentTile = y * xTileMax + x;
+    currentTileIndex = y * xTileMax + x;
+
+    tile = tiles->getTile(currentTileIndex);
+
+    cbSolidUp->setChecked(tile->solidUp);
+    cbSolidRight->setChecked(tile->solidRight);
+    cbSolidDown->setChecked(tile->solidDown);
+    cbSolidLeft->setChecked(tile->solidLeft);
+    cbAnimated->setChecked(tile->animated.active);
+    cbClimbing->setChecked(tile->climbing);
+    cbBreakable->setChecked(tile->breakable);
+    cbDangerous->setChecked(tile->dangerous);
+    cbHitBonus->setChecked(tile->hitBonus);
+    cbTouchBonus->setChecked(tile->touchBonus);
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_pbAdd_clicked(void) {
-    currentMap->add(x, y, currentTile);
+    currentMap->add(x, y, currentTileIndex);
     wGamePlay->update();
     wPreview->update();
 }

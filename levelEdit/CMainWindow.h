@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include <QImage>
 #include <CTileSetWidget.h>
+#include <CTiles.h>
 #include "ui_CMainWindow.h"
 #include "CWidgetGamePlay.h"
 #include "CTileMap.h"
@@ -21,9 +22,10 @@ private:
     int x, y;
     int xTileMax;
     CTileMap front, back, *currentMap;
-    int currentTile;
+    int currentTileIndex;
     QLabel lblMax, lblCurrent;
     QString fileName;
+    CTiles *tiles;
 
     void setXY(void);
 private slots:

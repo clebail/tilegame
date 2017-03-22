@@ -30,6 +30,8 @@ SOURCES += main.cpp\
         ../CTileSetWidget.cpp \
     CWidgetGamePlay.cpp \
     ../CTileMap.cpp \
+    ../CTile.cpp \
+    ../CTiles.cpp \
     CWidgetPreview.cpp
 
 HEADERS  += CMainWindow.h \
@@ -38,6 +40,8 @@ HEADERS  += CMainWindow.h \
         ../common.h \
     CWidgetGamePlay.h \
     ../CTileMap.h \
+    ../CTile.h \
+    ../CTiles.h \
     CWidgetPreview.h
 
 FORMS    += CMainWindow.ui \
