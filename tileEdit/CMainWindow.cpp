@@ -199,6 +199,10 @@ void CMainWindow::on_actSave_triggered(bool) {
     tiles->save(tiles->getFileName());
 }
 //----------------------------------------------------------------------------
+void CMainWindow::on_actQuit_triggered(bool) {
+    qApp->quit();
+}
+//----------------------------------------------------------------------------
 void CMainWindow::on_pbAnimate_clicked(void) {
     QList<CTile *> group = tiles->getAnimatedGroup(currentTile->animated.groupName);
 

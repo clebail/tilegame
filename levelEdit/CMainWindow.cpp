@@ -229,3 +229,7 @@ void CMainWindow::on_pbSetOrigin_clicked(void) {
     wPreview->setOrigin(p);
 }
 //----------------------------------------------------------------------------
+void CMainWindow::on_actQuit_triggered(bool) {
+    qApp->quit();
+}
+//----------------------------------------------------------------------------

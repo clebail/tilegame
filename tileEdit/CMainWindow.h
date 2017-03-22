@@ -46,6 +46,7 @@ private slots:
     void on_actOpen_triggered(bool checked = false);
     void on_actSaveAs_triggered(bool checked = false);
     void on_actSave_triggered(bool checked = false);
+    void on_actQuit_triggered(bool checked = false);
     void on_pbAnimate_clicked(void);
     void onTileSetWidgetMousePress(const int& x, const int &y);
 };
