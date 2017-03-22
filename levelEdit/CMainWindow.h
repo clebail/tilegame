@@ -40,6 +40,7 @@ private slots:
     void onWGamePlayViewPortChanged(const QPoint& point);
     void on_pbSetOrigin_clicked(void);
     void on_actQuit_triggered(bool checked = false);
+    void on_actSimulate_triggered(bool checked = false);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

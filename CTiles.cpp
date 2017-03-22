@@ -95,3 +95,29 @@ CTile * CTiles::getTile(int idx) {
     return tiles[idx];
 }
 //----------------------------------------------------------------------------
+QHash<QString, CTilesGroup *> CTiles::getGroups(void) {
+    QHash<QString, CTilesGroup *> groups;
+    int i;
+
+    for(i=0;i<tileCount;i++) {
+        CTile *tile = tiles[i];
+
+        if(tile->animated.active) {
+            QString key = tile->animated.groupName;
+            CTilesGroup *group;
+
+            if(groups.contains(key)) {
+                group = groups.value(key);
+            }else {
+                group = new CTilesGroup(key);
+            }
+
+            group->addTile(tile);
+
+            groups.insert(key, group);
+        }
+    }
+
+    return groups;
+}
+//----------------------------------------------------------------------------

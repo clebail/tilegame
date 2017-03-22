@@ -32,7 +32,10 @@ SOURCES += main.cpp\
     ../CTileMap.cpp \
     ../CTile.cpp \
     ../CTiles.cpp \
-    CWidgetPreview.cpp
+    CWidgetPreview.cpp \
+    CWidgetSimulate.cpp \
+    CDialogSimulate.cpp \
+    ../CTilesGroup.cpp
 
 HEADERS  += CMainWindow.h \
         ../CWidgetTile.h \
@@ -42,10 +45,14 @@ HEADERS  += CMainWindow.h \
     ../CTileMap.h \
     ../CTile.h \
     ../CTiles.h \
-    CWidgetPreview.h
+    CWidgetPreview.h \
+    CWidgetSimulate.h \
+    CDialogSimulate.h \
+    ../CTilesGroup.h
 
 FORMS    += CMainWindow.ui \
-        ../CTileSetWidget.ui
+        ../CTileSetWidget.ui \
+    CDialogSimulate.ui
 
 RESOURCES += \
     leveledit.qrc

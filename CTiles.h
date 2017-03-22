@@ -2,9 +2,10 @@
 #ifndef __CTILES_H__
 #define __CTILES_H__
 //----------------------------------------------------------------------------
-#include <QPair>
 #include <QHash>
+#include <QList>
 #include <CTile.h>
+#include <CTilesGroup.h>
 //----------------------------------------------------------------------------
 class CTiles {
 public:
@@ -15,6 +16,7 @@ public:
     QString getFileName(void);
     QList<CTile *> getAnimatedGroup(QString groupName);
     CTile * getTile(int idx);
+    QHash<QString, CTilesGroup *> getGroups(void);
 private:
     typedef CTile * PCTile;
 

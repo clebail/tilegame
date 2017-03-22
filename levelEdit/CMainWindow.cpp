@@ -3,6 +3,7 @@
 #include <QKeyEvent>
 #include <QFileDialog>
 #include <common.h>
+#include "CDialogSimulate.h"
 #include "CMainWindow.h"
 //----------------------------------------------------------------------------
 CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
@@ -160,6 +161,7 @@ void CMainWindow::on_actOpen_triggered(bool) {
 
             this->fileName = fileName;
 
+            cbView->setCurrentIndex(0);
             on_cbView_currentIndexChanged(0);
         }
     }
@@ -215,7 +217,6 @@ void CMainWindow::on_cbView_currentIndexChanged(int index) {
     onMapResize(currentMap->getSize());
 
     setXY();
-
 }
 //----------------------------------------------------------------------------
 void CMainWindow::onWGamePlayViewPortChanged(const QPoint& point) {
@@ -231,5 +232,14 @@ void CMainWindow::on_pbSetOrigin_clicked(void) {
 //----------------------------------------------------------------------------
 void CMainWindow::on_actQuit_triggered(bool) {
     qApp->quit();
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_actSimulate_triggered(bool) {
+    CDialogSimulate d(this);
+
+    d.setTileMaps(&front, &back);
+    d.setTilesImage(&tilesImage);
+
+    d.exec();
 }
 //----------------------------------------------------------------------------
