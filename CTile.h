@@ -25,6 +25,8 @@ public:
 
     int getX(void);
     int getY(void);
+    int getRealX(void);
+    int getRealY(void);
     void parseAnimated(QString str);
     QString serializeAnimated(void);
     QString getHash(void);
@@ -33,6 +35,7 @@ public:
     static QString getElement(QString str, int n);
 private:
     int x, y;
+    int realX, realY;
     QString hash;
 };
 //-----------------------------------------------------------------------------------------------

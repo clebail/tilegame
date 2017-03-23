@@ -239,6 +239,7 @@ void CMainWindow::on_actSimulate_triggered(bool) {
 
     d.setTileMaps(&front, &back);
     d.setTilesImage(&tilesImage);
+    d.setTiles(tiles);
 
     d.exec();
 }

@@ -14,6 +14,7 @@ public:
     void setTileMaps(CTileMap *front, CTileMap *back);
     void setTiles(CTiles *tiles);
     void setTilesImage(QImage *tilesImage);
+    virtual bool eventFilter(QObject *object, QEvent *event);
 private:
     QTimer *timer;
 private slots:

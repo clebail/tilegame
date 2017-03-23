@@ -1,7 +1,8 @@
 //----------------------------------------------------------------------------
 #include <QStringList>
 #include <QCryptographicHash>
-#include "CTile.h"
+#include <common.h>
+#include <CTile.h>
 //----------------------------------------------------------------------------
 QDataStream& operator<<(QDataStream& out, const CTile& tile) {
     out << tile.solidUp;
@@ -43,6 +44,9 @@ CTile::CTile(int x, int y) {
     this->x = x;
     this->y = y;
 
+    realX = x * REAL_TILE_WIDTH + OFFSET_X;
+    realY = y * REAL_TILE_HEIGHT + OFFSET_Y;
+
     this->hash = QCryptographicHash::hash((QString::number(x)+"_"+QString::number(y)).toAscii(), QCryptographicHash::Md5);
 
     solidUp = false;
@@ -67,6 +71,14 @@ int CTile::getX(void) {
 //----------------------------------------------------------------------------
 int CTile::getY(void) {
     return y;
+}
+//----------------------------------------------------------------------------
+int CTile::getRealX(void) {
+    return realX;
+}
+//----------------------------------------------------------------------------
+int CTile::getRealY(void) {
+    return realY;
 }
 //----------------------------------------------------------------------------
 void CTile::parseAnimated(QString str) {
