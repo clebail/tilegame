@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1355</width>
+    <width>1366</width>
     <height>697</height>
    </rect>
   </property>
@@ -218,6 +218,10 @@
                <property name="text">
                 <string>Set player</string>
                </property>
+               <property name="icon">
+                <iconset resource="leveledit.qrc">
+                 <normaloff>:/levelEdit/images/gentil.png</normaloff>:/levelEdit/images/gentil.png</iconset>
+               </property>
               </widget>
              </item>
              <item>
@@ -233,6 +237,10 @@
                </property>
                <property name="text">
                 <string>Toggle Monster</string>
+               </property>
+               <property name="icon">
+                <iconset resource="leveledit.qrc">
+                 <normaloff>:/levelEdit/images/mechant.png</normaloff>:/levelEdit/images/mechant.png</iconset>
                </property>
               </widget>
              </item>
@@ -560,7 +568,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1355</width>
+     <width>1366</width>
      <height>29</height>
     </rect>
    </property>
@@ -635,6 +643,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="leveledit.qrc"/>
+ </resources>
  <connections/>
 </ui>
