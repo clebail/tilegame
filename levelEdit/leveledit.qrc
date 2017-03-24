@@ -2,6 +2,7 @@
     <qresource prefix="/levelEdit/images">
         <file>tileset.png</file>
         <file>fond.png</file>
+		<file>mechant.png</file>
     </qresource>
     <qresource prefix="/levelEdit/datas">
         <file>tiles.dat</file>
