@@ -6,6 +6,7 @@
 #include <QList>
 #include <QSize>
 #include <QPoint>
+#include <CTileGame.h>
 //----------------------------------------------------------------------------
 class CTileMap : public QObject {
     Q_OBJECT
@@ -24,7 +25,7 @@ public:
     void insertColumn(int x);
 private:
     int xMax, yMax;
-    QList<int *> map;
+    QList<CTileGame> map;
     QPoint origin;
 
     void addToMap(int nb);

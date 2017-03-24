@@ -10,13 +10,7 @@ QDataStream& operator<<(QDataStream& out, const CTileMap& tileMap) {
     out << tileMap.origin;
 
     for(i=0;i<tileMap.map.size();i++) {
-        int *tileIndex = tileMap.map[i];
-
-        if(tileIndex != 0) {
-            out << QString::number(*tileIndex);
-        }else {
-            out << QString("N");
-        }
+        out << tileMap.map.at(i);
     }
 
     return out;
@@ -31,18 +25,10 @@ QDataStream& operator>>(QDataStream& in, CTileMap& tileMap) {
 
     for(y=0;y<tileMap.yMax;y++) {
         for(x=0;x<tileMap.xMax;x++) {
-            QString s;
+            CTileGame tileGame;
 
-            in >> s;
-
-            if(s != "N") {
-                int *tileIndex = new int;
-
-                *tileIndex = s.toInt();
-                tileMap.map.append(tileIndex);
-            }else {
-                tileMap.map.append(0);
-            }
+            in >> tileGame;
+            tileMap.map.append(tileGame);
         }
     }
 
@@ -60,8 +46,8 @@ CTileMap::~CTileMap(void) {
 //----------------------------------------------------------------------------
 void CTileMap::add(int x, int y, int tileIndex) {
     int mapIndex;
-    int *mapValue;
     bool resize = false;
+    CTileGame tileGame;
 
     if(x > xMax - 1 || y > yMax -1) {
         int newXMax = qMax(x + 1, xMax);
@@ -79,12 +65,13 @@ void CTileMap::add(int x, int y, int tileIndex) {
     }
 
     mapIndex = y * xMax + x;
-    if(map[mapIndex] == 0) {
-        map[mapIndex] = new int;
+    tileGame = map[mapIndex];
+    if(tileGame.tileIndex == 0) {
+        tileGame.tileIndex = new int;
+        map[mapIndex] = tileGame;
     }
 
-    mapValue = map[mapIndex];
-    *mapValue = tileIndex;
+    *tileGame.tileIndex = tileIndex;
 
     if(resize) {
         emit(mapResize(QSize(xMax, yMax)));
@@ -93,9 +80,11 @@ void CTileMap::add(int x, int y, int tileIndex) {
 //----------------------------------------------------------------------------
 void CTileMap::remove(int x, int y) {
     int idx = y * xMax + x;
-    if(map[idx] != 0) {
-        delete map[idx];
-        map[idx] = 0;
+    CTileGame tileGame = map[idx];
+
+    if(tileGame.tileIndex != 0) {
+        delete tileGame.tileIndex;
+        tileGame.tileIndex = 0;
     }
 }
 //----------------------------------------------------------------------------
@@ -108,7 +97,7 @@ int * CTileMap::getTile(int x, int y) {
         return 0;
     }
 
-    return map.at(y * xMax + x);
+    return map.at(y * xMax + x).tileIndex;
 }
 //----------------------------------------------------------------------------
 QSize CTileMap::getSize(void) {
@@ -119,7 +108,9 @@ void CTileMap::clear(void) {
     int i;
 
     for(i=0;i<getTileCount();i++) {
-        delete map[i];
+        if(map[i].tileIndex != 0) {
+            delete map[i].tileIndex;
+        }
     }
 
     map.clear();
@@ -139,7 +130,7 @@ void CTileMap::insertRow(int y) {
     int i;
 
     for(i=0;i<xMax;i++) {
-        map.insert(idx, 0);
+        map.insert(idx, CTileGame());
     }
     yMax++;
 }
@@ -157,7 +148,7 @@ void CTileMap::insertColumn(int x) {
             if(xM > x) {
                 map[idx] = map[idx-1];
             }else {
-                map[idx] = 0;
+                map[idx] = CTileGame();
             }
         }
     }
@@ -167,7 +158,7 @@ void CTileMap::addToMap(int nb) {
     int i;
 
     for(i=0;i<nb;i++) {
-        map.append(0);
+        map.append(CTileGame());
     }
 }
 //----------------------------------------------------------------------------
@@ -178,11 +169,11 @@ void CTileMap::reorderMap(int newXMax) {
         int x = i % xMax;
         int y = i / xMax;
 
-        if(y > 0 && map[i] != 0) {
+        if(y > 0 && map[i].tileIndex != 0) {
             int newI = y * newXMax + x;
 
             map[newI] = map[i];
-            map[i] = 0;
+            map[i].tileIndex = 0;
         }
     }
 }

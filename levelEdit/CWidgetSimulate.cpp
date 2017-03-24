@@ -8,6 +8,9 @@ CWidgetSimulate::CWidgetSimulate(QWidget *parent) : QWidget(parent) {
     front = back = 0;
     tiles = 0;
     tilesImage = 0;
+
+    gentil = QImage(":/levelEdit/images/gentil.png");
+    mechant = QImage(":/levelEdit/images/mechant.png");
 }
 //----------------------------------------------------------------------------
 CWidgetSimulate::~CWidgetSimulate(void) {
@@ -19,9 +22,10 @@ CWidgetSimulate::~CWidgetSimulate(void) {
     }
 }
 //----------------------------------------------------------------------------
-void CWidgetSimulate::setTileMaps(CTileMap *front, CTileMap *back) {
-    this->front = front;
-    this->back = back;
+void CWidgetSimulate::setLevel(CLevel *level) {
+    this->level = level;
+    front = level->getFront();
+    back = level->getBack();
 
     xFront = front->getOrigin().x() * GAME_TILE_WIDTH;
     yFront = front->getOrigin().y() * GAME_TILE_HEIGHT;
@@ -118,6 +122,19 @@ void CWidgetSimulate::paintEvent(QPaintEvent *) {
         }
         if(front != 0) {
             drawTiles(&painter, front, xFront, yFront);
+        }
+
+        if(!level->getPlayerStartPos().isNull()) {
+            int px = level->getPlayerStartPos().x() * GAME_TILE_WIDTH;
+            int py = level->getPlayerStartPos().y() * GAME_TILE_HEIGHT;
+
+            qDebug() << px - xFront + GAME_TILE_WIDTH;
+
+            if(px - xFront + GAME_TILE_WIDTH >= 0 && py - yFront + GAME_TILE_HEIGHT >= 0) {
+                QRect dst(px - xFront, py - yFront, GAME_TILE_WIDTH, GAME_TILE_HEIGHT);
+
+                painter.drawImage(dst, gentil);
+            }
         }
     }
 }

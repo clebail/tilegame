@@ -14,6 +14,8 @@ public:
     void setTilesImage(QImage *tilesImage);
     void setTileMap(CTileMap *tileMap);
     QPoint getViewPortCoords(void);
+    void setPlayerStartPos(int x, int y);
+    void setPlayerStartPos(const QPoint& p );
 protected:
     virtual void paintEvent(QPaintEvent *event);
     virtual void mousePressEvent(QMouseEvent *event);
@@ -24,6 +26,8 @@ private:
     QImage backImage;
     QImage *tilesImage;
     CTileMap *tileMap;
+    QPoint playerStartPos;
+    QImage gentil, mechant;
 
     void drawBackground(QPainter *painter);
     void drawMap(QPainter *painter);

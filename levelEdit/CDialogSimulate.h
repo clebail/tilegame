@@ -4,6 +4,7 @@
 //----------------------------------------------------------------------------
 #include <QDialog>
 #include <QTimer>
+#include <CLevel.h>
 #include "ui_CDialogSimulate.h"
 //----------------------------------------------------------------------------
 class CDialogSimulate : public QDialog, private Ui::CDialogSimulate {
@@ -11,7 +12,7 @@ class CDialogSimulate : public QDialog, private Ui::CDialogSimulate {
 public:
     explicit CDialogSimulate(QWidget *parent = 0);
     ~CDialogSimulate(void);
-    void setTileMaps(CTileMap *front, CTileMap *back);
+    void setLevel(CLevel *level);
     void setTiles(CTiles *tiles);
     void setTilesImage(QImage *tilesImage);
     virtual bool eventFilter(QObject *object, QEvent *event);

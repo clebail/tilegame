@@ -4,6 +4,22 @@
 CLevel::CLevel() {
 }
 //----------------------------------------------------------------------------
+CTileMap * CLevel::getFront(void) {
+    return &front;
+}
+//----------------------------------------------------------------------------
+CTileMap * CLevel::getBack(void) {
+    return &back;
+}
+//----------------------------------------------------------------------------
+void CLevel::setPlayerStartPos(int x, int y) {
+    playerStartPos = QPoint(x, y);
+}
+//----------------------------------------------------------------------------
+QPoint CLevel::getPlayerStartPos(void) {
+    return playerStartPos;
+}
+//----------------------------------------------------------------------------
 QDataStream& operator<<(QDataStream& out, const CLevel& level) {
 	int i;
 
@@ -28,7 +44,7 @@ QDataStream& operator>>(QDataStream& in, CLevel& level) {
     
     	in >> mp;
     	level.monsterStartPoss.append(mp);
-   	}
+    }
     in >> level.front;
     in >> level.back;
 

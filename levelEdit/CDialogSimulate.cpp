@@ -21,8 +21,8 @@ CDialogSimulate::~CDialogSimulate(void) {
     delete timer;
 }
 //----------------------------------------------------------------------------
-void CDialogSimulate::setTileMaps(CTileMap *front, CTileMap *back) {
-    wSimulate->setTileMaps(front, back);
+void CDialogSimulate::setLevel(CLevel *level) {
+    wSimulate->setLevel(level);
 }
 //----------------------------------------------------------------------------
 void CDialogSimulate::setTiles(CTiles *tiles) {

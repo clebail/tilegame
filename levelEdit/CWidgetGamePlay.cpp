@@ -12,6 +12,8 @@ CWidgetGamePlay::CWidgetGamePlay(QWidget *parent) : QWidget(parent) {
     tileMap = 0;
 
     backImage = QImage(":/levelEdit/images/fond.png");
+    gentil = QImage(":/levelEdit/images/gentil.png");
+    mechant = QImage(":/levelEdit/images/mechant.png");
 }
 //----------------------------------------------------------------------------
 void CWidgetGamePlay::setXY(int x, int y) {
@@ -53,6 +55,18 @@ QPoint CWidgetGamePlay::getViewPortCoords(void) {
     return QPoint(viewPortX, viewPortY);
 }
 //----------------------------------------------------------------------------
+void CWidgetGamePlay::setPlayerStartPos(int x, int y) {
+    playerStartPos = QPoint(x, y);
+
+    repaint();
+}
+//----------------------------------------------------------------------------
+void CWidgetGamePlay::setPlayerStartPos(const QPoint& p ) {
+    playerStartPos = p;
+
+    repaint();
+}
+//----------------------------------------------------------------------------
 void CWidgetGamePlay::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     QRect select(x * GAME_TILE_WIDTH, y * GAME_TILE_HEIGHT, GAME_TILE_WIDTH, GAME_TILE_HEIGHT);
@@ -74,8 +88,8 @@ void CWidgetGamePlay::paintEvent(QPaintEvent *) {
 void CWidgetGamePlay::mousePressEvent(QMouseEvent *event) {
     int x, y;
 
-    x = (event->x()) / GAME_TILE_WIDTH;
-    y = (event->y()) / GAME_TILE_HEIGHT;
+    x = (event->x()) / GAME_TILE_WIDTH + viewPortX;
+    y = (event->y()) / GAME_TILE_HEIGHT + viewPortY;
 
     emit(mousePress(x, y));
 }
@@ -107,6 +121,17 @@ void CWidgetGamePlay::drawMap(QPainter *painter) {
 
                 painter->drawImage(dst, *tilesImage, src);
             }
+        }
+    }
+
+    if(!playerStartPos.isNull()) {
+        int px = playerStartPos.x();
+        int py = playerStartPos.y();
+
+        if(px >= viewPortX && px < viewPortX + GAME_WIDTH && py >= viewPortY && py <= viewPortY + GAME_HEIGHT) {
+            QPoint dst((px - viewPortX) * GAME_TILE_WIDTH, (py - viewPortY) * GAME_TILE_HEIGHT);
+
+            painter->drawImage(dst, gentil);
         }
     }
 }

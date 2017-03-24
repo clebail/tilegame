@@ -1,5 +1,6 @@
 //----------------------------------------------------------------------------
 #include <QPainter>
+#include <QtDebug>
 #include <common.h>
 #include "CWidgetPreview.h"
 //----------------------------------------------------------------------------
@@ -11,6 +12,8 @@ CWidgetPreview::CWidgetPreview(QWidget *parent) : QWidget(parent) {
     origin = QPoint(0, 0);
 
     backImage = QImage(":/levelEdit/images/fond.png");
+    gentil = QImage(":/levelEdit/images/gentil.png");
+    mechant = QImage(":/levelEdit/images/mechant.png");
 }
 //----------------------------------------------------------------------------
 void CWidgetPreview::setTilesImage(QImage *tilesImage) {
@@ -38,6 +41,18 @@ void CWidgetPreview::setViewPort(int x, int y) {
 void CWidgetPreview::setOrigin(const QPoint& p) {
     origin.setX(p.x());
     origin.setY(p.y());
+
+    repaint();
+}
+//----------------------------------------------------------------------------
+void CWidgetPreview::setPlayerStartPos(int x, int y) {
+    playerStartPos = QPoint(x, y);
+
+    repaint();
+}
+//----------------------------------------------------------------------------
+void CWidgetPreview::setPlayerStartPos(const QPoint& p ) {
+    playerStartPos = p;
 
     repaint();
 }
@@ -102,6 +117,15 @@ void CWidgetPreview::drawMap(QPainter *painter) {
                     painter->drawImage(dst, *tilesImage, src);
                 }
             }
+        }
+
+        if(!playerStartPos.isNull()) {
+            int px = playerStartPos.x();
+            int py = playerStartPos.y();
+
+            QRect dst(px * w + mX, py * h + mY, w, h);
+
+            painter->drawImage(dst, gentil);
         }
 
         painter->setBrush(Qt::NoBrush);

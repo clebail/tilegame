@@ -10,6 +10,10 @@
 class CLevel {
 public:
     explicit CLevel();
+    CTileMap * getFront(void);
+    CTileMap * getBack(void);
+    void setPlayerStartPos(int x, int y);
+    QPoint getPlayerStartPos(void);
 private:
     CTileMap front, back;
     QPoint playerStartPos;

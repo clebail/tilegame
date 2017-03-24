@@ -6,9 +6,10 @@
 #include <QImage>
 #include <CTileSetWidget.h>
 #include <CTiles.h>
+#include <CTileMap.h>
+#include <CLevel.h>
 #include "ui_CMainWindow.h"
 #include "CWidgetGamePlay.h"
-#include "CTileMap.h"
 //----------------------------------------------------------------------------
 class CMainWindow : public QMainWindow, private Ui::CMainWindow {
     Q_OBJECT
@@ -21,7 +22,8 @@ private:
     CTileSetWidget *tileSetWidget;
     int x, y;
     int xTileMax;
-    CTileMap front, back, *currentMap;
+    CLevel level;
+    CTileMap *currentMap;
     int currentTileIndex;
     QLabel lblMax, lblCurrent;
     QString fileName;
@@ -44,6 +46,7 @@ private slots:
     void on_pbInsertRow_clicked(void);
     void on_pbInsertColumn_clicked(void);
     void onWGamePlayMousePress(const int& x, const int& y);
+    void on_pbSetPlayer_clicked(void);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

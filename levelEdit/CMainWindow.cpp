@@ -25,7 +25,7 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
 
     tileWidget->setImage(&tilesImage);
 
-    currentMap = &front;
+    currentMap = level.getFront();
 
     wGamePlay->resize(GAME_WIDTH, GAME_HEIGHT);
     wGamePlay->setTilesImage(&tilesImage);
@@ -51,8 +51,8 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
 
     onTileSetWidgetMousePress(0, 0);
 
-    connect(&front, SIGNAL(mapResize(QSize)), this, SLOT(onMapResize(QSize)));
-    connect(&back, SIGNAL(mapResize(QSize)), this, SLOT(onMapResize(QSize)));
+    connect(level.getFront(), SIGNAL(mapResize(QSize)), this, SLOT(onMapResize(QSize)));
+    connect(level.getBack(), SIGNAL(mapResize(QSize)), this, SLOT(onMapResize(QSize)));
 
     qApp->installEventFilter(this);
 }
@@ -102,7 +102,10 @@ bool CMainWindow::eventFilter(QObject *object, QEvent *event) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::setXY(void) {
-    bool canSetCharacter = currentMap == &front && currentMap->getTile(x ,y) == 0;
+    int *mapTileIndex = currentMap->getTile(x, y);
+    bool canSetCharacter = currentMap == level.getFront() && mapTileIndex == 0;
+    CTile *mapTile = (mapTileIndex != 0 ? tiles->getTile(*mapTileIndex) : 0);
+    bool canSetBonus = mapTile !=0 && (mapTile->hitBonus || mapTile->touchBonus);
 
     wGamePlay->setXY(x, y);
 
@@ -110,13 +113,12 @@ void CMainWindow::setXY(void) {
 
     pbSetPlayer->setEnabled(canSetCharacter);
     pbToggleMonster->setEnabled(canSetCharacter);
+    pbSetScore->setEnabled(canSetBonus);
+    pbSetBonus->setEnabled(canSetBonus);
 }
 //----------------------------------------------------------------------------
 void CMainWindow::onTileSetWidgetMousePress(const int& x, const int &y) {
     CTile *tile;
-    int *mapTileIndex = currentMap->getTile(this->x, this->y);
-    CTile *mapTile = (mapTileIndex != 0 ? tiles->getTile(*mapTileIndex) : 0);
-    bool canSetBonus = mapTile !=0 && (mapTile->hitBonus || mapTile->touchBonus);
 
     tileSetWidget->setXY(x, y);
     tileWidget->setXY(x, y);
@@ -135,9 +137,6 @@ void CMainWindow::onTileSetWidgetMousePress(const int& x, const int &y) {
     cbDangerous->setChecked(tile->dangerous);
     cbHitBonus->setChecked(tile->hitBonus);
     cbTouchBonus->setChecked(tile->touchBonus);
-
-    pbSetScore->setEnabled(canSetBonus);
-    pbSetBonus->setEnabled(canSetBonus);
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_pbAdd_clicked(void) {
@@ -164,10 +163,7 @@ void CMainWindow::on_actOpen_triggered(bool) {
         if(file.open(QIODevice::ReadOnly)) {
             QDataStream stream(&file);
 
-            front.clear();
-            back.clear();
-            stream >> front;
-            stream >> back;
+            stream >> level;
 
             file.close();
 
@@ -175,6 +171,8 @@ void CMainWindow::on_actOpen_triggered(bool) {
 
             cbView->setCurrentIndex(0);
             on_cbView_currentIndexChanged(0);
+            wGamePlay->setPlayerStartPos(level.getPlayerStartPos());
+            wPreview->setPlayerStartPos(level.getPlayerStartPos());
         }
     }
 }
@@ -187,8 +185,7 @@ void CMainWindow::on_actSaveAs_triggered(bool) {
         if(file.open(QIODevice::WriteOnly)) {
             QDataStream stream(&file);
 
-            stream << front;
-            stream << back;
+            stream << level;
 
             file.close();
 
@@ -205,8 +202,7 @@ void CMainWindow::on_actSave_triggered(bool) {
         if(file.open(QIODevice::WriteOnly)) {
             QDataStream stream(&file);
 
-            stream << front;
-            stream << back;
+            stream << level;
 
             file.close();
 
@@ -217,9 +213,15 @@ void CMainWindow::on_actSave_triggered(bool) {
 //----------------------------------------------------------------------------
 void CMainWindow::on_cbView_currentIndexChanged(int index) {
     if(index == 0) {
-        currentMap = &front;
+        currentMap = level.getFront();
+
+        wGamePlay->setPlayerStartPos(level.getPlayerStartPos());
+        wPreview->setPlayerStartPos(level.getPlayerStartPos());
     } else {
-        currentMap = &back ;
+        currentMap = level.getBack();
+
+        wGamePlay->setPlayerStartPos(QPoint());
+        wPreview->setPlayerStartPos(QPoint());
     }
 
     x = y = 0;
@@ -249,7 +251,7 @@ void CMainWindow::on_actQuit_triggered(bool) {
 void CMainWindow::on_actSimulate_triggered(bool) {
     CDialogSimulate d(this);
 
-    d.setTileMaps(&front, &back);
+    d.setLevel(&level);
     d.setTilesImage(&tilesImage);
     d.setTiles(tiles);
 
@@ -273,5 +275,12 @@ void CMainWindow::onWGamePlayMousePress(const int& x, const int& y) {
     this->y = y;
 
     setXY();
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_pbSetPlayer_clicked(void) {
+    level.setPlayerStartPos(x, y);
+    wGamePlay->setPlayerStartPos(x, y);
+    wPreview->setPlayerStartPos(x, y);
+    wGamePlay->update();
 }
 //----------------------------------------------------------------------------

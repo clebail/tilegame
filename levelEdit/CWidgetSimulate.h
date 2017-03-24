@@ -4,7 +4,7 @@
 //----------------------------------------------------------------------------
 #include <QWidget>
 #include <QPainter>
-#include <CTileMap.h>
+#include <CLevel.h>
 #include <CTiles.h>
 //----------------------------------------------------------------------------
 class CWidgetSimulate : public QWidget {
@@ -12,7 +12,7 @@ class CWidgetSimulate : public QWidget {
 public:
     explicit CWidgetSimulate(QWidget *parent = 0);
     ~CWidgetSimulate(void);
-    void setTileMaps(CTileMap *front, CTileMap *back);
+    void setLevel(CLevel *level);
     void setTiles(CTiles *tiles);
     void setTilesImage(QImage *tilesImage);
     void incX(void);
@@ -23,12 +23,13 @@ public:
 protected:
     virtual void paintEvent(QPaintEvent *event);
 private:
-    CTileMap *front;
-    CTileMap *back;
+    CLevel *level;
+    CTileMap *front, *back;
     CTiles *tiles;
     QImage *tilesImage;
     QHash<QString, CTilesGroup *> groups;
     int xFront, yFront, xBack, yBack;
+    QImage gentil, mechant;
 
     void drawTiles(QPainter *painter, CTileMap *tileMap, int curX, int curY);
 };
