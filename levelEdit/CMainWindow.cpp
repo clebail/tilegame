@@ -114,6 +114,9 @@ void CMainWindow::setXY(void) {
 //----------------------------------------------------------------------------
 void CMainWindow::onTileSetWidgetMousePress(const int& x, const int &y) {
     CTile *tile;
+    int *mapTileIndex = currentMap->getTile(this->x, this->y);
+    CTile *mapTile = (mapTileIndex != 0 ? tiles->getTile(*mapTileIndex) : 0);
+    bool canSetBonus = mapTile !=0 && (mapTile->hitBonus || mapTile->touchBonus);
 
     tileSetWidget->setXY(x, y);
     tileWidget->setXY(x, y);
@@ -133,8 +136,8 @@ void CMainWindow::onTileSetWidgetMousePress(const int& x, const int &y) {
     cbHitBonus->setChecked(tile->hitBonus);
     cbTouchBonus->setChecked(tile->touchBonus);
 
-    pbSetScore->setEnabled(tile->hitBonus || tile->touchBonus);
-    pbSetBonus->setEnabled(tile->hitBonus || tile->touchBonus);
+    pbSetScore->setEnabled(canSetBonus);
+    pbSetBonus->setEnabled(canSetBonus);
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_pbAdd_clicked(void) {

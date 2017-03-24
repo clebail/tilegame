@@ -35,7 +35,9 @@ SOURCES += main.cpp\
     CWidgetPreview.cpp \
     CWidgetSimulate.cpp \
     CDialogSimulate.cpp \
-    ../CTilesGroup.cpp
+    ../CTilesGroup.cpp \
+    ../CTileGame.cpp \
+    ../CLevel.cpp
 
 HEADERS  += CMainWindow.h \
         ../CWidgetTile.h \
@@ -48,7 +50,9 @@ HEADERS  += CMainWindow.h \
     CWidgetPreview.h \
     CWidgetSimulate.h \
     CDialogSimulate.h \
-    ../CTilesGroup.h
+    ../CTilesGroup.h \
+    ../CTileGame.h \
+    ../CLevel.h
 
 FORMS    += CMainWindow.ui \
         ../CTileSetWidget.ui \
