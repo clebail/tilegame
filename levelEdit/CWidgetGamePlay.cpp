@@ -1,5 +1,6 @@
 //----------------------------------------------------------------------------
 #include <QtDebug>
+#include <QMouseEvent>
 #include <common.h>
 #include "CWidgetGamePlay.h"
 //----------------------------------------------------------------------------
@@ -70,6 +71,16 @@ void CWidgetGamePlay::paintEvent(QPaintEvent *) {
     painter.drawRect(select);
 }
 //----------------------------------------------------------------------------
+void CWidgetGamePlay::mousePressEvent(QMouseEvent *event) {
+    int x, y;
+
+    x = (event->x()) / GAME_TILE_WIDTH;
+    y = (event->y()) / GAME_TILE_HEIGHT;
+
+    emit(mousePress(x, y));
+}
+//----------------------------------------------------------------------------
+
 void CWidgetGamePlay::drawBackground(QPainter *painter) {
     int x, y;
 

@@ -31,6 +31,7 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
     wGamePlay->setTilesImage(&tilesImage);
     wGamePlay->setTileMap(currentMap);
     connect(wGamePlay, SIGNAL(viewPortChange(QPoint)), this, SLOT(onWGamePlayViewPortChanged(QPoint)));
+    connect(wGamePlay, SIGNAL(mousePress(int,int)), this, SLOT(onWGamePlayMousePress(int,int)));
 
     wPreview->setTilesImage(&tilesImage);
     wPreview->setTileMap(currentMap);
@@ -101,9 +102,14 @@ bool CMainWindow::eventFilter(QObject *object, QEvent *event) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::setXY(void) {
+    bool canSetCharacter = currentMap == &front && currentMap->getTile(x ,y) == 0;
+
     wGamePlay->setXY(x, y);
 
     lblCurrent.setText("Position in map : "+QString::number(x + 1)+", "+QString::number(y + 1));
+
+    pbSetPlayer->setEnabled(canSetCharacter);
+    pbToggleMonster->setEnabled(canSetCharacter);
 }
 //----------------------------------------------------------------------------
 void CMainWindow::onTileSetWidgetMousePress(const int& x, const int &y) {
@@ -126,6 +132,9 @@ void CMainWindow::onTileSetWidgetMousePress(const int& x, const int &y) {
     cbDangerous->setChecked(tile->dangerous);
     cbHitBonus->setChecked(tile->hitBonus);
     cbTouchBonus->setChecked(tile->touchBonus);
+
+    pbSetScore->setEnabled(tile->hitBonus || tile->touchBonus);
+    pbSetBonus->setEnabled(tile->hitBonus || tile->touchBonus);
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_pbAdd_clicked(void) {
@@ -242,5 +251,24 @@ void CMainWindow::on_actSimulate_triggered(bool) {
     d.setTiles(tiles);
 
     d.exec();
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_pbInsertRow_clicked(void) {
+    currentMap->insertRow(y);
+    wGamePlay->update();
+    wPreview->update();
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_pbInsertColumn_clicked(void) {
+    currentMap->insertColumn(x);
+    wGamePlay->update();
+    wPreview->update();
+}
+//----------------------------------------------------------------------------
+void CMainWindow::onWGamePlayMousePress(const int& x, const int& y) {
+    this->x = x;
+    this->y = y;
+
+    setXY();
 }
 //----------------------------------------------------------------------------

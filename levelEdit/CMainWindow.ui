@@ -139,7 +139,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pbInsertCol">
+              <widget class="QPushButton" name="pbInsertColumn">
                <property name="text">
                 <string>Insert column</string>
                </property>
@@ -171,6 +171,70 @@
                 </size>
                </property>
               </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbSetScore">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton:disabled {
+	background-color: #e1e1e1;
+	color: #999;
+}</string>
+               </property>
+               <property name="text">
+                <string>Set score</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbSetBonus">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton:disabled {
+	background-color: #e1e1e1;
+	color: #999;
+}</string>
+               </property>
+               <property name="text">
+                <string>Set bonus</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbSetPlayer">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton:disabled {
+	background-color: #e1e1e1;
+	color: #999;
+}</string>
+               </property>
+               <property name="text">
+                <string>Set player</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbToggleMonster">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton:disabled {
+	background-color: #e1e1e1;
+	color: #999;
+}</string>
+               </property>
+               <property name="text">
+                <string>Toggle Monster</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>

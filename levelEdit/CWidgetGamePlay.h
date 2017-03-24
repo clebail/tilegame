@@ -16,6 +16,7 @@ public:
     QPoint getViewPortCoords(void);
 protected:
     virtual void paintEvent(QPaintEvent *event);
+    virtual void mousePressEvent(QMouseEvent *event);
 private:
     int x, y;
     int viewPortX, viewPortY;
@@ -28,6 +29,7 @@ private:
     void drawMap(QPainter *painter);
 signals:
     void viewPortChange(const QPoint& point);
+    void mousePress(const int &x, const int &y);
 };
 //----------------------------------------------------------------------------
 #endif //__CWIDGETGAMEPLAY_H__

@@ -41,6 +41,9 @@ private slots:
     void on_pbSetOrigin_clicked(void);
     void on_actQuit_triggered(bool checked = false);
     void on_actSimulate_triggered(bool checked = false);
+    void on_pbInsertRow_clicked(void);
+    void on_pbInsertColumn_clicked(void);
+    void onWGamePlayMousePress(const int& x, const int& y);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

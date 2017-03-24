@@ -134,6 +134,35 @@ QPoint CTileMap::getOrigin(void) {
     return origin;
 }
 //----------------------------------------------------------------------------
+void CTileMap::insertRow(int y) {
+    int idx = y * xMax;
+    int i;
+
+    for(i=0;i<xMax;i++) {
+        map.insert(idx, 0);
+    }
+    yMax++;
+}
+//----------------------------------------------------------------------------
+void CTileMap::insertColumn(int x) {
+    int xM, y;
+
+    reorderMap(xMax+1);
+    xMax++;
+
+    for(y=0;y<yMax;y++) {
+        for(xM=xMax-1;xM>=x;xM--) {
+            int idx = y * xMax + xM;
+
+            if(xM > x) {
+                map[idx] = map[idx-1];
+            }else {
+                map[idx] = 0;
+            }
+        }
+    }
+}
+//----------------------------------------------------------------------------
 void CTileMap::addToMap(int nb) {
     int i;
 

@@ -20,6 +20,8 @@ public:
     void clear(void);
     void setOrigin(const QPoint& p);
     QPoint getOrigin(void);
+    void insertRow(int y);
+    void insertColumn(int x);
 private:
     int xMax, yMax;
     QList<int *> map;
