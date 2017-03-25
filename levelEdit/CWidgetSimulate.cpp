@@ -4,6 +4,9 @@
 #include <common.h>
 #include "CWidgetSimulate.h"
 //----------------------------------------------------------------------------
+#define INC_FRONT           4
+#define INC_BACK            (INC_FRONT / 2)
+//----------------------------------------------------------------------------
 CWidgetSimulate::CWidgetSimulate(QWidget *parent) : QWidget(parent) {
     front = back = 0;
     tiles = 0;
@@ -52,48 +55,48 @@ void CWidgetSimulate::setTilesImage(QImage *tilesImage) {
 //----------------------------------------------------------------------------
 void CWidgetSimulate::incX(void) {
     if(front != 0 && back != 0) {
-        if(xFront + GAME_WIDTH < front->getSize().width() * GAME_TILE_WIDTH - 1) {
-            xFront += 2;
+        if(xFront + GAME_WIDTH < front->getSize().width() * GAME_TILE_WIDTH) {
+            xFront += INC_FRONT;
         }
 
         if(xBack + GAME_WIDTH < back->getSize().width() * GAME_TILE_WIDTH) {
-            xBack++;
+            xBack += INC_BACK;
         }
     }
 }
 //----------------------------------------------------------------------------
 void CWidgetSimulate::incY(void) {
     if(front != 0 && back != 0) {
-        if(yFront + GAME_HEIGHT < front->getSize().height() * GAME_TILE_HEIGHT - 1) {
-            yFront += 2;
+        if(yFront + GAME_HEIGHT < front->getSize().height() * GAME_TILE_HEIGHT) {
+            yFront += INC_FRONT;
         }
 
         if(yBack + GAME_HEIGHT < back->getSize().height() * GAME_TILE_HEIGHT) {
-            yBack++;
+            yBack += INC_BACK;
         }
     }
 }
 //----------------------------------------------------------------------------
 void CWidgetSimulate::decX(void) {
     if(front != 0 && back != 0) {
-        if(xFront >= 2) {
-            xFront -= 2;
+        if(xFront >= INC_FRONT) {
+            xFront -= INC_FRONT;
         }
 
         if(xBack) {
-            xBack--;
+            xBack -= INC_BACK;
         }
     }
 }
 //----------------------------------------------------------------------------
 void CWidgetSimulate::decY(void) {
     if(front != 0 && back != 0) {
-        if(yFront >= 2) {
-            yFront -= 2;
+        if(yFront >= INC_FRONT) {
+            yFront -= INC_FRONT;
         }
 
         if(yBack) {
-            yBack--;
+            yBack -= INC_BACK;
         }
     }
 }
@@ -111,6 +114,7 @@ void CWidgetSimulate::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     QBrush brush(QColor(74, 115, 207));
     QPen pen(QColor(74, 115, 207));
+    int i;
 
     painter.setBrush(brush);
     painter.setPen(pen);
@@ -128,12 +132,22 @@ void CWidgetSimulate::paintEvent(QPaintEvent *) {
             int px = level->getPlayerStartPos().x() * GAME_TILE_WIDTH;
             int py = level->getPlayerStartPos().y() * GAME_TILE_HEIGHT;
 
-            qDebug() << px - xFront + GAME_TILE_WIDTH;
-
             if(px - xFront + GAME_TILE_WIDTH >= 0 && py - yFront + GAME_TILE_HEIGHT >= 0) {
                 QRect dst(px - xFront, py - yFront, GAME_TILE_WIDTH, GAME_TILE_HEIGHT);
 
                 painter.drawImage(dst, gentil);
+            }
+        }
+
+        for(i=0;i<level->getMonsterStartPoss().size();i++) {
+            QPoint p = level->getMonsterStartPoss().at(i);
+            int px = p.x() * GAME_TILE_WIDTH;
+            int py = p.y() * GAME_TILE_HEIGHT;
+
+            if(px - xFront + GAME_TILE_WIDTH >= 0 && py - yFront + GAME_TILE_HEIGHT >= 0) {
+                QRect dst(px - xFront, py - yFront, GAME_TILE_WIDTH, GAME_TILE_HEIGHT);
+
+                painter.drawImage(dst, mechant);
             }
         }
     }
@@ -152,7 +166,7 @@ void CWidgetSimulate::drawTiles(QPainter *painter, CTileMap *tileMap, int curX, 
             int screenX = x * GAME_TILE_WIDTH;
             int realX = curX + screenX;
             int tileX = realX / GAME_TILE_WIDTH;
-            int *tileIdx = tileMap->getTile(tileX, tileY);
+            int *tileIdx = tileMap->getTileIndex(tileX, tileY);
 
             if(tileIdx != 0) {
                 CTile * tile = tiles->getTile(*tileIdx);

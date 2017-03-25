@@ -57,6 +57,12 @@ void CWidgetPreview::setPlayerStartPos(const QPoint& p ) {
     repaint();
 }
 //----------------------------------------------------------------------------
+void CWidgetPreview::setMonsterStartPoss(const QList<QPoint>& l) {
+    monsterStartPoss = l;
+
+    repaint();
+}
+//----------------------------------------------------------------------------
 void CWidgetPreview::paintEvent(QPaintEvent *) {
     QPainter painter(this);
 
@@ -77,7 +83,7 @@ void CWidgetPreview::drawBackground(QPainter *painter) {
 }
 //----------------------------------------------------------------------------
 void CWidgetPreview::drawMap(QPainter *painter) {
-    int x, y;
+    int x, y, i;
     double w, h;
     int mX, mY;
     QSize size = tileMap->getSize();
@@ -104,7 +110,7 @@ void CWidgetPreview::drawMap(QPainter *painter) {
 
         for(y=0;y<size.height();y++) {
             for(x=0;x<size.width();x++) {
-                int *tileIndex = tileMap->getTile(x, y);
+                int *tileIndex = tileMap->getTileIndex(x, y);
                 QRect dst(x * w + mX, y * h + mY, w, h);
 
                 painter->drawImage(dst, backImage);
@@ -126,6 +132,16 @@ void CWidgetPreview::drawMap(QPainter *painter) {
             QRect dst(px * w + mX, py * h + mY, w, h);
 
             painter->drawImage(dst, gentil);
+        }
+
+        for(i=0;i<monsterStartPoss.size();i++) {
+            QPoint p = monsterStartPoss.at(i);
+            int px = p.x();
+            int py = p.y();
+
+            QRect dst(px * w + mX, py * h + mY, w, h);
+
+            painter->drawImage(dst, mechant);
         }
 
         painter->setBrush(Qt::NoBrush);

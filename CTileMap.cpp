@@ -92,12 +92,20 @@ int CTileMap::getTileCount(void) {
     return xMax * yMax;
 }
 //----------------------------------------------------------------------------
-int * CTileMap::getTile(int x, int y) {
+int * CTileMap::getTileIndex(int x, int y) {
     if(x >= xMax || y >= yMax) {
         return 0;
     }
 
     return map.at(y * xMax + x).tileIndex;
+}
+//----------------------------------------------------------------------------
+CTileGame CTileMap::getTile(int x, int y) {
+    if(x >= xMax || y >= yMax) {
+        return CTileGame();
+    }
+
+    return map.at(y * xMax + x);
 }
 //----------------------------------------------------------------------------
 QSize CTileMap::getSize(void) {

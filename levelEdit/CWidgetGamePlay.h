@@ -15,7 +15,8 @@ public:
     void setTileMap(CTileMap *tileMap);
     QPoint getViewPortCoords(void);
     void setPlayerStartPos(int x, int y);
-    void setPlayerStartPos(const QPoint& p );
+    void setPlayerStartPos(const QPoint& p);
+    void setMonsterStartPoss(const QList<QPoint>& l);
 protected:
     virtual void paintEvent(QPaintEvent *event);
     virtual void mousePressEvent(QMouseEvent *event);
@@ -28,6 +29,7 @@ private:
     CTileMap *tileMap;
     QPoint playerStartPos;
     QImage gentil, mechant;
+    QList<QPoint> monsterStartPoss;
 
     void drawBackground(QPainter *painter);
     void drawMap(QPainter *painter);

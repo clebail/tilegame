@@ -16,7 +16,8 @@ public:
     void add(int x, int y, int tileIndex);
     void remove(int x, int y);
     int getTileCount(void);
-    int * getTile(int x, int y);
+    int * getTileIndex(int x, int y);
+    CTileGame getTile(int x, int y);
     QSize getSize(void);
     void clear(void);
     void setOrigin(const QPoint& p);

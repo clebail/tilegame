@@ -20,6 +20,28 @@ QPoint CLevel::getPlayerStartPos(void) {
     return playerStartPos;
 }
 //----------------------------------------------------------------------------
+void CLevel::toggleMonsterStartPoss(int x, int y) {
+    int i;
+
+    i=0;
+    while(i<monsterStartPoss.size()) {
+        QPoint p = monsterStartPoss.at(i);
+
+        if(x == p.x() && y == p.y()) {
+            monsterStartPoss.removeAt(i);
+            return;
+        }
+
+        i++;
+    }
+
+    monsterStartPoss.append(QPoint(x, y));
+}
+//----------------------------------------------------------------------------
+QList<QPoint> CLevel::getMonsterStartPoss(void) {
+    return monsterStartPoss;
+}
+//----------------------------------------------------------------------------
 QDataStream& operator<<(QDataStream& out, const CLevel& level) {
 	int i;
 

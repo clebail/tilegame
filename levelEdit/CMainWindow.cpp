@@ -102,10 +102,11 @@ bool CMainWindow::eventFilter(QObject *object, QEvent *event) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::setXY(void) {
-    int *mapTileIndex = currentMap->getTile(x, y);
+    int *mapTileIndex = currentMap->getTileIndex(x, y);
     bool canSetCharacter = currentMap == level.getFront() && mapTileIndex == 0;
     CTile *mapTile = (mapTileIndex != 0 ? tiles->getTile(*mapTileIndex) : 0);
     bool canSetBonus = mapTile !=0 && (mapTile->hitBonus || mapTile->touchBonus);
+    CTileGame tileGame = currentMap->getTile(x, y);
 
     wGamePlay->setXY(x, y);
 
@@ -113,8 +114,26 @@ void CMainWindow::setXY(void) {
 
     pbSetPlayer->setEnabled(canSetCharacter);
     pbToggleMonster->setEnabled(canSetCharacter);
-    pbSetScore->setEnabled(canSetBonus);
-    pbSetBonus->setEnabled(canSetBonus);
+
+    gbScore->setEnabled(canSetBonus);
+
+    if(canSetBonus) {
+        rbBombe->setChecked(tileGame.bonusType == CTileGame::ebtBombe);
+        rbOneUp->setChecked(tileGame.bonusType == CTileGame::ebtOneUp);
+        rbCoin->setChecked(tileGame.bonusType == CTileGame::ebtCoin);
+        rbFood->setChecked(tileGame.bonusType == CTileGame::ebtFood);
+        rbWin->setChecked(tileGame.bonusType == CTileGame::ebtWin);
+
+        leScore->setText(QString::number(tileGame.score));
+    } else {
+        rbBombe->setChecked(false);
+        rbOneUp->setChecked(false);
+        rbCoin->setChecked(false);
+        rbFood->setChecked(false);
+        rbWin->setChecked(false);
+
+        leScore->setText(0);
+    }
 }
 //----------------------------------------------------------------------------
 void CMainWindow::onTileSetWidgetMousePress(const int& x, const int &y) {
@@ -173,6 +192,9 @@ void CMainWindow::on_actOpen_triggered(bool) {
             on_cbView_currentIndexChanged(0);
             wGamePlay->setPlayerStartPos(level.getPlayerStartPos());
             wPreview->setPlayerStartPos(level.getPlayerStartPos());
+
+            wGamePlay->setMonsterStartPoss(level.getMonsterStartPoss());
+            wPreview->setMonsterStartPoss(level.getMonsterStartPoss());
         }
     }
 }
@@ -217,11 +239,17 @@ void CMainWindow::on_cbView_currentIndexChanged(int index) {
 
         wGamePlay->setPlayerStartPos(level.getPlayerStartPos());
         wPreview->setPlayerStartPos(level.getPlayerStartPos());
+
+        wGamePlay->setMonsterStartPoss(level.getMonsterStartPoss());
+        wPreview->setMonsterStartPoss(level.getMonsterStartPoss());
     } else {
         currentMap = level.getBack();
 
         wGamePlay->setPlayerStartPos(QPoint());
         wPreview->setPlayerStartPos(QPoint());
+
+        wGamePlay->setMonsterStartPoss(QList<QPoint>());
+        wPreview->setMonsterStartPoss(QList<QPoint>());
     }
 
     x = y = 0;
@@ -279,8 +307,21 @@ void CMainWindow::onWGamePlayMousePress(const int& x, const int& y) {
 //----------------------------------------------------------------------------
 void CMainWindow::on_pbSetPlayer_clicked(void) {
     level.setPlayerStartPos(x, y);
+
     wGamePlay->setPlayerStartPos(x, y);
     wPreview->setPlayerStartPos(x, y);
+
     wGamePlay->update();
+    wPreview->update();
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_pbToggleMonster_clicked(void) {
+    level.toggleMonsterStartPoss(x, y);
+
+    wGamePlay->setMonsterStartPoss(level.getMonsterStartPoss());
+    wPreview->setMonsterStartPoss(level.getMonsterStartPoss());
+
+    wGamePlay->update();
+    wPreview->update();
 }
 //----------------------------------------------------------------------------

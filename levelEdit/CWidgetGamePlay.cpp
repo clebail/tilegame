@@ -67,6 +67,12 @@ void CWidgetGamePlay::setPlayerStartPos(const QPoint& p ) {
     repaint();
 }
 //----------------------------------------------------------------------------
+void CWidgetGamePlay::setMonsterStartPoss(const QList<QPoint>& l) {
+    monsterStartPoss = l;
+
+    repaint();
+}
+//----------------------------------------------------------------------------
 void CWidgetGamePlay::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     QRect select(x * GAME_TILE_WIDTH, y * GAME_TILE_HEIGHT, GAME_TILE_WIDTH, GAME_TILE_HEIGHT);
@@ -94,7 +100,6 @@ void CWidgetGamePlay::mousePressEvent(QMouseEvent *event) {
     emit(mousePress(x, y));
 }
 //----------------------------------------------------------------------------
-
 void CWidgetGamePlay::drawBackground(QPainter *painter) {
     int x, y;
 
@@ -106,11 +111,11 @@ void CWidgetGamePlay::drawBackground(QPainter *painter) {
 }
 //----------------------------------------------------------------------------
 void CWidgetGamePlay::drawMap(QPainter *painter) {
-    int x, y;
+    int x, y, i;
 
     for(y=0;y<GAME_NB_Y;y++) {
         for(x=0;x<GAME_NB_X;x++) {
-            int *tileIndex = tileMap->getTile(x + viewPortX, y + viewPortY);
+            int *tileIndex = tileMap->getTileIndex(x + viewPortX, y + viewPortY);
 
             if(tileIndex != 0) {
                 int xTile = (*tileIndex) % xTileMax;
@@ -132,6 +137,18 @@ void CWidgetGamePlay::drawMap(QPainter *painter) {
             QPoint dst((px - viewPortX) * GAME_TILE_WIDTH, (py - viewPortY) * GAME_TILE_HEIGHT);
 
             painter->drawImage(dst, gentil);
+        }
+    }
+
+    for(i=0;i<monsterStartPoss.size();i++) {
+        QPoint p = monsterStartPoss.at(i);
+        int px = p.x();
+        int py = p.y();
+
+        if(px >= viewPortX && px < viewPortX + GAME_WIDTH && py >= viewPortY && py <= viewPortY + GAME_HEIGHT) {
+            QPoint dst((px - viewPortX) * GAME_TILE_WIDTH, (py - viewPortY) * GAME_TILE_HEIGHT);
+
+            painter->drawImage(dst, mechant);
         }
     }
 }

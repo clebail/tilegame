@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1366</width>
+    <width>1374</width>
     <height>697</height>
    </rect>
   </property>
@@ -173,38 +173,6 @@
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="pbSetScore">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QPushButton:disabled {
-	background-color: #e1e1e1;
-	color: #999;
-}</string>
-               </property>
-               <property name="text">
-                <string>Set score</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pbSetBonus">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QPushButton:disabled {
-	background-color: #e1e1e1;
-	color: #999;
-}</string>
-               </property>
-               <property name="text">
-                <string>Set bonus</string>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QPushButton" name="pbSetPlayer">
                <property name="enabled">
                 <bool>false</bool>
@@ -257,13 +225,13 @@
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>6</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>6</number>
           </property>
           <item>
            <widget class="QGroupBox" name="groupBox_2">
@@ -538,6 +506,89 @@
             </layout>
            </widget>
           </item>
+          <item>
+           <widget class="QGroupBox" name="gbScore">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="title">
+             <string>Bonus / Score</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="1">
+              <widget class="QRadioButton" name="rbBombe">
+               <property name="text">
+                <string>Bombe</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Score</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLineEdit" name="leScore">
+               <property name="inputMask">
+                <string>9999</string>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QRadioButton" name="rbCoin">
+               <property name="text">
+                <string>Coin</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QRadioButton" name="rbOneUp">
+               <property name="text">
+                <string>One Up</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QRadioButton" name="rbFood">
+               <property name="text">
+                <string>Food</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="5">
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="4">
+              <widget class="QRadioButton" name="rbWin">
+               <property name="text">
+                <string>Win</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -568,8 +619,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1366</width>
-     <height>29</height>
+     <width>1374</width>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

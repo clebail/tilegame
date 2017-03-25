@@ -6,7 +6,7 @@
 //----------------------------------------------------------------------------
 class CTileGame {
 public:
-    typedef enum { ebtNone = 0, ebtBombe, ebtOneUp, ebtFood, ebtCoin } EBonusType;
+    typedef enum { ebtNone = 0, ebtBombe, ebtOneUp, ebtFood, ebtCoin, ebtWin } EBonusType;
 
     int *tileIndex;
     int score;

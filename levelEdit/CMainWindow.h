@@ -47,6 +47,7 @@ private slots:
     void on_pbInsertColumn_clicked(void);
     void onWGamePlayMousePress(const int& x, const int& y);
     void on_pbSetPlayer_clicked(void);
+    void on_pbToggleMonster_clicked(void);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

@@ -14,6 +14,8 @@ public:
     CTileMap * getBack(void);
     void setPlayerStartPos(int x, int y);
     QPoint getPlayerStartPos(void);
+    void toggleMonsterStartPoss(int x, int y);
+    QList<QPoint> getMonsterStartPoss(void);
 private:
     CTileMap front, back;
     QPoint playerStartPos;
