@@ -5,6 +5,7 @@
 #include <common.h>
 #include "CDialogSimulate.h"
 #include "CMainWindow.h"
+#include "CWidgetSimulateSDL.h"
 //----------------------------------------------------------------------------
 CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
     int yTileMax;
@@ -403,5 +404,13 @@ void CMainWindow::on_leScore_editingFinished(void) {
 
     tileGame.score = leScore->text().toInt();
     currentMap->setTile(tileGame, x, y);
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_actSimulateSDL_triggered(bool) {
+    CWidgetSimulateSDL * wSimulate = new CWidgetSimulateSDL();
+
+    wSimulate->exec();
+
+    delete wSimulate;
 }
 //----------------------------------------------------------------------------

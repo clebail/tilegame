@@ -10,7 +10,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = levelEdit
 TEMPLATE = app
-INCLUDEPATH += ..
+INCLUDEPATH += .. /usr/include/SDL2
+LIBS += -lSDL2
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -37,7 +38,8 @@ SOURCES += main.cpp\
     CDialogSimulate.cpp \
     ../CTilesGroup.cpp \
     ../CTileGame.cpp \
-    ../CLevel.cpp
+    ../CLevel.cpp \
+    CWidgetSimulateSDL.cpp
 
 HEADERS  += CMainWindow.h \
         ../CWidgetTile.h \
@@ -52,7 +54,8 @@ HEADERS  += CMainWindow.h \
     CDialogSimulate.h \
     ../CTilesGroup.h \
     ../CTileGame.h \
-    ../CLevel.h
+    ../CLevel.h \
+    CWidgetSimulateSDL.h
 
 FORMS    += CMainWindow.ui \
         ../CTileSetWidget.ui \

@@ -620,7 +620,7 @@
      <x>0</x>
      <y>0</y>
      <width>1386</width>
-     <height>29</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -639,6 +639,7 @@
      <string>&amp;Game</string>
     </property>
     <addaction name="actSimulate"/>
+    <addaction name="actSimulateSDL"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuGame"/>
@@ -676,6 +677,11 @@
   <action name="actNew">
    <property name="text">
     <string>New</string>
+   </property>
+  </action>
+  <action name="actSimulateSDL">
+   <property name="text">
+    <string>Simulate (SDL)</string>
    </property>
   </action>
  </widget>

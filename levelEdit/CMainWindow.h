@@ -55,6 +55,7 @@ private slots:
     void on_rbFood_clicked(void);
     void on_rbWin_clicked(void);
     void on_leScore_editingFinished(void);
+    void on_actSimulateSDL_triggered(bool checked = false);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__
