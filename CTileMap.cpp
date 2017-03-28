@@ -108,6 +108,12 @@ CTileGame CTileMap::getTile(int x, int y) {
     return map.at(y * xMax + x);
 }
 //----------------------------------------------------------------------------
+void CTileMap::setTile(const CTileGame& tile, int x, int y) {
+    if(x < xMax && y < yMax) {
+        return map.replace(y * xMax + x, tile);
+    }
+}
+//----------------------------------------------------------------------------
 QSize CTileMap::getSize(void) {
     return QSize(xMax, yMax);
 }
@@ -122,6 +128,9 @@ void CTileMap::clear(void) {
     }
 
     map.clear();
+
+    xMax = yMax= 0;
+    origin = QPoint(0, 0);
 }
 //----------------------------------------------------------------------------
 void CTileMap::setOrigin(const QPoint& p) {

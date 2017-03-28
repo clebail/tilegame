@@ -35,6 +35,7 @@ private slots:
     void on_pbAdd_clicked(void);
     void on_pbDelete_clicked(void);
     void onMapResize(const QSize& size);
+    void on_actNew_triggered(bool checked = false);
     void on_actOpen_triggered(bool checked = false);
     void on_actSaveAs_triggered(bool checked = false);
     void on_actSave_triggered(bool checked = false);
@@ -48,6 +49,12 @@ private slots:
     void onWGamePlayMousePress(const int& x, const int& y);
     void on_pbSetPlayer_clicked(void);
     void on_pbToggleMonster_clicked(void);
+    void on_rbBombe_clicked(void);
+    void on_rbCoin_clicked(void);
+    void on_rbOneUp_clicked(void);
+    void on_rbFood_clicked(void);
+    void on_rbWin_clicked(void);
+    void on_leScore_editingFinished(void);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

@@ -117,20 +117,49 @@ void CMainWindow::setXY(void) {
 
     gbScore->setEnabled(canSetBonus);
 
-    if(canSetBonus) {
-        rbBombe->setChecked(tileGame.bonusType == CTileGame::ebtBombe);
-        rbOneUp->setChecked(tileGame.bonusType == CTileGame::ebtOneUp);
-        rbCoin->setChecked(tileGame.bonusType == CTileGame::ebtCoin);
-        rbFood->setChecked(tileGame.bonusType == CTileGame::ebtFood);
-        rbWin->setChecked(tileGame.bonusType == CTileGame::ebtWin);
+    if(canSetBonus && tileGame.bonusType != CTileGame::ebtNone) {
+        QRadioButton *rb = 0;
+        switch(tileGame.bonusType) {
+        case CTileGame::ebtBombe:
+            rb = rbBombe;
+            break;
+        case CTileGame::ebtCoin:
+            rb = rbCoin;
+            break;
+        case CTileGame::ebtFood:
+            rb = rbFood;
+            break;
+        case CTileGame::ebtOneUp:
+            rb = rbOneUp;
+            break;
+        case CTileGame::ebtWin:
+            rb = rbWin;
+            break;
+        default:
+            break;
+        }
+
+        rb->setChecked(true);
 
         leScore->setText(QString::number(tileGame.score));
     } else {
+        rbBombe->setAutoExclusive(false);
+        rbOneUp->setAutoExclusive(false);
+        rbCoin->setAutoExclusive(false);
+        rbFood->setAutoExclusive(false);
+        rbWin->setAutoExclusive(false);
+
         rbBombe->setChecked(false);
         rbOneUp->setChecked(false);
         rbCoin->setChecked(false);
         rbFood->setChecked(false);
         rbWin->setChecked(false);
+
+        rbBombe->setAutoExclusive(true);
+        rbOneUp->setAutoExclusive(true);
+        rbCoin->setAutoExclusive(true);
+        rbFood->setAutoExclusive(true);
+        rbWin->setAutoExclusive(true);
 
         leScore->setText(0);
     }
@@ -172,6 +201,15 @@ void CMainWindow::on_pbDelete_clicked(void) {
 //----------------------------------------------------------------------------
 void CMainWindow::onMapResize(const QSize& size) {
     lblMax.setText("Map size : "+QString::number(size.width())+" x "+QString::number(size.height()));
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_actNew_triggered(bool) {
+    fileName = "";
+
+    level.clear();
+
+    cbView->setCurrentIndex(0);
+    on_cbView_currentIndexChanged(0);
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_actOpen_triggered(bool) {
@@ -323,5 +361,47 @@ void CMainWindow::on_pbToggleMonster_clicked(void) {
 
     wGamePlay->update();
     wPreview->update();
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_rbBombe_clicked(void) {
+    CTileGame tileGame = currentMap->getTile(x, y);
+
+    tileGame.bonusType = CTileGame::ebtBombe;
+    currentMap->setTile(tileGame, x, y);
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_rbCoin_clicked(void) {
+    CTileGame tileGame = currentMap->getTile(x, y);
+
+    tileGame.bonusType = CTileGame::ebtCoin;
+    currentMap->setTile(tileGame, x, y);
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_rbOneUp_clicked(void) {
+    CTileGame tileGame = currentMap->getTile(x, y);
+
+    tileGame.bonusType = CTileGame::ebtOneUp;
+    currentMap->setTile(tileGame, x, y);
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_rbFood_clicked(void) {
+    CTileGame tileGame = currentMap->getTile(x, y);
+
+    tileGame.bonusType = CTileGame::ebtFood;
+    currentMap->setTile(tileGame, x, y);
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_rbWin_clicked(void) {
+    CTileGame tileGame = currentMap->getTile(x, y);
+
+    tileGame.bonusType = CTileGame::ebtWin;
+    currentMap->setTile(tileGame, x, y);
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_leScore_editingFinished(void) {
+    CTileGame tileGame = currentMap->getTile(x, y);
+
+    tileGame.score = leScore->text().toInt();
+    currentMap->setTile(tileGame, x, y);
 }
 //----------------------------------------------------------------------------

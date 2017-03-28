@@ -42,6 +42,13 @@ QList<QPoint> CLevel::getMonsterStartPoss(void) {
     return monsterStartPoss;
 }
 //----------------------------------------------------------------------------
+void CLevel::clear(void) {
+    playerStartPos = QPoint();
+    monsterStartPoss = QList<QPoint>();
+    front.clear();
+    back.clear();
+}
+//----------------------------------------------------------------------------
 QDataStream& operator<<(QDataStream& out, const CLevel& level) {
 	int i;
 

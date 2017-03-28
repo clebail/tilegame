@@ -18,6 +18,7 @@ public:
     int getTileCount(void);
     int * getTileIndex(int x, int y);
     CTileGame getTile(int x, int y);
+    void setTile(const CTileGame& tile, int x, int y);
     QSize getSize(void);
     void clear(void);
     void setOrigin(const QPoint& p);

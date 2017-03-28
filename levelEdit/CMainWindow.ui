@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1374</width>
+    <width>1386</width>
     <height>697</height>
    </rect>
   </property>
@@ -521,7 +521,7 @@
              <item row="0" column="1">
               <widget class="QRadioButton" name="rbBombe">
                <property name="text">
-                <string>Bombe</string>
+                <string>&amp;Bombe</string>
                </property>
               </widget>
              </item>
@@ -619,14 +619,15 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1374</width>
-     <height>18</height>
+     <width>1386</width>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>Fi&amp;le</string>
     </property>
+    <addaction name="actNew"/>
     <addaction name="actOpen"/>
     <addaction name="actSave"/>
     <addaction name="actSaveAs"/>
@@ -670,6 +671,11 @@
   <action name="actSimulate">
    <property name="text">
     <string>&amp;Simulate</string>
+   </property>
+  </action>
+  <action name="actNew">
+   <property name="text">
+    <string>New</string>
    </property>
   </action>
  </widget>
