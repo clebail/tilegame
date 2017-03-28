@@ -4,7 +4,7 @@
 #include <common.h>
 #include "CWidgetSimulate.h"
 //----------------------------------------------------------------------------
-#define INC_FRONT           4
+#define INC_FRONT           10
 #define INC_BACK            (INC_FRONT / 2)
 //----------------------------------------------------------------------------
 CWidgetSimulate::CWidgetSimulate(QWidget *parent) : QWidget(parent) {
@@ -83,7 +83,7 @@ void CWidgetSimulate::decX(void) {
             xFront -= INC_FRONT;
         }
 
-        if(xBack) {
+        if(xBack >= INC_BACK) {
             xBack -= INC_BACK;
         }
     }
@@ -95,7 +95,7 @@ void CWidgetSimulate::decY(void) {
             yFront -= INC_FRONT;
         }
 
-        if(yBack) {
+        if(yBack >= INC_BACK) {
             yBack -= INC_BACK;
         }
     }
