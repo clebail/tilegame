@@ -5,7 +5,7 @@
 #include <common.h>
 #include "CDialogSimulate.h"
 #include "CMainWindow.h"
-#include "CWidgetSimulateSDL.h"
+#include "CWidgetSimulateSFML.h"
 //----------------------------------------------------------------------------
 CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
     int yTileMax;
@@ -407,10 +407,14 @@ void CMainWindow::on_leScore_editingFinished(void) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_actSimulateSDL_triggered(bool) {
-    CWidgetSimulateSDL * wSimulate = new CWidgetSimulateSDL();
+    CWidgetSimulateSFML *wSimulate = new CWidgetSimulateSFML(this);
+    CDialogSimulate d(this, wSimulate);
 
-    wSimulate->exec();
+    d.setLevel(&level);
+    d.setTilesImage(&tilesImage);
+    d.setTiles(tiles);
 
+    d.exec();
     delete wSimulate;
 }
 //----------------------------------------------------------------------------
