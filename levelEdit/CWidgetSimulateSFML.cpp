@@ -20,13 +20,23 @@ CWidgetSimulateSFML::~CWidgetSimulateSFML(void) {
 
 }
 //----------------------------------------------------------------------------
+void CWidgetSimulateSFML::setTilesImage(QImage *tilesImage) {
+    sf::Image image;
+    QImage res;
+    CWidgetSimulate::setTilesImage(tilesImage);
+
+    res = tilesImage->rgbSwapped();
+
+    image.create(res.width(), res.height(), reinterpret_cast<const sf::Uint8*>(res.bits()));
+    texture.loadFromImage(image);
+    sprite.setTexture(texture);
+}
+//----------------------------------------------------------------------------
 void CWidgetSimulateSFML::showEvent(QShowEvent*) {
     if (!initialized) {
         XFlush(QX11Info::display());
 
         sf::RenderWindow::create(winId());
-
-        init();
 
         initialized = true;
     }
@@ -42,9 +52,9 @@ void CWidgetSimulateSFML::paintEvent(QPaintEvent*) {
     sf::RenderWindow::display();
 }
 //----------------------------------------------------------------------------
-void CWidgetSimulateSFML::init(void) {
-}
-//----------------------------------------------------------------------------
 void CWidgetSimulateSFML::update(void) {
+    sf::RenderWindow::clear(sf::Color(74, 115, 207));
+
+    sf::RenderWindow::draw(sprite);
 }
 //----------------------------------------------------------------------------

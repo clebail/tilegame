@@ -9,15 +9,16 @@ class CWidgetSimulateSFML : public CWidgetSimulate, public sf::RenderWindow {
 public:
     explicit CWidgetSimulateSFML(QWidget* parent = 0);
     ~CWidgetSimulateSFML(void);
-    void exec(void);
+    virtual void setTilesImage(QImage *tilesImage);
 protected:
     virtual QPaintEngine* paintEngine(void) const;
     virtual void showEvent(QShowEvent*);
     virtual void paintEvent(QPaintEvent*);
 private:
     bool initialized;
+    sf::Texture texture;
+    sf::Sprite sprite;
 
-    void init(void);
     void update(void);
 };
 //----------------------------------------------------------------------------

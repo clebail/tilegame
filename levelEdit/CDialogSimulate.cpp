@@ -8,6 +8,7 @@ CDialogSimulate::CDialogSimulate(QWidget *parent, CWidgetSimulate *wSimulate) :Q
     setupUi(this);
 
     resize(GAME_WIDTH + layout()->margin() * 2, GAME_HEIGHT + layout()->margin() * 2);
+
     if(wSimulate != 0) {
         this->wSimulate = wSimulate;
     }
