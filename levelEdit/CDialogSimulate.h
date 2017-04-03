@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <CLevel.h>
 #include <CTiles.h>
+#include "CWidgetSimulate.h"
 #include "ui_CDialogSimulate.h"
 //----------------------------------------------------------------------------
 class CDialogSimulate : public QDialog, private Ui::CDialogSimulate {
@@ -19,6 +20,7 @@ public:
     virtual bool eventFilter(QObject *object, QEvent *event);
 private:
     QTimer *timer;
+    CWidgetSimulate *wSimulate;
 private slots:
     void timeout(void);
 };

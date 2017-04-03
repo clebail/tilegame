@@ -30,7 +30,8 @@ protected:
     QImage gentil, mechant;
 
     virtual void paintEvent(QPaintEvent *event);
-    virtual void drawTiles(QPainter *painter, CTileMap *tileMap, int curX, int curY);
+private:
+    void drawTiles(QPainter *painter, CTileMap *tileMap, int curX, int curY);
 };
 //----------------------------------------------------------------------------
 #endif // __CWIDGETSIMULATE_H__

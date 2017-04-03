@@ -84,7 +84,10 @@ void CTileMap::remove(int x, int y) {
 
     if(tileGame.tileIndex != 0) {
         delete tileGame.tileIndex;
+
         tileGame.tileIndex = 0;
+        tileGame.score = 0;
+        tileGame.bonusType = CTileGame::ebtNone;
     }
 }
 //----------------------------------------------------------------------------

@@ -170,15 +170,17 @@ void CWidgetSimulate::drawTiles(QPainter *painter, CTileMap *tileMap, int curX, 
 
             if(tileIdx != 0) {
                 CTile * tile = tiles->getTile(*tileIdx);
-                int w = GAME_TILE_WIDTH - curX % GAME_TILE_WIDTH;
+                if(tile) {
+                    int w = GAME_TILE_WIDTH - curX % GAME_TILE_WIDTH;
 
-                QRect dst(screenX - GAME_TILE_WIDTH + w, screenY - GAME_TILE_HEIGHT + h, GAME_TILE_WIDTH, GAME_TILE_HEIGHT);
+                    QRect dst(screenX - GAME_TILE_WIDTH + w, screenY - GAME_TILE_HEIGHT + h, GAME_TILE_WIDTH, GAME_TILE_HEIGHT);
 
-                if(tile->animated.active) {
-                    tile = groups.value(tile->animated.groupName)->getCurrentTile();
+                    if(tile->animated.active) {
+                        tile = groups.value(tile->animated.groupName)->getCurrentTile();
+                    }
+
+                    painter->drawImage(dst, *tilesImage, QRect(tile->getRealX(), tile->getRealY(), TILE_WIDTH, TILE_HEIGHT));
                 }
-
-                painter->drawImage(dst, *tilesImage, QRect(tile->getRealX(), tile->getRealY(), TILE_WIDTH, TILE_HEIGHT));
             }
         }
     }

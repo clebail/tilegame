@@ -29,19 +29,8 @@
    <property name="bottomMargin">
     <number>5</number>
    </property>
-   <item>
-    <widget class="CWidgetSimulate" name="wSimulate" native="true"/>
-   </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>CWidgetSimulate</class>
-   <extends>QWidget</extends>
-   <header>CWidgetSimulate.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

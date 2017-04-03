@@ -74,7 +74,11 @@ CTilesGroup * CTiles::getAnimatedGroup(QString groupName) {
 }
 //----------------------------------------------------------------------------
 CTile * CTiles::getTile(int idx) {
-    return tiles[idx];
+    if(idx >= 0 && idx < tileCount) {
+        return tiles[idx];
+    }
+
+    return 0;
 }
 //----------------------------------------------------------------------------
 QHash<QString, CTilesGroup *> CTiles::getGroups(void) {

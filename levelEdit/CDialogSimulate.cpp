@@ -9,8 +9,9 @@ CDialogSimulate::CDialogSimulate(QWidget *parent, CWidgetSimulate *wSimulate) :Q
 
     resize(GAME_WIDTH + layout()->margin() * 2, GAME_HEIGHT + layout()->margin() * 2);
 
+    this->wSimulate = wSimulate;
     if(wSimulate != 0) {
-        this->wSimulate = wSimulate;
+        this->layout()->addWidget(wSimulate);
     }
 
     timer = new QTimer(this);
@@ -26,36 +27,44 @@ CDialogSimulate::~CDialogSimulate(void) {
 }
 //----------------------------------------------------------------------------
 void CDialogSimulate::setLevel(CLevel *level) {
-    wSimulate->setLevel(level);
+    if(wSimulate != 0) {
+        wSimulate->setLevel(level);
+    }
 }
 //----------------------------------------------------------------------------
 void CDialogSimulate::setTiles(CTiles *tiles) {
-    wSimulate->setTiles(tiles);
+    if(wSimulate != 0) {
+        wSimulate->setTiles(tiles);
+    }
 }
 //----------------------------------------------------------------------------
 void CDialogSimulate::setTilesImage(QImage *tilesImage) {
-    wSimulate->setTilesImage(tilesImage);
+    if(wSimulate != 0) {
+        wSimulate->setTilesImage(tilesImage);
+    }
 }
 //----------------------------------------------------------------------------
 bool CDialogSimulate::eventFilter(QObject *object, QEvent *event) {
-    if(event->type() == QEvent::KeyPress && !object->inherits("QLineEdit")) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+    if(wSimulate != 0) {
+        if(event->type() == QEvent::KeyPress && !object->inherits("QLineEdit")) {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
 
-        switch(keyEvent->key()) {
-        case Qt::Key_Up:
-            wSimulate->decY();
-            return true;
-        case Qt::Key_Right:
-            wSimulate->incX();
-            return true;
-        case Qt::Key_Down:
-            wSimulate->incY();
-            return true;
-        case Qt::Key_Left:
-            wSimulate->decX();
-            return true;
-        default:
-            break;
+            switch(keyEvent->key()) {
+            case Qt::Key_Up:
+                wSimulate->decY();
+                return true;
+            case Qt::Key_Right:
+                wSimulate->incX();
+                return true;
+            case Qt::Key_Down:
+                wSimulate->incY();
+                return true;
+            case Qt::Key_Left:
+                wSimulate->decX();
+                return true;
+            default:
+                break;
+            }
         }
     }
 
@@ -63,7 +72,9 @@ bool CDialogSimulate::eventFilter(QObject *object, QEvent *event) {
 }
 //----------------------------------------------------------------------------
 void CDialogSimulate::timeout(void) {
-    wSimulate->updateAnimate();
-    wSimulate->update();
+    if(wSimulate != 0) {
+        wSimulate->updateAnimate();
+        wSimulate->update();
+    }
 }
 //----------------------------------------------------------------------------

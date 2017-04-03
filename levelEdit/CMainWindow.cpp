@@ -316,13 +316,15 @@ void CMainWindow::on_actQuit_triggered(bool) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_actSimulate_triggered(bool) {
-    CDialogSimulate d(this);
+    CWidgetSimulate *w = new CWidgetSimulate(this);
+    CDialogSimulate d(this, w);
 
     d.setLevel(&level);
     d.setTilesImage(&tilesImage);
     d.setTiles(tiles);
 
     d.exec();
+    delete w;
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_pbInsertRow_clicked(void) {
