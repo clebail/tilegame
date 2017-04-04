@@ -43,7 +43,6 @@ private slots:
     void onWGamePlayViewPortChanged(const QPoint& point);
     void on_pbSetOrigin_clicked(void);
     void on_actQuit_triggered(bool checked = false);
-    void on_actSimulate_triggered(bool checked = false);
     void on_pbInsertRow_clicked(void);
     void on_pbInsertColumn_clicked(void);
     void onWGamePlayMousePress(const int& x, const int& y);
@@ -55,7 +54,7 @@ private slots:
     void on_rbFood_clicked(void);
     void on_rbWin_clicked(void);
     void on_leScore_editingFinished(void);
-    void on_actSimulateSDL_triggered(bool checked = false);
+    void on_actSimulateSFML_triggered(bool checked = false);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

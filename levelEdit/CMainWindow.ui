@@ -638,8 +638,7 @@
     <property name="title">
      <string>&amp;Game</string>
     </property>
-    <addaction name="actSimulate"/>
-    <addaction name="actSimulateSDL"/>
+    <addaction name="actSimulateSFML"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuGame"/>
@@ -679,9 +678,12 @@
     <string>&amp;New</string>
    </property>
   </action>
-  <action name="actSimulateSDL">
+  <action name="actSimulateSFML">
    <property name="text">
-    <string>S&amp;imulate (SFML)</string>
+    <string>S&amp;imulate</string>
+   </property>
+   <property name="toolTip">
+    <string>Simulate</string>
    </property>
   </action>
  </widget>

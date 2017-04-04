@@ -315,18 +315,6 @@ void CMainWindow::on_actQuit_triggered(bool) {
     qApp->quit();
 }
 //----------------------------------------------------------------------------
-void CMainWindow::on_actSimulate_triggered(bool) {
-    CWidgetSimulate *w = new CWidgetSimulate(this);
-    CDialogSimulate d(this, w);
-
-    d.setLevel(&level);
-    d.setTilesImage(&tilesImage);
-    d.setTiles(tiles);
-
-    d.exec();
-    delete w;
-}
-//----------------------------------------------------------------------------
 void CMainWindow::on_pbInsertRow_clicked(void) {
     currentMap->insertRow(y);
     wGamePlay->update();
@@ -408,15 +396,13 @@ void CMainWindow::on_leScore_editingFinished(void) {
     currentMap->setTile(tileGame, x, y);
 }
 //----------------------------------------------------------------------------
-void CMainWindow::on_actSimulateSDL_triggered(bool) {
-    CWidgetSimulateSFML *wSimulate = new CWidgetSimulateSFML(this);
-    CDialogSimulate d(this, wSimulate);
+void CMainWindow::on_actSimulateSFML_triggered(bool) {
+    CDialogSimulate d(this);
 
     d.setLevel(&level);
     d.setTilesImage(&tilesImage);
     d.setTiles(tiles);
 
     d.exec();
-    delete wSimulate;
 }
 //----------------------------------------------------------------------------

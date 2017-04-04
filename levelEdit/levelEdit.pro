@@ -34,7 +34,6 @@ SOURCES += main.cpp\
     ../CTile.cpp \
     ../CTiles.cpp \
     CWidgetPreview.cpp \
-    CWidgetSimulate.cpp \
     CDialogSimulate.cpp \
     ../CTilesGroup.cpp \
     ../CTileGame.cpp \
@@ -50,7 +49,6 @@ HEADERS  += CMainWindow.h \
     ../CTile.h \
     ../CTiles.h \
     CWidgetPreview.h \
-    CWidgetSimulate.h \
     CDialogSimulate.h \
     ../CTilesGroup.h \
     ../CTileGame.h \

@@ -6,13 +6,13 @@
 #include <QTimer>
 #include <CLevel.h>
 #include <CTiles.h>
-#include "CWidgetSimulate.h"
+#include "CWidgetSimulateSFML.h"
 #include "ui_CDialogSimulate.h"
 //----------------------------------------------------------------------------
 class CDialogSimulate : public QDialog, private Ui::CDialogSimulate {
     Q_OBJECT
 public:
-    explicit CDialogSimulate(QWidget *parent = 0, CWidgetSimulate *wSimulate = 0);
+    explicit CDialogSimulate(QWidget *parent = 0);
     ~CDialogSimulate(void);
     void setLevel(CLevel *level);
     void setTiles(CTiles *tiles);
@@ -20,7 +20,6 @@ public:
     virtual bool eventFilter(QObject *object, QEvent *event);
 private:
     QTimer *timer;
-    CWidgetSimulate *wSimulate;
 private slots:
     void timeout(void);
 };

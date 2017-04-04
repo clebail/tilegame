@@ -6,7 +6,16 @@
 #include <Qt/qx11info_x11.h>
 #include <X11/Xlib.h>
 //----------------------------------------------------------------------------
-CWidgetSimulateSFML::CWidgetSimulateSFML(QWidget *parent) : CWidgetSimulate(parent) {
+#define INC_FRONT           10
+#define INC_BACK            (INC_FRONT / 2)
+//----------------------------------------------------------------------------
+CWidgetSimulateSFML::CWidgetSimulateSFML(QWidget *parent) : QWidget(parent) {
+    front = back = 0;
+    tiles = 0;
+
+    QImage gentil(":/levelEdit/images/gentil.png");
+    QImage mechant(":/levelEdit/images/mechant.png");
+
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_OpaquePaintEvent);
     setAttribute(Qt::WA_NoSystemBackground);
@@ -20,13 +29,97 @@ CWidgetSimulateSFML::CWidgetSimulateSFML(QWidget *parent) : CWidgetSimulate(pare
 }
 //----------------------------------------------------------------------------
 CWidgetSimulateSFML::~CWidgetSimulateSFML(void) {
+    QHashIterator<QString, CTilesGroup *> i(groups);
+    while (i.hasNext()) {
+        i.next();
 
+        delete i.value();
+    }
+}
+//----------------------------------------------------------------------------
+void CWidgetSimulateSFML::setLevel(CLevel *level) {
+    this->level = level;
+    front = level->getFront();
+    back = level->getBack();
+
+    xFront = front->getOrigin().x() * GAME_TILE_WIDTH;
+    yFront = front->getOrigin().y() * GAME_TILE_HEIGHT;
+
+    xBack = back->getOrigin().x() * GAME_TILE_WIDTH;
+    yBack = back->getOrigin().y() * GAME_TILE_HEIGHT;
+
+    repaint();
+}
+//----------------------------------------------------------------------------
+void CWidgetSimulateSFML::setTiles(CTiles *tiles) {
+    this->tiles = tiles;
+
+    groups = tiles->getGroups();
+
+    repaint();
 }
 //----------------------------------------------------------------------------
 void CWidgetSimulateSFML::setTilesImage(QImage *tilesImage) {
-    CWidgetSimulate::setTilesImage(tilesImage);
-
     fromQImage(*tilesImage, &texture, &sprite);
+
+    repaint();
+}
+//----------------------------------------------------------------------------
+void CWidgetSimulateSFML::incX(void) {
+    if(front != 0 && back != 0) {
+        if(xFront + GAME_WIDTH < front->getSize().width() * GAME_TILE_WIDTH) {
+            xFront += INC_FRONT;
+        }
+
+        if(xBack + GAME_WIDTH < back->getSize().width() * GAME_TILE_WIDTH) {
+            xBack += INC_BACK;
+        }
+    }
+}
+//----------------------------------------------------------------------------
+void CWidgetSimulateSFML::incY(void) {
+    if(front != 0 && back != 0) {
+        if(yFront + GAME_HEIGHT < front->getSize().height() * GAME_TILE_HEIGHT) {
+            yFront += INC_FRONT;
+        }
+
+        if(yBack + GAME_HEIGHT < back->getSize().height() * GAME_TILE_HEIGHT) {
+            yBack += INC_BACK;
+        }
+    }
+}
+//----------------------------------------------------------------------------
+void CWidgetSimulateSFML::decX(void) {
+    if(front != 0 && back != 0) {
+        if(xFront >= INC_FRONT) {
+            xFront -= INC_FRONT;
+        }
+
+        if(xBack >= INC_BACK) {
+            xBack -= INC_BACK;
+        }
+    }
+}
+//----------------------------------------------------------------------------
+void CWidgetSimulateSFML::decY(void) {
+    if(front != 0 && back != 0) {
+        if(yFront >= INC_FRONT) {
+            yFront -= INC_FRONT;
+        }
+
+        if(yBack >= INC_BACK) {
+            yBack -= INC_BACK;
+        }
+    }
+}
+//----------------------------------------------------------------------------
+void CWidgetSimulateSFML::updateAnimate(void) {
+    QHashIterator<QString, CTilesGroup *> i(groups);
+    while (i.hasNext()) {
+        i.next();
+
+        i.value()->next();
+    }
 }
 //----------------------------------------------------------------------------
 void CWidgetSimulateSFML::showEvent(QShowEvent*) {
@@ -44,17 +137,17 @@ QPaintEngine* CWidgetSimulateSFML::paintEngine() const {
 }
 //----------------------------------------------------------------------------
 void CWidgetSimulateSFML::paintEvent(QPaintEvent*) {
-    update();
+    updateScene();
 
     sf::RenderWindow::display();
 }
 //----------------------------------------------------------------------------
-void CWidgetSimulateSFML::update(void) {
+void CWidgetSimulateSFML::updateScene(void) {
     int i;
 
     sf::RenderWindow::clear(sf::Color(74, 115, 207));
 
-    if(tilesImage != 0 && tiles != 0) {
+    if(tiles != 0) {
         if(back != 0) {
             drawTiles(back, xBack, yBack);
         }
