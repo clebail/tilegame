@@ -98,7 +98,7 @@ bool CMainWindow::eventFilter(QObject *object, QEvent *event) {
 //----------------------------------------------------------------------------
 void CMainWindow::setXY(void) {
     int *mapTileIndex = currentMap->getTileIndex(x, y);
-    bool canSetCharacter = currentMap == level.getFront() && mapTileIndex == 0;
+    bool canSetCharacter = currentMap == level.getLayer(0) && mapTileIndex == 0;
     CTile *mapTile = (mapTileIndex != 0 ? tiles->getTile(*mapTileIndex) : 0);
     bool canSetBonus = mapTile !=0 && (mapTile->hitBonus || mapTile->touchBonus);
     CTileGame tileGame = currentMap->getTile(x, y);
@@ -407,9 +407,14 @@ void CMainWindow::on_actSimulateSFML_triggered(bool) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_actNewLayer_triggered(bool) {
+    int newLayerIndex;
+
     level.addLayer();
 
-    cbView->setCurrentIndex(level.getNbLayer() - 1);
+    newLayerIndex = level.getNbLayer() - 1;
+
+    cbView->addItem("Layer "+QString::number(newLayerIndex));
+    cbView->setCurrentIndex(newLayerIndex);
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_actDeleteLayer_triggered(bool) {

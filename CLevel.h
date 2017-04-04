@@ -11,8 +11,6 @@ class CLevel {
 public:
     explicit CLevel(void);
     ~CLevel(void);
-    CTileMap * getFront(void);
-    CTileMap * getBack(void);
     void setPlayerStartPos(int x, int y);
     QPoint getPlayerStartPos(void);
     void toggleMonsterStartPoss(int x, int y);

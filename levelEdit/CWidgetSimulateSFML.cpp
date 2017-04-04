@@ -42,10 +42,12 @@ CWidgetSimulateSFML::~CWidgetSimulateSFML(void) {
 }
 //----------------------------------------------------------------------------
 void CWidgetSimulateSFML::setLevel(CLevel *level) {
+    int i;
     this->level = level;
 
-    addLayer(level->getFront());
-    addLayer(level->getBack());
+    for(i=0;i<level->getNbLayer();i++) {
+        addLayer(level->getLayer(i));
+    }
 
     repaint();
 }
@@ -73,7 +75,7 @@ void CWidgetSimulateSFML::incX(void) {
         CTileMap *tileMap = pair.second;
 
         if(p->x() + GAME_WIDTH < tileMap->getSize().width() * GAME_TILE_WIDTH) {
-            p->rx() += INC / (i +1);
+            p->rx() += INC / (1 << i);
         }
     }
 }
@@ -87,7 +89,7 @@ void CWidgetSimulateSFML::incY(void) {
         CTileMap *tileMap = pair.second;
 
         if(p->y() + GAME_HEIGHT < tileMap->getSize().height() * GAME_TILE_HEIGHT) {
-            p->ry() += INC / (i +1);
+            p->ry() += INC / (1 << i);
         }
     }
 }
@@ -98,7 +100,7 @@ void CWidgetSimulateSFML::decX(void) {
     for(i=0;i<layers.size();i++) {
         QPair<QPoint *, CTileMap *> pair = layers.at(i);
         QPoint *p = pair.first;
-        int inc = INC / (i +1);
+        int inc = INC / (1 << i);
 
         if(p->x() >= inc) {
             p->rx() -= inc;
@@ -112,7 +114,7 @@ void CWidgetSimulateSFML::decY(void) {
     for(i=0;i<layers.size();i++) {
         QPair<QPoint *, CTileMap *> pair = layers.at(i);
         QPoint *p = pair.first;
-        int inc = INC / (i +1);
+        int inc = INC / (1 << i);
 
         if(p->y() >= inc) {
             p->ry() -= inc;

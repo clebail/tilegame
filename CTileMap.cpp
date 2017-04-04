@@ -83,6 +83,9 @@ void CTileMap::remove(int x, int y) {
         tileGame.score = 0;
         tileGame.bonusType = CTileGame::ebtNone;
     }
+
+    map[idx] = tileGame;
+    compress();
 }
 //----------------------------------------------------------------------------
 int CTileMap::getTileCount(void) {
@@ -174,12 +177,12 @@ void CTileMap::compress(void) {
     int i;
 
     for(i=0;i<getTileCount();i++) {
-        int x = i / xMax;
-        int y = i % xMax;
+        int x = i % xMax;
+        int y = i / xMax;
 
         if(map[i].tileIndex != 0) {
-            newXMax = qMax(x, newXMax);
-            newYMax = qMax(y, newYMax);
+            newXMax = qMax(x + 1, newXMax);
+            newYMax = qMax(y + 1, newYMax);
         }
     }
 

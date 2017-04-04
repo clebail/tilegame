@@ -9,14 +9,6 @@ CLevel::~CLevel(void) {
     clear();
 }
 //----------------------------------------------------------------------------
-CTileMap * CLevel::getFront(void) {
-    return layers.at(0);
-}
-//----------------------------------------------------------------------------
-CTileMap * CLevel::getBack(void) {
-    return layers.at(1);
-}
-//----------------------------------------------------------------------------
 void CLevel::setPlayerStartPos(int x, int y) {
     playerStartPos = QPoint(x, y);
 }
