@@ -26,7 +26,7 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
 
     tileWidget->setImage(&tilesImage);
 
-    currentMap = level.getFront();
+    currentMap = level.getLayer(0);
 
     wGamePlay->resize(GAME_WIDTH, GAME_HEIGHT);
     wGamePlay->setTilesImage(&tilesImage);
@@ -41,19 +41,13 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(tileSetWidget, SIGNAL(mousePress(int,int)), this, SLOT(onTileSetWidgetMousePress(int,int)));
     scrollArea->setWidget(tileSetWidget);
 
-    lblCurrent.setFrameStyle(QFrame::Panel | QFrame::Sunken);;
-    lblMax.setFrameStyle(QFrame::Panel | QFrame::Sunken);;
+    lblCurrent.setFrameStyle(QFrame::Panel | QFrame::Sunken);
 
     Ui::CMainWindow::statusBar->addPermanentWidget(&lblCurrent);
-    Ui::CMainWindow::statusBar->addPermanentWidget(&lblMax);
 
-    onMapResize(QSize(0, 0));
     setXY();
 
     onTileSetWidgetMousePress(0, 0);
-
-    connect(level.getFront(), SIGNAL(mapResize(QSize)), this, SLOT(onMapResize(QSize)));
-    connect(level.getBack(), SIGNAL(mapResize(QSize)), this, SLOT(onMapResize(QSize)));
 
     qApp->installEventFilter(this);
 }
@@ -200,14 +194,16 @@ void CMainWindow::on_pbDelete_clicked(void) {
     wPreview->update();
 }
 //----------------------------------------------------------------------------
-void CMainWindow::onMapResize(const QSize& size) {
-    lblMax.setText("Map size : "+QString::number(size.width())+" x "+QString::number(size.height()));
-}
-//----------------------------------------------------------------------------
 void CMainWindow::on_actNew_triggered(bool) {
+    int i;
+
     fileName = "";
 
-    level.clear();
+    level.create();
+    cbView->clear();
+    for(i=0;i<level.getNbLayer();i++) {
+        cbView->addItem("Layer "+QString::number(i));
+    }
 
     cbView->setCurrentIndex(0);
     on_cbView_currentIndexChanged(0);
@@ -219,11 +215,18 @@ void CMainWindow::on_actOpen_triggered(bool) {
     if(!fileName.isEmpty()) {
         QFile file(fileName);
         if(file.open(QIODevice::ReadOnly)) {
+            int i;
             QDataStream stream(&file);
 
+            level.clear();
             stream >> level;
 
             file.close();
+
+            cbView->clear();
+            for(i=0;i<level.getNbLayer();i++) {
+                cbView->addItem("Layer "+QString::number(i));
+            }
 
             this->fileName = fileName;
 
@@ -273,17 +276,15 @@ void CMainWindow::on_actSave_triggered(bool) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_cbView_currentIndexChanged(int index) {
-    if(index == 0) {
-        currentMap = level.getFront();
+    currentMap = level.getLayer(index);
 
+    if(index == 0) {
         wGamePlay->setPlayerStartPos(level.getPlayerStartPos());
         wPreview->setPlayerStartPos(level.getPlayerStartPos());
 
         wGamePlay->setMonsterStartPoss(level.getMonsterStartPoss());
         wPreview->setMonsterStartPoss(level.getMonsterStartPoss());
     } else {
-        currentMap = level.getBack();
-
         wGamePlay->setPlayerStartPos(QPoint());
         wPreview->setPlayerStartPos(QPoint());
 
@@ -295,7 +296,6 @@ void CMainWindow::on_cbView_currentIndexChanged(int index) {
 
     wGamePlay->setTileMap(currentMap);
     wPreview->setTileMap(currentMap);
-    onMapResize(currentMap->getSize());
 
     setXY();
 }
@@ -404,5 +404,31 @@ void CMainWindow::on_actSimulateSFML_triggered(bool) {
     d.setTiles(tiles);
 
     d.exec();
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_actNewLayer_triggered(bool) {
+    level.addLayer();
+
+    cbView->setCurrentIndex(level.getNbLayer() - 1);
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_actDeleteLayer_triggered(bool) {
+    if(level.deleteLayer(cbView->currentIndex())) {
+        cbView->setCurrentIndex(0);
+    }
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_actLayerUp_triggered(bool) {
+    if(cbView->currentIndex() != 0) {
+        level.layerUp(cbView->currentIndex());
+        cbView->setCurrentIndex(cbView->currentIndex() - 1);
+    }
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_actLayerDown_triggered(bool) {
+    if(cbView->currentIndex() < cbView->count() - 1) {
+        level.layerDown(cbView->currentIndex());
+        cbView->setCurrentIndex(cbView->currentIndex() + 1);
+    }
 }
 //----------------------------------------------------------------------------

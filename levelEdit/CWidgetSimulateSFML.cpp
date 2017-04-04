@@ -6,11 +6,9 @@
 #include <Qt/qx11info_x11.h>
 #include <X11/Xlib.h>
 //----------------------------------------------------------------------------
-#define INC_FRONT           10
-#define INC_BACK            (INC_FRONT / 2)
+#define INC             (GAME_TILE_WIDTH / 2)
 //----------------------------------------------------------------------------
 CWidgetSimulateSFML::CWidgetSimulateSFML(QWidget *parent) : QWidget(parent) {
-    front = back = 0;
     tiles = 0;
 
     QImage gentil(":/levelEdit/images/gentil.png");
@@ -35,18 +33,19 @@ CWidgetSimulateSFML::~CWidgetSimulateSFML(void) {
 
         delete i.value();
     }
+
+    for(int j=0;j<layers.size();j++) {
+        QPair<QPoint *, CTileMap *> pair = layers.at(j);
+
+        delete pair.first;
+    }
 }
 //----------------------------------------------------------------------------
 void CWidgetSimulateSFML::setLevel(CLevel *level) {
     this->level = level;
-    front = level->getFront();
-    back = level->getBack();
 
-    xFront = front->getOrigin().x() * GAME_TILE_WIDTH;
-    yFront = front->getOrigin().y() * GAME_TILE_HEIGHT;
-
-    xBack = back->getOrigin().x() * GAME_TILE_WIDTH;
-    yBack = back->getOrigin().y() * GAME_TILE_HEIGHT;
+    addLayer(level->getFront());
+    addLayer(level->getBack());
 
     repaint();
 }
@@ -66,49 +65,57 @@ void CWidgetSimulateSFML::setTilesImage(QImage *tilesImage) {
 }
 //----------------------------------------------------------------------------
 void CWidgetSimulateSFML::incX(void) {
-    if(front != 0 && back != 0) {
-        if(xFront + GAME_WIDTH < front->getSize().width() * GAME_TILE_WIDTH) {
-            xFront += INC_FRONT;
-        }
+    int i;
 
-        if(xBack + GAME_WIDTH < back->getSize().width() * GAME_TILE_WIDTH) {
-            xBack += INC_BACK;
+    for(i=0;i<layers.size();i++) {
+        QPair<QPoint *, CTileMap *> pair = layers.at(i);
+        QPoint *p = pair.first;
+        CTileMap *tileMap = pair.second;
+
+        if(p->x() + GAME_WIDTH < tileMap->getSize().width() * GAME_TILE_WIDTH) {
+            p->rx() += INC / (i +1);
         }
     }
 }
 //----------------------------------------------------------------------------
 void CWidgetSimulateSFML::incY(void) {
-    if(front != 0 && back != 0) {
-        if(yFront + GAME_HEIGHT < front->getSize().height() * GAME_TILE_HEIGHT) {
-            yFront += INC_FRONT;
-        }
+    int i;
 
-        if(yBack + GAME_HEIGHT < back->getSize().height() * GAME_TILE_HEIGHT) {
-            yBack += INC_BACK;
+    for(i=0;i<layers.size();i++) {
+        QPair<QPoint *, CTileMap *> pair = layers.at(i);
+        QPoint *p = pair.first;
+        CTileMap *tileMap = pair.second;
+
+        if(p->y() + GAME_HEIGHT < tileMap->getSize().height() * GAME_TILE_HEIGHT) {
+            p->ry() += INC / (i +1);
         }
     }
 }
 //----------------------------------------------------------------------------
 void CWidgetSimulateSFML::decX(void) {
-    if(front != 0 && back != 0) {
-        if(xFront >= INC_FRONT) {
-            xFront -= INC_FRONT;
-        }
+    int i;
 
-        if(xBack >= INC_BACK) {
-            xBack -= INC_BACK;
+    for(i=0;i<layers.size();i++) {
+        QPair<QPoint *, CTileMap *> pair = layers.at(i);
+        QPoint *p = pair.first;
+        int inc = INC / (i +1);
+
+        if(p->x() >= inc) {
+            p->rx() -= inc;
         }
     }
 }
 //----------------------------------------------------------------------------
 void CWidgetSimulateSFML::decY(void) {
-    if(front != 0 && back != 0) {
-        if(yFront >= INC_FRONT) {
-            yFront -= INC_FRONT;
-        }
+    int i;
 
-        if(yBack >= INC_BACK) {
-            yBack -= INC_BACK;
+    for(i=0;i<layers.size();i++) {
+        QPair<QPoint *, CTileMap *> pair = layers.at(i);
+        QPoint *p = pair.first;
+        int inc = INC / (i +1);
+
+        if(p->y() >= inc) {
+            p->ry() -= inc;
         }
     }
 }
@@ -148,31 +155,37 @@ void CWidgetSimulateSFML::updateScene(void) {
     sf::RenderWindow::clear(sf::Color(74, 115, 207));
 
     if(tiles != 0) {
-        if(back != 0) {
-            drawTiles(back, xBack, yBack);
-        }
-        if(front != 0) {
-            drawTiles(front, xFront, yFront);
+        QPoint *p = 0;
+        CTileMap *tileMap = 0;
+
+        for(i=layers.size()-1;i>=0;i--) {
+            QPair<QPoint *, CTileMap *> pair = layers.at(i);
+            p = pair.first;
+            tileMap = pair.second;
+
+            drawTiles(tileMap, p->x(), p->y());
         }
 
-        if(!level->getPlayerStartPos().isNull()) {
-            int px = level->getPlayerStartPos().x() * GAME_TILE_WIDTH;
-            int py = level->getPlayerStartPos().y() * GAME_TILE_HEIGHT;
+        if(p != 0 && tileMap != 0) {
+            if(!level->getPlayerStartPos().isNull()) {
+                int px = level->getPlayerStartPos().x() * GAME_TILE_WIDTH;
+                int py = level->getPlayerStartPos().y() * GAME_TILE_HEIGHT;
 
-            if(px - xFront + GAME_TILE_WIDTH >= 0 && py - yFront + GAME_TILE_HEIGHT >= 0) {
-                sGentil.setPosition(px - xFront, py - yFront);
-                sf::RenderWindow::draw(sGentil);
+                if(px - p->x() + GAME_TILE_WIDTH >= 0 && py - p->y() + GAME_TILE_HEIGHT >= 0) {
+                    sGentil.setPosition(px - p->x(), py - p->y());
+                    sf::RenderWindow::draw(sGentil);
+                }
             }
-        }
 
-        for(i=0;i<level->getMonsterStartPoss().size();i++) {
-            QPoint p = level->getMonsterStartPoss().at(i);
-            int px = p.x() * GAME_TILE_WIDTH;
-            int py = p.y() * GAME_TILE_HEIGHT;
+            for(i=0;i<level->getMonsterStartPoss().size();i++) {
+                QPoint mp = level->getMonsterStartPoss().at(i);
+                int px = mp.x() * GAME_TILE_WIDTH;
+                int py = mp.y() * GAME_TILE_HEIGHT;
 
-            if(px - xFront + GAME_TILE_WIDTH >= 0 && py - yFront + GAME_TILE_HEIGHT >= 0) {
-                sMechant.setPosition(px - xFront, py - yFront);
-                sf::RenderWindow::draw(sMechant);
+                if(px - p->x() + GAME_TILE_WIDTH >= 0 && py - p->y() + GAME_TILE_HEIGHT >= 0) {
+                    sMechant.setPosition(px - p->x(), py - p->y());
+                    sf::RenderWindow::draw(sMechant);
+                }
             }
         }
     }
@@ -222,5 +235,12 @@ void CWidgetSimulateSFML::drawTiles(CTileMap *tileMap, int curX, int curY) {
             }
         }
     }
+}
+//----------------------------------------------------------------------------
+void CWidgetSimulateSFML::addLayer(CTileMap *tileMap) {
+    QPoint *p = new QPoint(tileMap->getOrigin().x() * GAME_TILE_WIDTH, tileMap->getOrigin().y() * GAME_TILE_HEIGHT);
+    QPair<QPoint *, CTileMap *> pair(p, tileMap);
+
+    layers.append(pair);
 }
 //----------------------------------------------------------------------------

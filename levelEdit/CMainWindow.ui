@@ -111,18 +111,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="cbView">
-               <item>
-                <property name="text">
-                 <string>Front</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Back</string>
-                </property>
-               </item>
-              </widget>
+              <widget class="QComboBox" name="cbView"/>
              </item>
              <item>
               <widget class="QPushButton" name="pbAdd">
@@ -640,8 +629,19 @@
     </property>
     <addaction name="actSimulateSFML"/>
    </widget>
+   <widget class="QMenu" name="menuLayers">
+    <property name="title">
+     <string>La&amp;yers</string>
+    </property>
+    <addaction name="actNewLayer"/>
+    <addaction name="actDeleteLayer"/>
+    <addaction name="separator"/>
+    <addaction name="actLayerUp"/>
+    <addaction name="actLayerDown"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuGame"/>
+   <addaction name="menuLayers"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="styleSheet">
@@ -684,6 +684,29 @@
    </property>
    <property name="toolTip">
     <string>Simulate</string>
+   </property>
+  </action>
+  <action name="actNewLayer">
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="toolTip">
+    <string>New</string>
+   </property>
+  </action>
+  <action name="actDeleteLayer">
+   <property name="text">
+    <string>Delete</string>
+   </property>
+  </action>
+  <action name="actLayerUp">
+   <property name="text">
+    <string>Up</string>
+   </property>
+  </action>
+  <action name="actLayerDown">
+   <property name="text">
+    <string>Down</string>
    </property>
   </action>
  </widget>

@@ -9,7 +9,6 @@
 #include <CTileGame.h>
 //----------------------------------------------------------------------------
 class CTileMap : public QObject {
-    Q_OBJECT
 public:
     CTileMap(void);
     ~CTileMap(void);
@@ -25,6 +24,7 @@ public:
     QPoint getOrigin(void);
     void insertRow(int y);
     void insertColumn(int x);
+    void compress(void);
 private:
     int xMax, yMax;
     QList<CTileGame> map;
@@ -34,8 +34,6 @@ private:
     void reorderMap(int newXMax);
     friend QDataStream& operator<<(QDataStream& out, const CTileMap& tileMap);
     friend QDataStream& operator>>(QDataStream& in, CTileMap& tileMap);
-signals:
-    void mapResize(const QSize& size);
 };
 //----------------------------------------------------------------------------
 #endif //__CTILEMAP_H__

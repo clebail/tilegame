@@ -9,7 +9,8 @@
 //----------------------------------------------------------------------------
 class CLevel {
 public:
-    explicit CLevel();
+    explicit CLevel(void);
+    ~CLevel(void);
     CTileMap * getFront(void);
     CTileMap * getBack(void);
     void setPlayerStartPos(int x, int y);
@@ -17,8 +18,15 @@ public:
     void toggleMonsterStartPoss(int x, int y);
     QList<QPoint> getMonsterStartPoss(void);
     void clear(void);
+    void addLayer(void);
+    void create(void);
+    int getNbLayer(void);
+    CTileMap * getLayer(int index);
+    bool deleteLayer(int index);
+    void layerUp(int index);
+    void layerDown(int index);
 private:
-    CTileMap front, back;
+    QList<CTileMap *> layers;
     QPoint playerStartPos;
     QList<QPoint> monsterStartPoss;
 

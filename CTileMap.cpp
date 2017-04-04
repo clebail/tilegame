@@ -46,7 +46,6 @@ CTileMap::~CTileMap(void) {
 //----------------------------------------------------------------------------
 void CTileMap::add(int x, int y, int tileIndex) {
     int mapIndex;
-    bool resize = false;
     CTileGame tileGame;
 
     if(x > xMax - 1 || y > yMax -1) {
@@ -54,7 +53,6 @@ void CTileMap::add(int x, int y, int tileIndex) {
         int newYMax = qMax(y + 1, yMax);
 
         addToMap((newXMax * newYMax) - getTileCount());
-        resize = true;
 
         if(x > xMax - 1) {
             reorderMap(x + 1);
@@ -72,10 +70,6 @@ void CTileMap::add(int x, int y, int tileIndex) {
     }
 
     *tileGame.tileIndex = tileIndex;
-
-    if(resize) {
-        emit(mapResize(QSize(xMax, yMax)));
-    }
 }
 //----------------------------------------------------------------------------
 void CTileMap::remove(int x, int y) {
@@ -174,6 +168,27 @@ void CTileMap::insertColumn(int x) {
     }
 }
 //----------------------------------------------------------------------------
+void CTileMap::compress(void) {
+    int newXMax = 0;
+    int newYMax = 0;
+    int i;
+
+    for(i=0;i<getTileCount();i++) {
+        int x = i / xMax;
+        int y = i % xMax;
+
+        if(map[i].tileIndex != 0) {
+            newXMax = qMax(x, newXMax);
+            newYMax = qMax(y, newYMax);
+        }
+    }
+
+    reorderMap(newXMax);
+
+    xMax = newXMax;
+    yMax = newYMax;
+}
+//----------------------------------------------------------------------------
 void CTileMap::addToMap(int nb) {
     int i;
 
@@ -185,16 +200,20 @@ void CTileMap::addToMap(int nb) {
 void CTileMap::reorderMap(int newXMax) {
     int i;
 
-    for(i=getTileCount()-1;i>=0;i--) {
-        int x = i % xMax;
-        int y = i / xMax;
+    if(newXMax > xMax) {
+        for(i=getTileCount()-1;i>=0;i--) {
+            int x = i % xMax;
+            int y = i / xMax;
 
-        if(y > 0 && map[i].tileIndex != 0) {
-            int newI = y * newXMax + x;
+            if(y > 0 && map[i].tileIndex != 0) {
+                int newI = y * newXMax + x;
 
-            map[newI] = map[i];
-            map[i].tileIndex = 0;
+                map[newI] = map[i];
+                map[i].tileIndex = 0;
+            }
         }
+    } else if(newXMax < xMax) {
+
     }
 }
 //----------------------------------------------------------------------------

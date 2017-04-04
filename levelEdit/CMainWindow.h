@@ -25,7 +25,7 @@ private:
     CLevel level;
     CTileMap *currentMap;
     int currentTileIndex;
-    QLabel lblMax, lblCurrent;
+    QLabel lblCurrent;
     QString fileName;
     CTiles *tiles;
 
@@ -34,7 +34,6 @@ private slots:
     void onTileSetWidgetMousePress(const int& x, const int &y);
     void on_pbAdd_clicked(void);
     void on_pbDelete_clicked(void);
-    void onMapResize(const QSize& size);
     void on_actNew_triggered(bool checked = false);
     void on_actOpen_triggered(bool checked = false);
     void on_actSaveAs_triggered(bool checked = false);
@@ -55,6 +54,10 @@ private slots:
     void on_rbWin_clicked(void);
     void on_leScore_editingFinished(void);
     void on_actSimulateSFML_triggered(bool checked = false);
+    void on_actNewLayer_triggered(bool checked = false);
+    void on_actDeleteLayer_triggered(bool checked = false);
+    void on_actLayerUp_triggered(bool checked = false);
+    void on_actLayerDown_triggered(bool checked = false);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

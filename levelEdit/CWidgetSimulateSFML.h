@@ -26,10 +26,9 @@ protected:
     virtual void paintEvent(QPaintEvent*);
 private:
     CLevel *level;
-    CTileMap *front, *back;
+    QList<QPair<QPoint *, CTileMap *> > layers;
     CTiles *tiles;
     QHash<QString, CTilesGroup *> groups;
-    int xFront, yFront, xBack, yBack;
     bool initialized;
     sf::Texture texture, tGentil, tMechant;
     sf::Sprite sprite, sGentil, sMechant;
@@ -37,6 +36,7 @@ private:
     void updateScene(void);
     void fromQImage(const QImage& img, sf::Texture * texture, sf::Sprite * sprite);
     void drawTiles(CTileMap *tileMap, int curX, int curY);
+    void addLayer(CTileMap *tileMap);
 };
 //----------------------------------------------------------------------------
 #endif // __CWIDGETSIMULATESFML_H__
