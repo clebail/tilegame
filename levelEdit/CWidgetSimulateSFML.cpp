@@ -174,7 +174,8 @@ void CWidgetSimulateSFML::updateScene(void) {
                 int py = level->getPlayerStartPos().y() * GAME_TILE_HEIGHT;
 
                 if(px - p->x() + GAME_TILE_WIDTH >= 0 && py - p->y() + GAME_TILE_HEIGHT >= 0) {
-                    sGentil.setPosition(px - p->x(), py - p->y());
+                    sf::FloatRect r = sGentil.getGlobalBounds();
+                    sGentil.setPosition(px - p->x(), py - p->y() - r.height + GAME_TILE_HEIGHT);
                     sf::RenderWindow::draw(sGentil);
                 }
             }

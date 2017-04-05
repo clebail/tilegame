@@ -32,3 +32,11 @@ void CMainWindow::on_actSSopen_triggered(bool) {
     }
 }
 //----------------------------------------------------------------------------
+void CMainWindow::on_pbZoomPlus_clicked(void) {
+    wSpriteSheet->incZoomScale();
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_pbZoomMoins_clicked(void) {
+    wSpriteSheet->decZoomScale();
+}
+//----------------------------------------------------------------------------

@@ -16,6 +16,8 @@ private:
 private slots:
     void on_actQuit_triggered(bool checked = false);
     void on_actSSopen_triggered(bool checked = false);
+    void on_pbZoomPlus_clicked(void);
+    void on_pbZoomMoins_clicked(void);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

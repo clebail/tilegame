@@ -128,8 +128,10 @@ void CWidgetPreview::drawMap(QPainter *painter) {
         if(!playerStartPos.isNull()) {
             int px = playerStartPos.x();
             int py = playerStartPos.y();
+            int pw = gentil.width() * w / TILE_WIDTH;
+            int ph = gentil.height() * h / TILE_HEIGHT;
 
-            QRect dst(px * w + mX, py * h + mY, w, h);
+            QRect dst(px * w + mX, py * h + mY - ph + h, pw, ph);
 
             painter->drawImage(dst, gentil);
         }

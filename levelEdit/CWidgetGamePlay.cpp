@@ -134,7 +134,7 @@ void CWidgetGamePlay::drawMap(QPainter *painter) {
         int py = playerStartPos.y();
 
         if(px >= viewPortX && px < viewPortX + GAME_WIDTH && py >= viewPortY && py <= viewPortY + GAME_HEIGHT) {
-            QPoint dst((px - viewPortX) * GAME_TILE_WIDTH, (py - viewPortY) * GAME_TILE_HEIGHT);
+            QPoint dst((px - viewPortX) * GAME_TILE_WIDTH, (py - viewPortY) * GAME_TILE_HEIGHT - gentil.height() + GAME_TILE_HEIGHT);
 
             painter->drawImage(dst, gentil);
         }

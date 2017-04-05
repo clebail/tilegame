@@ -114,6 +114,16 @@
                  <string>Bomb</string>
                 </property>
                </item>
+               <item>
+                <property name="text">
+                 <string>Game over</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Win</string>
+                </property>
+               </item>
               </widget>
              </item>
             </layout>
@@ -259,7 +269,7 @@
      <x>0</x>
      <y>0</y>
      <width>977</width>
-     <height>29</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
