@@ -216,7 +216,17 @@ void CTileMap::reorderMap(int newXMax) {
             }
         }
     } else if(newXMax < xMax) {
+        for(i=0;i<getTileCount();i++) {
+            int x = i % xMax;
+            int y = i / xMax;
 
+            if(y > 0 && map[i].tileIndex != 0) {
+                int newI = y * newXMax + x;
+
+                map[newI] = map[i];
+                map[i].tileIndex = 0;
+            }
+        }
     }
 }
 //----------------------------------------------------------------------------
