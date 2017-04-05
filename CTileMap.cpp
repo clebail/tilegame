@@ -152,6 +152,31 @@ void CTileMap::insertRow(int y) {
     yMax++;
 }
 //----------------------------------------------------------------------------
+void CTileMap::deleteRow(int y) {
+    int yM, i;
+
+    for(yM=y;yM<yMax;yM++) {
+        for(i=0;i<xMax;i++) {
+            int idx = yM * xMax + i;
+
+            if(yM == yMax - 1) {
+                map[idx] = CTileGame();
+            } else {
+                if(yM == y) {
+                    CTileGame tileGame = map[idx];
+                    if(tileGame.tileIndex != 0) {
+                        delete tileGame.tileIndex;
+                    }
+                }
+
+                map[idx] = map[idx + xMax];
+            }
+        }
+    }
+
+    compress();
+}
+//----------------------------------------------------------------------------
 void CTileMap::insertColumn(int x) {
     int xM, y;
 
@@ -169,6 +194,31 @@ void CTileMap::insertColumn(int x) {
             }
         }
     }
+}
+//----------------------------------------------------------------------------
+void CTileMap::deleteColumn(int x) {
+    int xM, y;
+
+    for(y=0;y<yMax;y++) {
+        for(xM=x;xM<xMax;xM++) {
+            int idx = y * xMax + xM;
+
+            if(xM == xMax -1) {
+                map[idx] = CTileGame();
+            }else {
+                if(xM == x) {
+                    CTileGame tileGame = map[idx];
+                    if(tileGame.tileIndex != 0) {
+                        delete tileGame.tileIndex;
+                    }
+
+                    map[idx] = map[idx + 1];
+                }
+            }
+        }
+    }
+
+    compress();
 }
 //----------------------------------------------------------------------------
 void CTileMap::compress(void) {

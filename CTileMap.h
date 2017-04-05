@@ -23,7 +23,9 @@ public:
     void setOrigin(const QPoint& p);
     QPoint getOrigin(void);
     void insertRow(int y);
+    void deleteRow(int y);
     void insertColumn(int x);
+    void deleteColumn(int x);
     void compress(void);
 private:
     int xMax, yMax;

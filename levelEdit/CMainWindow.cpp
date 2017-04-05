@@ -321,8 +321,20 @@ void CMainWindow::on_pbInsertRow_clicked(void) {
     wPreview->update();
 }
 //----------------------------------------------------------------------------
+void CMainWindow::on_pbDeleteRow_clicked(void) {
+    currentMap->deleteRow(y);
+    wGamePlay->update();
+    wPreview->update();
+}
+//----------------------------------------------------------------------------
 void CMainWindow::on_pbInsertColumn_clicked(void) {
     currentMap->insertColumn(x);
+    wGamePlay->update();
+    wPreview->update();
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_pbDeleteColumn_clicked(void) {
+    currentMap->deleteColumn(x);
     wGamePlay->update();
     wPreview->update();
 }

@@ -43,7 +43,9 @@ private slots:
     void on_pbSetOrigin_clicked(void);
     void on_actQuit_triggered(bool checked = false);
     void on_pbInsertRow_clicked(void);
+    void on_pbDeleteRow_clicked(void);
     void on_pbInsertColumn_clicked(void);
+    void on_pbDeleteColumn_clicked(void);
     void onWGamePlayMousePress(const int& x, const int& y);
     void on_pbSetPlayer_clicked(void);
     void on_pbToggleMonster_clicked(void);
