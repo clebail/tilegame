@@ -4,6 +4,7 @@
 //----------------------------------------------------------------------------
 #include <QWidget>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio/Music.hpp>
 #include <CLevel.h>
 #include <CTiles.h>
 //----------------------------------------------------------------------------
@@ -32,6 +33,8 @@ private:
     bool initialized;
     sf::Texture texture, tGentil, tMechant;
     sf::Sprite sprite, sGentil, sMechant;
+    sf::Music music;
+    char *musicBuffer;
 
     void updateScene(void);
     void fromQImage(const QImage& img, sf::Texture * texture, sf::Sprite * sprite);

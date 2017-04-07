@@ -60,6 +60,7 @@ private slots:
     void on_actDeleteLayer_triggered(bool checked = false);
     void on_actLayerUp_triggered(bool checked = false);
     void on_actLayerDown_triggered(bool checked = false);
+    void on_pbOpenMusic_clicked(void);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

@@ -24,6 +24,8 @@ CWidgetSimulateSFML::CWidgetSimulateSFML(QWidget *parent) : QWidget(parent) {
 
     fromQImage(gentil, &tGentil, &sGentil);
     fromQImage(mechant, &tMechant, &sMechant);
+
+    musicBuffer = 0;
 }
 //----------------------------------------------------------------------------
 CWidgetSimulateSFML::~CWidgetSimulateSFML(void) {
@@ -39,14 +41,32 @@ CWidgetSimulateSFML::~CWidgetSimulateSFML(void) {
 
         delete pair.first;
     }
+
+    if(musicBuffer != 0 && music.getStatus() == sf::SoundSource::Playing) {
+        music.stop();
+        delete[] musicBuffer;
+    }
 }
 //----------------------------------------------------------------------------
 void CWidgetSimulateSFML::setLevel(CLevel *level) {
     int i;
+    QByteArray baMusic;
+
     this->level = level;
+    baMusic = level->getMusic();
 
     for(i=0;i<level->getNbLayer();i++) {
         addLayer(level->getLayer(i));
+    }
+
+    if(baMusic.size() != 0) {
+        musicBuffer = new char[baMusic.size()];
+        memcpy(musicBuffer, baMusic.data(), baMusic.size());
+    }
+
+    if(music.openFromMemory((const void *)musicBuffer, baMusic.size())) {
+        //music.setLoop(true);
+        music.play();
     }
 
     repaint();

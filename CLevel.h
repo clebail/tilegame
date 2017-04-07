@@ -23,10 +23,17 @@ public:
     bool deleteLayer(int index);
     void layerUp(int index);
     void layerDown(int index);
+    QString getMusicName(void);
+    void setMusicName(QString musicName);
+    QByteArray getMusic(void);
+    void setMusic(const QByteArray& music);
 private:
     QList<CTileMap *> layers;
     QPoint playerStartPos;
     QList<QPoint> monsterStartPoss;
+    QString musicName;
+    QByteArray music;
+
 
     friend QDataStream& operator<<(QDataStream& out, const CLevel& level);
     friend QDataStream& operator>>(QDataStream& in, CLevel& level);

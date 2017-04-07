@@ -7,6 +7,8 @@
 #include "CMainWindow.h"
 #include "CWidgetSimulateSFML.h"
 //----------------------------------------------------------------------------
+#define BUFFER_SIZE             1024
+//----------------------------------------------------------------------------
 CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
     int yTileMax;
 
@@ -237,6 +239,8 @@ void CMainWindow::on_actOpen_triggered(bool) {
 
             wGamePlay->setMonsterStartPoss(level.getMonsterStartPoss());
             wPreview->setMonsterStartPoss(level.getMonsterStartPoss());
+
+            leMusic->setText(level.getMusicName());
         }
     }
 }
@@ -446,6 +450,34 @@ void CMainWindow::on_actLayerDown_triggered(bool) {
     if(cbView->currentIndex() < cbView->count() - 1) {
         level.layerDown(cbView->currentIndex());
         cbView->setCurrentIndex(cbView->currentIndex() + 1);
+    }
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_pbOpenMusic_clicked(void) {
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open file"), QString(), tr("Music file (*.wav *.ogg *.mp3)"));
+
+    if(!fileName.isEmpty()) {
+        QFile file(fileName);
+        if(file.open(QIODevice::ReadOnly)) {
+            QDataStream stream(&file);
+            QByteArray music;
+            QFileInfo fi(file);
+
+            while(!stream.atEnd()) {
+                char buffer[BUFFER_SIZE];
+                int len;
+
+                len = stream.readRawData(buffer, BUFFER_SIZE);
+
+                music.append(buffer, len);
+            }
+
+            file.close();
+
+            leMusic->setText(fi.baseName());
+            level.setMusicName(fi.baseName());
+            level.setMusic(music);
+        }
     }
 }
 //----------------------------------------------------------------------------

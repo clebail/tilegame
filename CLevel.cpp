@@ -1,4 +1,5 @@
 //----------------------------------------------------------------------------
+#include <QtDebug>
 #include "CLevel.h"
 //----------------------------------------------------------------------------
 CLevel::CLevel(void) {
@@ -94,6 +95,22 @@ void CLevel::layerDown(int index) {
     layers.swap(index, index + 1);
 }
 //----------------------------------------------------------------------------
+QString CLevel::getMusicName(void) {
+    return musicName;
+}
+//----------------------------------------------------------------------------
+void CLevel::setMusicName(QString musicName) {
+    this->musicName = musicName;
+}
+//----------------------------------------------------------------------------
+QByteArray CLevel::getMusic(void) {
+   return music;
+}
+//----------------------------------------------------------------------------
+void CLevel::setMusic(const QByteArray& music) {
+    this->music = music;
+}
+//----------------------------------------------------------------------------
 QDataStream& operator<<(QDataStream& out, const CLevel& level) {
 	int i;
 
@@ -107,6 +124,9 @@ QDataStream& operator<<(QDataStream& out, const CLevel& level) {
         CTileMap *tm = level.layers.at(i);
         out << *tm;
     }
+
+    out << level.musicName;
+    out << level.music;
 
     return out;
 }
@@ -129,6 +149,9 @@ QDataStream& operator>>(QDataStream& in, CLevel& level) {
         in >> *tm;
         level.layers.append(tm);
     }
+
+    in >> level.musicName;
+    in >> level.music;
 
     return in;
 }
