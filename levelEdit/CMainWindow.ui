@@ -612,7 +612,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="leMusic"/>
+              <widget class="QLineEdit" name="leMusic">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QPushButton" name="pbOpenMusic">

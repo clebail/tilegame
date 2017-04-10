@@ -3,6 +3,7 @@
 #define __CMAINWINDOW_H__
 //----------------------------------------------------------------------------
 #include <QMainWindow>
+#include <CSprite.h>
 #include "ui_CMainWindow.h"
 #include "CWidgetSpriteSheet.h"
 //----------------------------------------------------------------------------
@@ -13,11 +14,16 @@ public:
     ~CMainWindow(void);
 private:
     CWidgetSpriteSheet *wSpriteSheet;
+    CSprite sprite;
+    CSpriteFrame currentSpriteFrame;
 private slots:
     void on_actQuit_triggered(bool checked = false);
     void on_actSSopen_triggered(bool checked = false);
     void on_pbZoomPlus_clicked(void);
     void on_pbZoomMoins_clicked(void);
+    void onCapture(const QPoint& topLeft, const QPoint& bottomRight);
+    void on_pbAddFrame_clicked(void);
+    void on_cbMotionType_currentIndexChanged(int index);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

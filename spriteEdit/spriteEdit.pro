@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = spriteEdit
 TEMPLATE = app
 INCLUDEPATH += .. .
+LIBS +=  -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system -lX11
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -26,10 +27,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         CMainWindow.cpp \
-    CWidgetSpriteSheet.cpp
+    CWidgetSpriteSheet.cpp \
+    ../CSprite.cpp \
+    ../CSpriteFrame.cpp \
+    CSpriteFrameWidget.cpp \
+    CSpritePreview.cpp
 
 HEADERS  += CMainWindow.h \
-    CWidgetSpriteSheet.h
+    CWidgetSpriteSheet.h \
+    ../CSprite.h \
+    ../CSpriteFrame.h \
+    CSpriteFrameWidget.h \
+    CSpritePreview.h
 
 FORMS    += CMainWindow.ui \
     CWidgetSpriteSheet.ui
+
+RESOURCES += \
+    spriteedit.qrc
