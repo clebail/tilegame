@@ -65,7 +65,7 @@ void CWidgetSimulateSFML::setLevel(CLevel *level) {
     }
 
     if(music.openFromMemory((const void *)musicBuffer, baMusic.size())) {
-        //music.setLoop(true);
+        music.setLoop(true);
         music.play();
     }
 
