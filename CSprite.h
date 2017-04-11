@@ -20,6 +20,8 @@ public:
     int getFrameCount(int motionIndex);
     CSpriteFrame * getFrame(int motionIndex, int frameIndex);
     void addFrame(int motionIndex, CSpriteFrame * spriteFrame);
+    void swap(int motionIndex, int index1, int index2);
+    void deleteFrame(int motionIndex, int frameIndex);
 private:
     QImage spriteSheet;
     QList<CSpriteFrame *> motions[NB_MOTION];

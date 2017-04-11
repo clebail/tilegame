@@ -26,8 +26,10 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
     wPreview->setSprite(&sprite);
 
     currentSpriteFrame = 0;
+    currentSpriteFrameIndex = 0;
 
     connect(wSpriteSheet, SIGNAL(capture(QPoint,QPoint)), this, SLOT(onCapture(QPoint,QPoint)));
+    connect(wPreview, SIGNAL(currentFrameChanged(int)), this, SLOT(onCurrentFrameChnaged(int)));
 }
 //----------------------------------------------------------------------------
 CMainWindow::~CMainWindow(void) {
@@ -71,7 +73,9 @@ void CMainWindow::on_pbAddFrame_clicked(void) {
 
     sprite.addFrame(cbMotionType->currentIndex(), currentSpriteFrame);
 
-    wPreview->setCurrentFrameIndex(sprite.getFrameCount(cbMotionType->currentIndex()) - 1);
+    currentSpriteFrameIndex = sprite.getFrameCount(cbMotionType->currentIndex()) - 1;
+
+    wPreview->setCurrentFrameIndex(currentSpriteFrameIndex);
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_cbMotionType_currentIndexChanged(int index) {
@@ -79,7 +83,6 @@ void CMainWindow::on_cbMotionType_currentIndexChanged(int index) {
     wPreview->setCurrentFrameIndex(0);
 
     currentSpriteFrame = sprite.getFrame((CSprite::EMotion)index, 0);
-
     cbHurt->setChecked(false);
     leSound->setText("");
 
@@ -87,14 +90,17 @@ void CMainWindow::on_cbMotionType_currentIndexChanged(int index) {
         wFrame->setImage(QImage());
     } else {
         wFrame->setImage(wSpriteSheet->getImage().copy(currentSpriteFrame->getRect()));
-
         cbHurt->setChecked(currentSpriteFrame->getHurt());
         leSound->setText(currentSpriteFrame->getSoundName());
     }
+
+    currentSpriteFrameIndex = 0;
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_cbHurt_stateChanged(int state) {
-    currentSpriteFrame->setHurt((bool)state);
+    if(currentSpriteFrame != 0) {
+        currentSpriteFrame->setHurt((bool)state);
+    }
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_pbOpenSound_clicked(void) {
@@ -123,5 +129,48 @@ void CMainWindow::on_pbOpenSound_clicked(void) {
             currentSpriteFrame->setSound(sound);
         }
     }
+}
+//----------------------------------------------------------------------------
+void CMainWindow::onCurrentFrameChnaged(int index) {
+    currentSpriteFrame = sprite.getFrame((CSprite::EMotion)cbMotionType->currentIndex(), index);
+
+    wFrame->setImage(wSpriteSheet->getImage().copy(currentSpriteFrame->getRect()));
+
+    cbHurt->setChecked(currentSpriteFrame->getHurt());
+    leSound->setText(currentSpriteFrame->getSoundName());
+
+    currentSpriteFrameIndex = index;
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_pbLeft_clicked(void) {
+    if(currentSpriteFrameIndex > 0) {
+        sprite.swap(cbMotionType->currentIndex(), currentSpriteFrameIndex, currentSpriteFrameIndex - 1);
+        currentSpriteFrameIndex--;
+
+        wPreview->setCurrentFrameIndex(currentSpriteFrameIndex);
+        wPreview->updateFrameRects();
+        wPreview->repaint();
+    }
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_pbRight_clicked(void) {
+    if(currentSpriteFrameIndex < sprite.getFrameCount(cbMotionType->currentIndex()) - 1) {
+        sprite.swap(cbMotionType->currentIndex(), currentSpriteFrameIndex, currentSpriteFrameIndex + 1);
+        currentSpriteFrameIndex++;
+
+        wPreview->setCurrentFrameIndex(currentSpriteFrameIndex);
+        wPreview->updateFrameRects();
+        wPreview->repaint();
+    }
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_pbDelete_clicked(void) {
+    sprite.deleteFrame(cbMotionType->currentIndex(), currentSpriteFrameIndex);
+
+    currentSpriteFrameIndex = 0;
+
+    wPreview->setCurrentFrameIndex(currentSpriteFrameIndex);
+    wPreview->updateFrameRects();
+    wPreview->repaint();
 }
 //----------------------------------------------------------------------------

@@ -17,6 +17,7 @@ private:
     CSprite sprite;
     CSpriteFrame * currentSpriteFrame;
     CSpriteFrame tmpSpriteFrame;
+    int currentSpriteFrameIndex;
 private slots:
     void on_actQuit_triggered(bool checked = false);
     void on_actSSopen_triggered(bool checked = false);
@@ -27,6 +28,10 @@ private slots:
     void on_cbMotionType_currentIndexChanged(int index);
     void on_cbHurt_stateChanged(int state);
     void on_pbOpenSound_clicked(void);
+    void onCurrentFrameChnaged(int index);
+    void on_pbLeft_clicked(void);
+    void on_pbRight_clicked(void);
+    void on_pbDelete_clicked(void);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

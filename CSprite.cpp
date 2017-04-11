@@ -2,7 +2,6 @@
 #include "CSprite.h"
 //----------------------------------------------------------------------------
 CSprite::CSprite(void) {
-
 }
 //----------------------------------------------------------------------------
 CSprite::~CSprite(void) {
@@ -46,6 +45,22 @@ CSpriteFrame * CSprite::getFrame(int motionIndex, int frameIndex) {
 void CSprite::addFrame(int motionIndex, CSpriteFrame * spriteFrame) {
     if(motionIndex >= 0 && motionIndex < NB_MOTION) {
         motions[motionIndex].append(spriteFrame);
+    }
+}
+//----------------------------------------------------------------------------
+void CSprite::swap(int motionIndex, int index1, int index2) {
+    if(motionIndex >= 0 && motionIndex < NB_MOTION) {
+        motions[motionIndex].swap(index1, index2);
+    }
+}
+//----------------------------------------------------------------------------
+void CSprite::deleteFrame(int motionIndex, int frameIndex) {
+    if(motionIndex >= 0 && motionIndex < NB_MOTION) {
+        if(frameIndex >= 0 && frameIndex < motions[motionIndex].size()) {
+            CSpriteFrame *spriteFrame = motions[motionIndex].takeAt(frameIndex);
+
+            delete spriteFrame;
+        }
     }
 }
 //----------------------------------------------------------------------------
