@@ -48,10 +48,10 @@ void CSpritePreview::paintEvent(QPaintEvent *) {
         double w = MARGIN, h = 0;
 
         for(i=0;i<sprite->getFrameCount(currentMotion);i++) {
-            CSpriteFrame spriteFrame = sprite->getFrame(currentMotion, i);
+            CSpriteFrame * spriteFrame = sprite->getFrame(currentMotion, i);
 
-            w += spriteFrame.getRect().width() + MARGIN;
-            h = qMax(h, (double)spriteFrame.getRect().height());
+            w += spriteFrame->getRect().width() + MARGIN;
+            h = qMax(h, (double)spriteFrame->getRect().height());
         }
 
         double coefX, coefY, coef, mX, mY;
@@ -70,10 +70,10 @@ void CSpritePreview::paintEvent(QPaintEvent *) {
         int x = mX;
 
         for(i=0;i<sprite->getFrameCount(currentMotion);i++) {
-            CSpriteFrame spriteFrame = sprite->getFrame(currentMotion, i);
-            QRect dst(x, mY + (h - spriteFrame.getRect().height()) * coef, spriteFrame.getRect().width() * coef, spriteFrame.getRect().height() * coef);
+            CSpriteFrame * spriteFrame = sprite->getFrame(currentMotion, i);
+            QRect dst(x, mY + (h - spriteFrame->getRect().height()) * coef, spriteFrame->getRect().width() * coef, spriteFrame->getRect().height() * coef);
 
-            painter.drawImage(dst, spriteSheet, spriteFrame.getRect());
+            painter.drawImage(dst, spriteSheet, spriteFrame->getRect());
 
             if(i == currentFrameIndex) {
                 QPen pen(Qt::DotLine);
@@ -83,7 +83,7 @@ void CSpritePreview::paintEvent(QPaintEvent *) {
                 painter.drawRect(dst);
             }
 
-            x += (spriteFrame.getRect().width() + MARGIN) * coef;
+            x += (spriteFrame->getRect().width() + MARGIN) * coef;
         }
     }
 }

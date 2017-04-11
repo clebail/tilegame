@@ -14,14 +14,15 @@ public:
     typedef enum  { emNothing = 0, emWalk, emJump, emClimb, emHit, emBomb, emGameOver, emWin, emStroke } EMotion;
 
     explicit CSprite(void);
+    ~CSprite(void);
     void setSpriteSheet(const QImage& spriteSheet);
     QImage getSpriteSheet(void);
     int getFrameCount(int motionIndex);
-    CSpriteFrame getFrame(int motionIndex, int frameIndex);
-    void addFrame(int motionIndex, CSpriteFrame spriteFrame);
+    CSpriteFrame * getFrame(int motionIndex, int frameIndex);
+    void addFrame(int motionIndex, CSpriteFrame * spriteFrame);
 private:
     QImage spriteSheet;
-    QList<CSpriteFrame> motions[NB_MOTION];
+    QList<CSpriteFrame *> motions[NB_MOTION];
 
     friend QDataStream& operator<<(QDataStream& out, const CSprite& sprite);
     friend QDataStream& operator>>(QDataStream& in, CSprite& sprite);

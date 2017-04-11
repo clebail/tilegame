@@ -5,6 +5,18 @@ CSprite::CSprite(void) {
 
 }
 //----------------------------------------------------------------------------
+CSprite::~CSprite(void) {
+    int i, j;
+
+    for(i=0;i<NB_MOTION;i++) {
+        for(j=0;j<motions[i].size();j++) {
+            delete motions[i].at(j);
+        }
+
+        motions[i].clear();
+    }
+}
+//----------------------------------------------------------------------------
 void CSprite::setSpriteSheet(const QImage& spriteSheet) {
     this->spriteSheet = spriteSheet;
 }
@@ -21,17 +33,17 @@ int CSprite::getFrameCount(int motionIndex) {
     return 0;
 }
 //----------------------------------------------------------------------------
-CSpriteFrame CSprite::getFrame(int motionIndex, int frameIndex) {
+CSpriteFrame * CSprite::getFrame(int motionIndex, int frameIndex) {
     if(motionIndex >= 0 && motionIndex < NB_MOTION) {
         if(frameIndex >= 0 && frameIndex < motions[motionIndex].size()) {
             return motions[motionIndex].at(frameIndex);
         }
     }
 
-    return CSpriteFrame();
+    return 0;
 }
 //----------------------------------------------------------------------------
-void CSprite::addFrame(int motionIndex, CSpriteFrame spriteFrame) {
+void CSprite::addFrame(int motionIndex, CSpriteFrame * spriteFrame) {
     if(motionIndex >= 0 && motionIndex < NB_MOTION) {
         motions[motionIndex].append(spriteFrame);
     }
