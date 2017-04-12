@@ -3,6 +3,7 @@
 #include <QScrollBar>
 #include <QRgb>
 #include "CMainWindow.h"
+#include "CDialogAnimate.h"
 //----------------------------------------------------------------------------
 #define BUFFER_SIZE             1024
 //----------------------------------------------------------------------------
@@ -134,7 +135,7 @@ void CMainWindow::on_pbOpenSound_clicked(void) {
 void CMainWindow::onCurrentFrameChnaged(int index) {
     currentSpriteFrame = sprite.getFrame((CSprite::EMotion)cbMotionType->currentIndex(), index);
 
-    wFrame->setImage(wSpriteSheet->getImage().copy(currentSpriteFrame->getRect()));
+    wFrame->setImage(sprite.getSpriteSheet().copy(currentSpriteFrame->getRect()));
 
     cbHurt->setChecked(currentSpriteFrame->getHurt());
     leSound->setText(currentSpriteFrame->getSoundName());
@@ -172,5 +173,102 @@ void CMainWindow::on_pbDelete_clicked(void) {
     wPreview->setCurrentFrameIndex(currentSpriteFrameIndex);
     wPreview->updateFrameRects();
     wPreview->repaint();
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_actNew_triggered(bool) {
+    sprite.clear();
+
+    currentSpriteFrame = 0;
+    currentSpriteFrameIndex = 0;
+    wSpriteSheet->clear();
+
+    wFrame->setImage(QImage());
+
+    wPreview->setCurrentFrameIndex(currentSpriteFrameIndex);
+    wPreview->updateFrameRects();
+    wPreview->repaint();
+
+    cbMotionType->setCurrentIndex(0);
+    cbHurt->setChecked(false);
+    leSound->setText("");
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_actOpen_triggered(bool) {
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), QString(), tr("Sprite data (*.spr)"));
+
+    if(!fileName.isEmpty()) {
+        QFile file(fileName);
+        if(file.open(QIODevice::ReadOnly)) {
+            QDataStream stream(&file);
+
+            sprite.clear();
+            stream >> sprite;
+
+            file.close();
+
+            wSpriteSheet->setImage(sprite.getSpriteSheet());
+            cbMotionType->setCurrentIndex(0);
+            currentSpriteFrameIndex = 0;
+
+            currentSpriteFrame = sprite.getFrame(0, 0);
+
+            if(currentSpriteFrame != 0) {
+                wFrame->setImage(sprite.getSpriteSheet().copy(currentSpriteFrame->getRect()));
+                cbHurt->setChecked(currentSpriteFrame->getHurt());
+                leSound->setText(currentSpriteFrame->getSoundName());
+            }else {
+                wFrame->setImage(QImage());
+                cbHurt->setChecked(false);
+                leSound->setText("");
+            }
+
+            wPreview->setCurrentFrameIndex(currentSpriteFrameIndex);
+            wPreview->updateFrameRects();
+            wPreview->repaint();
+        }
+    }
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_actSaveAs_triggered(bool) {
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QString(), tr("Sprite data (*.spr)"));
+
+    if(!fileName.isEmpty()) {
+        QFile file(fileName);
+        if(file.open(QIODevice::WriteOnly)) {
+            QDataStream stream(&file);
+
+            stream << sprite;
+
+            file.close();
+
+            this->fileName = fileName;
+        }
+    }
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_actSave_triggered(bool) {
+    if(fileName.isEmpty()) {
+        on_actSaveAs_triggered();
+    }else {
+        QFile file(fileName);
+        if(file.open(QIODevice::WriteOnly)) {
+            QDataStream stream(&file);
+
+            stream << sprite;
+
+            file.close();
+
+            this->fileName = fileName;
+        }
+    }
+}
+//----------------------------------------------------------------------------
+void CMainWindow::on_pbAnimate_clicked(void) {
+    CDialogAnimate dialogAnimate(this);
+
+    dialogAnimate.setSprite(&sprite);
+    dialogAnimate.setMotionIndex(cbMotionType->currentIndex());
+
+    dialogAnimate.exec();
 }
 //----------------------------------------------------------------------------

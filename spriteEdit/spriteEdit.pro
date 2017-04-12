@@ -31,17 +31,20 @@ SOURCES += main.cpp\
     ../CSprite.cpp \
     ../CSpriteFrame.cpp \
     CSpriteFrameWidget.cpp \
-    CSpritePreview.cpp
+    CSpritePreview.cpp \
+    CDialogAnimate.cpp
 
 HEADERS  += CMainWindow.h \
     CWidgetSpriteSheet.h \
     ../CSprite.h \
     ../CSpriteFrame.h \
     CSpriteFrameWidget.h \
-    CSpritePreview.h
+    CSpritePreview.h \
+    CDialogAnimate.h
 
 FORMS    += CMainWindow.ui \
-    CWidgetSpriteSheet.ui
+    CWidgetSpriteSheet.ui \
+    CDialogAnimate.ui
 
 RESOURCES += \
     spriteedit.qrc

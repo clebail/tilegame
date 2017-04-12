@@ -179,7 +179,7 @@ void CMainWindow::on_txtAnimatedGroupeName_textEdited(const QString & text) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_actOpen_triggered(bool) {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Save File"), QString(), tr("Tile data (*.dat)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Save File"), QString(), tr("Tile data (*.til)"));
 
     tiles->load(fileName);
 
@@ -188,7 +188,7 @@ void CMainWindow::on_actOpen_triggered(bool) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_actSaveAs_triggered(bool) {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QString(), tr("Tile data (*.dat)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QString(), tr("Tile data (*.til)"));
 
     if(!fileName.isEmpty()) {
         tiles->save(fileName);

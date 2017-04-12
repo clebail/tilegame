@@ -1,19 +1,12 @@
 //----------------------------------------------------------------------------
+#include <QtDebug>
 #include "CSprite.h"
 //----------------------------------------------------------------------------
 CSprite::CSprite(void) {
 }
 //----------------------------------------------------------------------------
 CSprite::~CSprite(void) {
-    int i, j;
-
-    for(i=0;i<NB_MOTION;i++) {
-        for(j=0;j<motions[i].size();j++) {
-            delete motions[i].at(j);
-        }
-
-        motions[i].clear();
-    }
+    clear();
 }
 //----------------------------------------------------------------------------
 void CSprite::setSpriteSheet(const QImage& spriteSheet) {
@@ -64,25 +57,50 @@ void CSprite::deleteFrame(int motionIndex, int frameIndex) {
     }
 }
 //----------------------------------------------------------------------------
+void CSprite::clear(void) {
+    int i, j;
+
+    for(i=0;i<NB_MOTION;i++) {
+        for(j=0;j<motions[i].size();j++) {
+            delete motions[i].at(j);
+        }
+
+        motions[i].clear();
+    }
+
+    spriteSheet = QImage();
+}
+//----------------------------------------------------------------------------
 QDataStream& operator<<(QDataStream& out, const CSprite& sprite) {
-    int i;
+    int i, j;
 
     out << sprite.spriteSheet;
 
     for(i=0;i<NB_MOTION;i++) {
-        out << sprite.motions[i];
+        out << sprite.motions[i].size();
+        for(j=0;j<sprite.motions[i].size();j++) {
+            out << sprite.motions[i].at(j);
+        }
     }
 
     return out;
 }
 //-----------------------------------------------------------------------------------------------
 QDataStream& operator>>(QDataStream& in, CSprite& sprite) {
-    int i;
+    int i, j;
 
     in >> sprite.spriteSheet;
 
     for(i=0;i<NB_MOTION;i++) {
-        in >> sprite.motions[i];
+        int nbFrame;
+
+        in >> nbFrame;
+        for(j=0;j<nbFrame;j++) {
+            CSpriteFrame *spriteFrame = new CSpriteFrame();
+
+            in >> spriteFrame;
+            sprite.motions[i].append(spriteFrame);
+        }
     }
 
     return in;

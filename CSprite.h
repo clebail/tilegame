@@ -22,6 +22,7 @@ public:
     void addFrame(int motionIndex, CSpriteFrame * spriteFrame);
     void swap(int motionIndex, int index1, int index2);
     void deleteFrame(int motionIndex, int frameIndex);
+    void clear(void);
 private:
     QImage spriteSheet;
     QList<CSpriteFrame *> motions[NB_MOTION];

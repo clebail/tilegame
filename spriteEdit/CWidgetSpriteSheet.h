@@ -13,7 +13,9 @@ public:
     void incZoomScale(void);
     void decZoomScale(void);
     int getZoomScale(void);
+    void setImage(const QImage& image);
     QImage getImage(void);
+    void clear(void);
 protected:
     virtual void paintEvent(QPaintEvent *event);
     virtual void mousePressEvent(QMouseEvent *event);

@@ -6,6 +6,6 @@
         <file>gentil.png</file>
     </qresource>
     <qresource prefix="/levelEdit/datas">
-        <file>tiles.dat</file>
+        <file>tiles.til</file>
     </qresource>
 </RCC>

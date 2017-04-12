@@ -24,7 +24,7 @@ CMainWindow::CMainWindow(QWidget *parent) : QMainWindow(parent) {
     yTileMax = (tilesImage.size().height() - 2 * OFFSET_Y) / REAL_TILE_HEIGHT + 1;
 
     tiles = new CTiles(xTileMax, yTileMax);
-    tiles->load(":/levelEdit/datas/tiles.dat");
+    tiles->load(":/levelEdit/datas/tiles.til");
 
     tileWidget->setImage(&tilesImage);
 
@@ -212,7 +212,7 @@ void CMainWindow::on_actNew_triggered(bool) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_actOpen_triggered(bool) {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Save File"), QString(), tr("Tile data (*.dat)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), QString(), tr("Level data (*.lvl)"));
 
     if(!fileName.isEmpty()) {
         QFile file(fileName);
@@ -246,7 +246,7 @@ void CMainWindow::on_actOpen_triggered(bool) {
 }
 //----------------------------------------------------------------------------
 void CMainWindow::on_actSaveAs_triggered(bool) {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QString(), tr("Tile data (*.dat)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QString(), tr("Level data (*.lvl)"));
 
     if(!fileName.isEmpty()) {
         QFile file(fileName);

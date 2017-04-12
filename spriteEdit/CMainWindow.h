@@ -18,6 +18,7 @@ private:
     CSpriteFrame * currentSpriteFrame;
     CSpriteFrame tmpSpriteFrame;
     int currentSpriteFrameIndex;
+    QString fileName;
 private slots:
     void on_actQuit_triggered(bool checked = false);
     void on_actSSopen_triggered(bool checked = false);
@@ -32,6 +33,11 @@ private slots:
     void on_pbLeft_clicked(void);
     void on_pbRight_clicked(void);
     void on_pbDelete_clicked(void);
+    void on_actNew_triggered(bool checked = false);
+    void on_actOpen_triggered(bool checked = false);
+    void on_actSaveAs_triggered(bool checked = false);
+    void on_actSave_triggered(bool checked = false);
+    void on_pbAnimate_clicked(void);
 };
 //----------------------------------------------------------------------------
 #endif //__CMAINWINDOW_H__

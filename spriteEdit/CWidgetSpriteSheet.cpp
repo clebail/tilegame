@@ -16,12 +16,7 @@ CWidgetSpriteSheet::CWidgetSpriteSheet(QWidget *parent) : QWidget(parent) {
 void CWidgetSpriteSheet::loadImage(QString fileName) {
     image = QImage(fileName);
 
-    if(!image.isNull()) {
-        resize(image.size());
-        zoomScale = 1;
-    }
-
-    repaint();
+    setImage(image);
 }
 //----------------------------------------------------------------------------
 void CWidgetSpriteSheet::incZoomScale(void) {
@@ -48,8 +43,26 @@ int CWidgetSpriteSheet::getZoomScale(void) {
     return zoomScale;
 }
 //----------------------------------------------------------------------------
+void CWidgetSpriteSheet::setImage(const QImage& image) {
+    this->image = image;
+
+    if(!image.isNull()) {
+        resize(image.size());
+        zoomScale = 1;
+    }
+
+    repaint();
+}
+//----------------------------------------------------------------------------
 QImage CWidgetSpriteSheet::getImage(void) {
     return image;
+}
+//----------------------------------------------------------------------------
+void CWidgetSpriteSheet::clear(void) {
+    image = QImage();
+    zoomScale = 1;
+
+    repaint();
 }
 //----------------------------------------------------------------------------
 void CWidgetSpriteSheet::paintEvent(QPaintEvent *) {
