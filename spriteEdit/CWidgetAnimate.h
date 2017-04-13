@@ -1,31 +1,30 @@
 //----------------------------------------------------------------------------
-#ifndef __CSPRITEPREVIEW_H__
-#define __CSPRITEPREVIEW_H__
+#ifndef __CWIDGETANIMATE_H__
+#define __CWIDGETANIMATE_H__
 //----------------------------------------------------------------------------
 #include <QWidget>
 #include <CSprite.h>
 //----------------------------------------------------------------------------
-class CSpritePreview : public QWidget {
+class CWidgetAnimate : public QWidget {
     Q_OBJECT
 public:
-    explicit CSpritePreview(QWidget *parent = 0);
-    void setSprite(CSprite *sprite);
-    void setCurrentMotion(CSprite::EMotion currentMotion);
-    void setCurrentFrameIndex(int currentFrameIndex);
-    void updateFrameRects(void);
+    explicit CWidgetAnimate(QWidget *parent = 0);
+    void setData(CSprite *sprite, int motionIndex);
+    void updateFrame(void);
 protected:
     virtual void paintEvent(QPaintEvent *event);
-    virtual void mousePressEvent(QMouseEvent *event);
     virtual void resizeEvent(QResizeEvent * event);
 private:
+    QImage backImage, image;
+    QRect rect;
     CSprite *sprite;
-    CSprite::EMotion currentMotion;
-    QImage backImage;
-    int currentFrameIndex;
-    QList<QRect> frameRects;
-signals:
-    void currentFrameChanged(int index);
+    int x, y;
+    double coef;
+    int motionIndex, currentFrame;
+
+    void updateMetrics(void);
+    void updateFrameMetrics(void);
 };
 //----------------------------------------------------------------------------
-#endif // __CSPRITEPREVIEW_H__
+#endif // __CWIDGETANIMATE_H__
 //----------------------------------------------------------------------------

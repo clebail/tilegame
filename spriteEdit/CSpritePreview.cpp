@@ -133,4 +133,9 @@ void CSpritePreview::mousePressEvent(QMouseEvent *event) {
     }
 }
 //----------------------------------------------------------------------------
+void CSpritePreview::resizeEvent(QResizeEvent * event) {
+    QWidget::resizeEvent(event);
 
+    updateFrameRects();
+}
+//----------------------------------------------------------------------------

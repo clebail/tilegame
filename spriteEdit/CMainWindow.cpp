@@ -266,8 +266,7 @@ void CMainWindow::on_actSave_triggered(bool) {
 void CMainWindow::on_pbAnimate_clicked(void) {
     CDialogAnimate dialogAnimate(this);
 
-    dialogAnimate.setSprite(&sprite);
-    dialogAnimate.setMotionIndex(cbMotionType->currentIndex());
+    dialogAnimate.setData(&sprite, cbMotionType->currentIndex());
 
     dialogAnimate.exec();
 }
