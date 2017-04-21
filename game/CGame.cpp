@@ -67,14 +67,14 @@ void CGame::loop(void) {
         updateScene();
         drawScene();
 
-        fin = clock.getElapsedTime().asMilliseconds();
-        usleep((40 - (fin - debut)) * 1000);
-
         while (window->pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window->close();
             }
         }
+
+        fin = clock.getElapsedTime().asMilliseconds();
+        usleep((40 - (fin - debut)) * 1000);
     }while(window->isOpen());
 }
 //----------------------------------------------------------------------------
