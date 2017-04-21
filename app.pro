@@ -1,4 +1,5 @@
 TEMPLATE = subdirs
 SUBDIRS = tileEdit \
     levelEdit \
-    spriteEdit
+    spriteEdit \
+    game

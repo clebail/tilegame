@@ -27,6 +27,8 @@ public:
     void setMusicName(QString musicName);
     QByteArray getMusic(void);
     void setMusic(const QByteArray& music);
+    void load(QString fileName);
+    void save(QString fileName);
 private:
     QList<CTileMap *> layers;
     QPoint playerStartPos;

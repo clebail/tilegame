@@ -215,33 +215,26 @@ void CMainWindow::on_actOpen_triggered(bool) {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), QString(), tr("Level data (*.lvl)"));
 
     if(!fileName.isEmpty()) {
-        QFile file(fileName);
-        if(file.open(QIODevice::ReadOnly)) {
-            int i;
-            QDataStream stream(&file);
+        int i;
 
-            level.clear();
-            stream >> level;
+        level.load(fileName);
 
-            file.close();
-
-            cbView->clear();
-            for(i=0;i<level.getNbLayer();i++) {
-                cbView->addItem("Layer "+QString::number(i));
-            }
-
-            this->fileName = fileName;
-
-            cbView->setCurrentIndex(0);
-            on_cbView_currentIndexChanged(0);
-            wGamePlay->setPlayerStartPos(level.getPlayerStartPos());
-            wPreview->setPlayerStartPos(level.getPlayerStartPos());
-
-            wGamePlay->setMonsterStartPoss(level.getMonsterStartPoss());
-            wPreview->setMonsterStartPoss(level.getMonsterStartPoss());
-
-            leMusic->setText(level.getMusicName());
+        cbView->clear();
+        for(i=0;i<level.getNbLayer();i++) {
+            cbView->addItem("Layer "+QString::number(i));
         }
+
+        this->fileName = fileName;
+
+        cbView->setCurrentIndex(0);
+        on_cbView_currentIndexChanged(0);
+        wGamePlay->setPlayerStartPos(level.getPlayerStartPos());
+        wPreview->setPlayerStartPos(level.getPlayerStartPos());
+
+        wGamePlay->setMonsterStartPoss(level.getMonsterStartPoss());
+        wPreview->setMonsterStartPoss(level.getMonsterStartPoss());
+
+        leMusic->setText(level.getMusicName());
     }
 }
 //----------------------------------------------------------------------------
@@ -249,16 +242,8 @@ void CMainWindow::on_actSaveAs_triggered(bool) {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QString(), tr("Level data (*.lvl)"));
 
     if(!fileName.isEmpty()) {
-        QFile file(fileName);
-        if(file.open(QIODevice::WriteOnly)) {
-            QDataStream stream(&file);
-
-            stream << level;
-
-            file.close();
-
-            this->fileName = fileName;
-        }
+        level.save(fileName);
+        this->fileName = fileName;
     }
 }
 //----------------------------------------------------------------------------
@@ -266,16 +251,8 @@ void CMainWindow::on_actSave_triggered(bool) {
     if(fileName.isEmpty()) {
         on_actSaveAs_triggered();
     }else {
-        QFile file(fileName);
-        if(file.open(QIODevice::WriteOnly)) {
-            QDataStream stream(&file);
-
-            stream << level;
-
-            file.close();
-
-            this->fileName = fileName;
-        }
+        level.save(fileName);
+        this->fileName = fileName;
     }
 }
 //----------------------------------------------------------------------------

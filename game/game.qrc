@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/game/datas">
+        <file>gentil.spr</file>
+        <file>mechant.spr</file>
+        <file>tiles.til</file>
+    </qresource>
+    <qresource prefix="/game/images">
+        <file>tileset.png</file>
+    </qresource>
+    <qresource prefix="/game/levels">
+        <file>level1.lvl</file>
+    </qresource>
+</RCC>

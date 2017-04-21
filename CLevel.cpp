@@ -1,5 +1,6 @@
 //----------------------------------------------------------------------------
 #include <QtDebug>
+#include <QFile>
 #include "CLevel.h"
 //----------------------------------------------------------------------------
 CLevel::CLevel(void) {
@@ -109,6 +110,29 @@ QByteArray CLevel::getMusic(void) {
 //----------------------------------------------------------------------------
 void CLevel::setMusic(const QByteArray& music) {
     this->music = music;
+}
+//----------------------------------------------------------------------------
+void CLevel::load(QString fileName) {
+    QFile file(fileName);
+    if(file.open(QIODevice::ReadOnly)) {
+        QDataStream stream(&file);
+
+        clear();
+        stream >> *this;
+
+        file.close();
+    }
+}
+//----------------------------------------------------------------------------
+void CLevel::save(QString fileName) {
+    QFile file(fileName);
+    if(file.open(QIODevice::WriteOnly)) {
+        QDataStream stream(&file);
+
+        stream << *this;
+
+        file.close();
+    }
 }
 //----------------------------------------------------------------------------
 QDataStream& operator<<(QDataStream& out, const CLevel& level) {
