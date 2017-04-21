@@ -13,8 +13,8 @@ public:
     explicit CGame(CTiles *tiles, QImage *tilesImage);
     ~CGame(void);
     void setLevel(CLevel *level);
-public:
     void loop(void);
+    void init(void);
 private:
     sf::RenderWindow *window;
     CTiles *tiles;
@@ -25,6 +25,7 @@ private:
     sf::Sprite tilesSprite;
     sf::Music music;
     char *musicBuffer;
+    bool initalized;
 
     void updateScene(void);
     void drawScene(void);

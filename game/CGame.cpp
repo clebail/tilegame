@@ -11,7 +11,7 @@
 #include <X11/Xlib.h>
 //----------------------------------------------------------------------------
 CGame::CGame(CTiles *tiles, QImage *tilesImage) {
-    window = new sf::RenderWindow(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), "Game");
+    initalized = false;
 
     this->tiles = tiles;
     fromQImage(*tilesImage, &tilesTexture, &tilesSprite);
@@ -29,7 +29,9 @@ CGame::~CGame(void) {
 
     deleteDatas();
 
-    delete window;
+    if(initalized) {
+        delete window;
+    }
 }
 //----------------------------------------------------------------------------
 void CGame::setLevel(CLevel *level) {
@@ -48,34 +50,44 @@ void CGame::setLevel(CLevel *level) {
     if(baMusic.size() != 0) {
         musicBuffer = new char[baMusic.size()];
         memcpy(musicBuffer, baMusic.data(), baMusic.size());
-    }
 
-    if(music.openFromMemory((const void *)musicBuffer, baMusic.size())) {
-        music.setLoop(true);
-        music.play();
+        if(music.openFromMemory((const void *)musicBuffer, baMusic.size())) {
+            music.setLoop(true);
+            music.play();
+        }
     }
 }
 //----------------------------------------------------------------------------
 void CGame::loop(void) {
-    sf::Clock clock;
+    if(initalized) {
+        sf::Clock clock;
 
-    do {
-        sf::Event event;
-        int debut = clock.getElapsedTime().asMilliseconds();
-        int fin;
+        do {
+            sf::Event event;
+            int debut = clock.getElapsedTime().asMilliseconds();
+            int fin;
 
-        updateScene();
-        drawScene();
+            updateScene();
+            drawScene();
 
-        while (window->pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window->close();
+            while (window->pollEvent(event)) {
+                if (event.type == sf::Event::Closed) {
+                    window->close();
+                }
             }
-        }
 
-        fin = clock.getElapsedTime().asMilliseconds();
-        usleep((40 - (fin - debut)) * 1000);
-    }while(window->isOpen());
+            fin = clock.getElapsedTime().asMilliseconds();
+            usleep((40 - (fin - debut)) * 1000);
+        }while(window->isOpen());
+    }
+}
+//----------------------------------------------------------------------------
+void CGame::init(void) {
+    if(!initalized) {
+        window = new sf::RenderWindow(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), "Game");
+
+        initalized = true;
+    }
 }
 //----------------------------------------------------------------------------
 void CGame::updateScene(void) {
@@ -156,6 +168,8 @@ void CGame::deleteDatas(void) {
 
         delete pair.first;
     }
+
+    layers.clear();
 
     if(musicBuffer != 0 && music.getStatus() == sf::SoundSource::Playing) {
         music.stop();

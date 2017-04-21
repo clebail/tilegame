@@ -20,15 +20,12 @@ int main(int, char **) {
 
     w->setLevel(level);
 
+    w->init();
     w->loop();
 
-    qDebug() << 1;
     delete w;
-    qDebug() << 2;
     delete level;
-    qDebug() << 3;
     delete tiles;
-    qDebug() << 4;
 
     return 0;
 }
